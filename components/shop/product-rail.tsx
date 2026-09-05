@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { Button, cn } from "@heroui/react";
 import { ProductCard, ProductItem } from "./product-card";
 
 export const BESTSELLER_PRODUCTS: ProductItem[] = [
@@ -179,24 +180,26 @@ export function ProductRail({
     const ref = scrollRef.current;
     if (!ref) return;
     ref.addEventListener("scroll", checkScroll, { passive: true });
+    ref.addEventListener("scrollend", checkScroll);
     window.addEventListener("resize", checkScroll);
     return () => {
       ref.removeEventListener("scroll", checkScroll);
+      ref.removeEventListener("scrollend", checkScroll);
       window.removeEventListener("resize", checkScroll);
     };
   }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
-    // Scroll by exact container viewport width so a full set of 6 items slides in
+    const container = scrollRef.current;
     const amount = direction === "right" 
-      ? scrollRef.current.clientWidth 
-      : -scrollRef.current.clientWidth;
-    scrollRef.current.scrollBy({ left: amount, behavior: "smooth" });
+      ? container.clientWidth * 0.85 
+      : -container.clientWidth * 0.85;
+    container.scrollBy({ left: amount, behavior: "smooth" });
   };
 
   return (
-    <div className={`relative w-full max-w-full mx-auto ${className}`}>
+    <div className={cn("relative w-full max-w-full mx-auto", className)}>
       {/* Section Header with Chevron */}
       <div className="mb-2.5">
         <button
@@ -204,7 +207,7 @@ export function ProductRail({
           onClick={onHeaderClick}
           className="flex items-center gap-1.5 text-left group w-fit cursor-pointer focus:outline-none"
         >
-          <span className="text-[17px] sm:text-[20px] font-semibold text-foreground tracking-[-0.05em] leading-tight group-hover:opacity-75 transition-opacity">
+          <span className="text-lg sm:text-xl font-semibold text-foreground tracking-tight leading-tight group-hover:opacity-75 transition-opacity">
             {title}
           </span>
           <ChevronRight
@@ -214,43 +217,47 @@ export function ProductRail({
         </button>
       </div>
 
-      {/* Scrollable Product Rail: starts flush on left matching CategoryGrid and flows seamlessly to right edge */}
+      {/* Scrollable Product Rail: recommended visual affordance peek */}
       <div
         ref={scrollRef}
-        className="flex items-start gap-3 sm:gap-3.5 lg:gap-4 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth w-full px-0 py-1"
+        className="flex items-start gap-3 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth snap-x snap-mandatory w-full px-0 py-1"
       >
         {products.map((product) => (
           <ProductCard
             key={product.id}
             product={product}
             onClick={onProductClick}
-            className="w-[170px] sm:w-[195px] lg:w-[218px] shrink-0"
+            className="snap-start snap-always shrink-0 w-[calc((100%-24px)/2.25)] sm:w-[calc((100%-36px)/3.25)] md:w-[calc((100%-48px)/4.25)] lg:w-[calc((100%-72px)/6.25)]"
           />
         ))}
       </div>
 
-      {/* Floating Carousel Next Button */}
+      {/* Floating Carousel Next Button using HeroUI Button */}
       {canScrollRight && (
-        <button
-          type="button"
-          onClick={() => scroll("right")}
+        <Button
+          isIconOnly
+          size="sm"
+          variant="secondary"
+          onPress={() => scroll("right")}
           aria-label="Next products"
-          className="absolute right-1 sm:right-2 top-[36%] -translate-y-1/2 z-20 size-8 sm:size-8.5 rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.12)] border border-[#ebebeb] flex items-center justify-center transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+          className="absolute right-2 sm:right-3 top-[36%] -translate-y-1/2 z-20 rounded-full bg-surface/90 backdrop-blur-md shadow-md border border-border transition-all duration-150 hover:scale-105 active:scale-95"
         >
           <ChevronRight className="size-4 text-foreground stroke-[2.2]" />
-        </button>
+        </Button>
       )}
 
-      {/* Floating Carousel Prev Button */}
+      {/* Floating Carousel Prev Button using HeroUI Button */}
       {canScrollLeft && (
-        <button
-          type="button"
-          onClick={() => scroll("left")}
+        <Button
+          isIconOnly
+          size="sm"
+          variant="secondary"
+          onPress={() => scroll("left")}
           aria-label="Previous products"
-          className="absolute left-1 sm:left-2 top-[36%] -translate-y-1/2 z-20 size-8 sm:size-8.5 rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.12)] border border-[#ebebeb] flex items-center justify-center transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+          className="absolute left-2 sm:left-3 top-[36%] -translate-y-1/2 z-20 rounded-full bg-surface/90 backdrop-blur-md shadow-md border border-border transition-all duration-150 hover:scale-105 active:scale-95"
         >
           <ChevronLeft className="size-4 text-foreground stroke-[2.2]" />
-        </button>
+        </Button>
       )}
     </div>
   );

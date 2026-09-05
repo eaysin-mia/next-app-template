@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { Button, cn } from "@heroui/react";
 
 export interface CategoryTile {
   label: string;
@@ -234,37 +235,40 @@ export function CategoryGrid({
     const ref = scrollRef.current;
     if (!ref) return;
     ref.addEventListener("scroll", checkScroll, { passive: true });
+    ref.addEventListener("scrollend", checkScroll);
     window.addEventListener("resize", checkScroll);
     return () => {
       ref.removeEventListener("scroll", checkScroll);
+      ref.removeEventListener("scrollend", checkScroll);
       window.removeEventListener("resize", checkScroll);
     };
   }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
-    const amount = direction === "right" ? 360 : -360;
-    scrollRef.current.scrollBy({ left: amount, behavior: "smooth" });
+    const container = scrollRef.current;
+    const amount = direction === "right" ? container.clientWidth * 0.85 : -container.clientWidth * 0.85;
+    container.scrollBy({ left: amount, behavior: "smooth" });
   };
 
   return (
-    <div className={`relative w-full max-w-full mx-auto ${className}`}>
-      {/* Scrollable Category Rail */}
+    <div className={cn("relative w-full max-w-full mx-auto", className)}>
+      {/* Scrollable Category Rail: recommended visual affordance peek */}
       <div
         ref={scrollRef}
-        className="flex items-start gap-3.5 sm:gap-4 lg:gap-5 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth w-full px-0 py-1"
+        className="flex items-start gap-4 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth snap-x snap-mandatory w-full px-0 py-1"
       >
         {categories.map((category) => (
           <div
             key={category.id}
-            className="flex flex-col shrink-0 select-none"
+            className="flex flex-col shrink-0 select-none snap-start snap-always w-[calc((100%-16px)/1.25)] sm:w-[calc((100%-32px)/2.25)] md:w-[calc((100%-48px)/3.25)] lg:w-[calc((100%-80px)/5.25)]"
           >
-            {/* Category Header with Chevron — 20px GTStandard-MSemibold at -0.05em tracking */}
+            {/* Category Header with Chevron */}
             <button
               type="button"
               className="flex items-center gap-1.5 mb-2.5 text-left group w-fit cursor-pointer focus:outline-none"
             >
-              <span className="text-[17px] sm:text-[20px] font-semibold text-foreground tracking-[-0.05em] leading-tight group-hover:opacity-75 transition-opacity">
+              <span className="text-lg sm:text-xl font-semibold text-foreground tracking-tight leading-tight group-hover:opacity-75 transition-opacity">
                 {category.name}
               </span>
               <ChevronRight
@@ -273,12 +277,12 @@ export function CategoryGrid({
               />
             </button>
 
-            {/* 2x2 Grid Product Card: True Shop App Proportions (320-350px wide, aspect-[1/0.92], 28px radius) */}
-            <div className="w-[290px] sm:w-[325px] lg:w-[345px] aspect-[1/0.92] rounded-[24px] sm:rounded-[28px] overflow-hidden grid grid-cols-2 grid-rows-2 gap-[1.5px] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-neutral-100">
+            {/* 2x2 Grid Product Card using HeroUI radii & surface tokens */}
+            <div className="w-full aspect-square rounded-2xl sm:rounded-3xl overflow-hidden grid grid-cols-2 grid-rows-2 gap-0.5 bg-border border border-border shadow-sm">
               {category.tiles.map((tile, idx) => (
                 <div
                   key={`${category.id}-${idx}-${tile.label}`}
-                  className="relative w-full h-full overflow-hidden group cursor-pointer bg-neutral-100"
+                  className="relative w-full h-full overflow-hidden group cursor-pointer bg-surface-secondary"
                 >
                   {/* Product Image */}
                   <img
@@ -294,9 +298,9 @@ export function CategoryGrid({
                     aria-hidden="true"
                   />
 
-                  {/* Clean Direct White Text Label — 14px Semibold/Medium at -0.014em tracking */}
+                  {/* Clean Direct Typography Label */}
                   <div className="absolute bottom-0 inset-x-0 p-2.5 sm:p-3 pb-2.5 sm:pb-3 pointer-events-none">
-                    <span className="text-white text-[13px] sm:text-[14px] font-medium tracking-[-0.014em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] whitespace-nowrap overflow-hidden text-ellipsis block select-none">
+                    <span className="text-white text-xs sm:text-sm font-medium tracking-tight drop-shadow-sm truncate block select-none">
                       {tile.label}
                     </span>
                   </div>
@@ -307,28 +311,32 @@ export function CategoryGrid({
         ))}
       </div>
 
-      {/* Floating Carousel Next Button */}
+      {/* Floating Carousel Next Button using HeroUI Button */}
       {canScrollRight && (
-        <button
-          type="button"
-          onClick={() => scroll("right")}
+        <Button
+          isIconOnly
+          size="sm"
+          variant="secondary"
+          onPress={() => scroll("right")}
           aria-label="Next categories"
-          className="absolute right-1 sm:right-2 top-[56%] -translate-y-1/2 z-20 size-8 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-[#ebebeb] flex items-center justify-center transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+          className="absolute right-2 sm:right-3 top-[56%] -translate-y-1/2 z-20 rounded-full bg-surface/90 backdrop-blur-md shadow-md border border-border transition-all duration-150 hover:scale-105 active:scale-95"
         >
           <ChevronRight className="size-4 text-foreground stroke-[2.2]" />
-        </button>
+        </Button>
       )}
 
-      {/* Floating Carousel Prev Button */}
+      {/* Floating Carousel Prev Button using HeroUI Button */}
       {canScrollLeft && (
-        <button
-          type="button"
-          onClick={() => scroll("left")}
+        <Button
+          isIconOnly
+          size="sm"
+          variant="secondary"
+          onPress={() => scroll("left")}
           aria-label="Previous categories"
-          className="absolute left-1 sm:left-2 top-[56%] -translate-y-1/2 z-20 size-8 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-[#ebebeb] flex items-center justify-center transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+          className="absolute left-2 sm:left-3 top-[56%] -translate-y-1/2 z-20 rounded-full bg-surface/90 backdrop-blur-md shadow-md border border-border transition-all duration-150 hover:scale-105 active:scale-95"
         >
           <ChevronLeft className="size-4 text-foreground stroke-[2.2]" />
-        </button>
+        </Button>
       )}
     </div>
   );

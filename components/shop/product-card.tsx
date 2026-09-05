@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Heart } from "lucide-react";
+import { Button, Chip, cn } from "@heroui/react";
 
 export interface ProductItem {
   id: string;
@@ -26,12 +27,10 @@ export interface ProductCardProps {
 
 /**
  * ProductCard Component
- * Follows industry-standard modern e-commerce & Shop app UX/UI design system:
- * - 1:1 Square aspect ratio (global e-commerce catalog standard for universal product feeds)
- * - 20px-22px pillow-soft inner radius with neutral canvas contrast
- * - Accessible 32px (size-8) translucent floating wishlist action with micro-animations
- * - Fixed metadata baseline alignment so prices and titles across all 6 cards align horizontally
- * - Strict typography hierarchy: muted secondary brand, medium primary title, amber rating, bold/medium price
+ * Implemented using the official HeroUI design system and tokens:
+ * - Semantic surface & contrast colors (bg-surface-secondary, text-foreground, text-muted)
+ * - Standard HeroUI radii (rounded-2xl) and typography scale (text-xs, text-sm)
+ * - HeroUI Chip for badges and HeroUI Button for interactive actions
  */
 export function ProductCard({
   product,
@@ -41,8 +40,8 @@ export function ProductCard({
 }: ProductCardProps) {
   const [wishlisted, setWishlisted] = useState(false);
 
-  const handleHeartClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleHeartClick = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     const nextState = !wishlisted;
     setWishlisted(nextState);
     if (onWishlistToggle) {
@@ -55,15 +54,22 @@ export function ProductCard({
   return (
     <div
       onClick={() => onClick?.(product)}
-      className={`group flex flex-col shrink-0 select-none cursor-pointer ${className}`}
+      className={cn(
+        "group flex flex-col shrink-0 select-none cursor-pointer min-w-0",
+        className
+      )}
     >
-      {/* 1. Standard 1:1 Product Image Container */}
-      <div className="relative w-full aspect-square rounded-[20px] sm:rounded-[22px] overflow-hidden bg-[#e6e7e8] flex items-center justify-center">
-        {/* Optional Promo Badge */}
+      {/* 1. 1:1 Product Image Container on HeroUI secondary surface */}
+      <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-surface-secondary flex items-center justify-center">
+        {/* Optional Promo Badge with HeroUI Chip */}
         {product.badge && (
-          <span className="absolute top-2.5 left-2.5 z-10 px-2 py-0.5 rounded-full bg-black text-white text-[10px] font-medium tracking-tight shadow-xs">
+          <Chip
+            size="sm"
+            variant="secondary"
+            className="absolute top-2.5 left-2.5 z-10 font-medium text-xs shadow-xs"
+          >
             {product.badge}
-          </span>
+          </Chip>
         )}
 
         {/* Product Imagery */}
@@ -71,51 +77,56 @@ export function ProductCard({
           src={product.imageSrc}
           alt={product.imageAlt || product.title}
           loading="lazy"
-          className={`w-full h-full transition-transform duration-300 ease-out group-hover:scale-104 ${
+          className={cn(
+            "w-full h-full transition-transform duration-300 ease-out group-hover:scale-105",
             isContain ? "object-contain p-2.5" : "object-cover"
-          }`}
+          )}
         />
 
-        {/* Accessible 32px Wishlist Tap Target */}
-        <button
-          type="button"
-          onClick={handleHeartClick}
+        {/* Wishlist Action using HeroUI Button */}
+        <Button
+          isIconOnly
+          size="sm"
+          variant="ghost"
           aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          className={`absolute bottom-2.5 right-2.5 z-10 size-8 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none ${
+          onPress={() => handleHeartClick()}
+          className={cn(
+            "absolute bottom-2.5 right-2.5 z-10 rounded-full transition-all duration-200",
             wishlisted
-              ? "bg-white text-danger shadow-xs scale-105"
-              : "bg-black/30 hover:bg-black/45 text-white backdrop-blur-xs active:scale-95"
-          }`}
+              ? "bg-surface text-danger shadow-sm scale-105"
+              : "bg-foreground/25 hover:bg-foreground/35 text-background backdrop-blur-xs active:scale-95"
+          )}
         >
           <Heart
-            className={`size-3.5 transition-transform ${
-              wishlisted ? "fill-danger stroke-danger" : "stroke-white stroke-[2]"
-            }`}
+            className={cn(
+              "size-3.5 transition-transform",
+              wishlisted ? "fill-danger stroke-danger" : "stroke-current stroke-[2]"
+            )}
           />
-        </button>
+        </Button>
       </div>
 
-      {/* 2. Structured Metadata with Consistent Baseline Alignment */}
-      <div className="pt-2 px-0.5 flex flex-col flex-1">
+      {/* 2. Structured Metadata with HeroUI Typography Tokens */}
+      <div className="pt-2 px-0.5 flex flex-col flex-1 min-w-0">
         {/* Brand Name */}
-        <p className="text-[11.5px] sm:text-[12px] text-muted font-normal leading-tight tracking-[-0.01em] truncate">
+        <p className="text-xs text-muted font-normal leading-tight tracking-tight truncate">
           {product.brand}
         </p>
 
         {/* Product Title */}
-        <h3 className="text-[13px] sm:text-[13.5px] font-medium text-foreground leading-snug tracking-[-0.014em] truncate group-hover:opacity-80 transition-opacity">
+        <h3 className="text-sm font-medium text-foreground leading-snug tracking-tight truncate group-hover:opacity-80 transition-opacity">
           {product.title}
         </h3>
 
-        {/* Standard Rating Slot with Fixed Height for Grid Baseline Coherence */}
+        {/* Rating Row */}
         <div className="h-4 flex items-center gap-1 pt-0.5">
           {product.rating !== undefined && (
             <>
-              <div className="flex items-center text-amber-500 text-[11px] leading-none">
+              <div className="flex items-center text-amber-500 text-xs leading-none">
                 {"★".repeat(Math.min(5, Math.floor(product.rating)))}
               </div>
               {product.reviewCount !== undefined && (
-                <span className="text-[11px] text-muted font-normal tracking-[-0.014em] leading-none">
+                <span className="text-xs text-muted font-normal tracking-tight leading-none">
                   ({product.reviewCount})
                 </span>
               )}
@@ -125,11 +136,11 @@ export function ProductCard({
 
         {/* Price Row */}
         <div className="flex items-center gap-1.5 pt-0.5 mt-auto">
-          <span className="text-[13px] sm:text-[13.5px] font-medium text-foreground tracking-[-0.014em]">
+          <span className="text-sm font-medium text-foreground tracking-tight">
             {product.price}
           </span>
           {product.originalPrice && (
-            <span className="text-[11.5px] sm:text-[12px] text-muted line-through font-normal">
+            <span className="text-xs text-muted line-through font-normal">
               {product.originalPrice}
             </span>
           )}
@@ -138,3 +149,4 @@ export function ProductCard({
     </div>
   );
 }
+
