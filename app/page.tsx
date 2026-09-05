@@ -9,7 +9,7 @@ import {
 
 export default function Home() {
   return (
-    <div className="w-full mx-auto flex flex-col gap-3 sm:gap-5 pt-0 pb-12">
+    <div className="w-full mx-auto flex flex-col gap-6 sm:gap-8 lg:gap-10 pt-0 pb-12">
       {/* 1. Top Dynamic Hero Constellation */}
       <section className="w-full flex justify-center pr-6 sm:pr-8 md:pr-10 lg:pr-12">
         <HeroConstellation />

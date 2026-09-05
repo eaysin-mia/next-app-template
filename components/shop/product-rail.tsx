@@ -240,7 +240,7 @@ export function ProductRail({
           variant="secondary"
           onPress={() => scroll("right")}
           aria-label="Next products"
-          className="absolute right-2 sm:right-3 top-[36%] -translate-y-1/2 z-20 rounded-full bg-surface/90 backdrop-blur-md shadow-md border border-border transition-all duration-150 hover:scale-105 active:scale-95"
+          className="absolute right-2 sm:right-3 top-[36%] -translate-y-1/2 z-20 rounded-full bg-surface shadow-[rgba(0,0,0,0.12)_0px_4px_24px_0px] border-0 transition-all duration-150 hover:scale-105 active:scale-95"
         >
           <ChevronRight className="size-4 text-foreground stroke-[2.2]" />
         </Button>
@@ -254,7 +254,7 @@ export function ProductRail({
           variant="secondary"
           onPress={() => scroll("left")}
           aria-label="Previous products"
-          className="absolute left-2 sm:left-3 top-[36%] -translate-y-1/2 z-20 rounded-full bg-surface/90 backdrop-blur-md shadow-md border border-border transition-all duration-150 hover:scale-105 active:scale-95"
+          className="absolute left-2 sm:left-3 top-[36%] -translate-y-1/2 z-20 rounded-full bg-surface shadow-[rgba(0,0,0,0.12)_0px_4px_24px_0px] border-0 transition-all duration-150 hover:scale-105 active:scale-95"
         >
           <ChevronLeft className="size-4 text-foreground stroke-[2.2]" />
         </Button>

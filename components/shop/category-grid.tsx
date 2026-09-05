@@ -277,8 +277,7 @@ export function CategoryGrid({
               />
             </button>
 
-            {/* 2x2 Grid Product Card using HeroUI radii & surface tokens */}
-            <div className="w-full aspect-square rounded-2xl sm:rounded-3xl overflow-hidden grid grid-cols-2 grid-rows-2 gap-0.5 bg-border border border-border shadow-sm">
+            <div className="w-full aspect-square rounded-[28px] overflow-hidden grid grid-cols-2 grid-rows-2 gap-px bg-surface shadow-sm">
               {category.tiles.map((tile, idx) => (
                 <div
                   key={`${category.id}-${idx}-${tile.label}`}
@@ -292,15 +291,13 @@ export function CategoryGrid({
                     className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                   />
 
-                  {/* Clean bottom fade for text contrast */}
+                  {/* Subtle gradient for text contrast, white label text — matches reference */}
                   <div
                     className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"
                     aria-hidden="true"
                   />
-
-                  {/* Clean Direct Typography Label */}
-                  <div className="absolute bottom-0 inset-x-0 p-2.5 sm:p-3 pb-2.5 sm:pb-3 pointer-events-none">
-                    <span className="text-white text-xs sm:text-sm font-medium tracking-tight drop-shadow-sm truncate block select-none">
+                  <div className="absolute bottom-0 inset-x-0 px-2 pb-2 pointer-events-none">
+                    <span className="text-white text-xs font-medium tracking-tight truncate block select-none drop-shadow-sm">
                       {tile.label}
                     </span>
                   </div>
