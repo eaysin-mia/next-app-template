@@ -40,7 +40,7 @@ export function ShopSearchBar({
         onChange={setValue}
         className="w-full"
       >
-        <SearchField.Group className="relative flex items-center w-full h-[54px] sm:h-[56px] bg-surface rounded-full border border-border shadow-sm hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-md transition-all duration-200 pl-3 pr-2">
+        <SearchField.Group className="relative flex items-center w-full h-[60px] sm:h-[64px] bg-surface rounded-full border border-border shadow-sm hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-md transition-all duration-200 pl-4 pr-3">
           {/* Left Camera Button inside Circular Ring */}
           <button
             type="button"

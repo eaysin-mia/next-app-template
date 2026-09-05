@@ -110,7 +110,7 @@ export function CategoryPills({
       aria-label="Product Categories"
       className={`w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden py-1 ${className}`}
     >
-      <div className="flex items-center gap-3 min-w-max mx-auto justify-start md:justify-center px-3">
+      <div className="flex items-center gap-3 min-w-max mx-auto justify-start md:justify-center px-1">
         {categories.map((cat) => {
           const Icon = cat.icon;
           const isSelected = active === cat.id;
@@ -123,7 +123,7 @@ export function CategoryPills({
               className="focus:outline-none transition-transform active:scale-[0.97]"
             >
               <Chip
-                className={`flex items-center gap-2 pl-1.5 pr-4 h-9 rounded-full bg-surface border cursor-pointer transition-all duration-150 shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:bg-surface-secondary hover:border-foreground/20 ${
+                className={`flex items-center gap-2 pl-1.5 pr-4 h-10 rounded-full bg-surface border cursor-pointer transition-all duration-150 shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:bg-surface-secondary hover:border-foreground/20 ${
                   isSelected
                     ? "border-foreground/40 ring-1 ring-foreground/10 shadow-sm"
                     : "border-border"
@@ -135,7 +135,7 @@ export function CategoryPills({
                     cat.iconColor || "text-background"
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 stroke-[2.2]" />
+                  <Icon className="size-5 stroke-[2.2]" />
                 </div>
 
                 {/* 14px-15px Category Label */}
