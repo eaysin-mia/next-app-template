@@ -5,3 +5,4 @@ export * from "./search-bar";
 export * from "./category-pills";
 export * from "./shop-wordmark";
 export * from "./category-grid";
+export * from "./product-rail";
