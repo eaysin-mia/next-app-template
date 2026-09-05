@@ -126,47 +126,34 @@ export function HeroConstellation() {
           {/* Left Column */}
           <div className="col-span-12 grid grid-cols-12 gap-2 lg:col-span-6">
             {/* Top Card */}
-            {/* Red Indicator Card — Shop design system */}
-            <Card
-              className="col-span-12 rounded-[28px] bg-white"
-              style={{
-                boxShadow:
-                  "rgba(0,0,0,0.1) 0px 4px 6px -1px, rgba(0,0,0,0.1) 0px 2px 4px -2px",
-              }}
-            >
+            {/* Red Indicator Card — HeroUI tokens, Shop design system */}
+            <Card className="col-span-12 rounded-[28px] bg-surface shadow-sm-2 relative overflow-hidden">
+              <div className="absolute end-3 top-3 z-10">
+                <CloseButton aria-label="Dismiss notification" />
+              </div>
               <Card.Header className="gap-3 pe-10">
-                {/* Product image with red indicator dot */}
+                {/* Avatar with danger dot indicator */}
                 <div className="relative shrink-0">
                   <img
                     alt="Product"
                     className="size-[40px] rounded-[20px] object-cover"
                     src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo1.jpg"
                   />
-                  {/* Red indicator dot */}
                   <span
-                    className="absolute -end-0.5 -top-0.5 size-[10px] rounded-full border-2 border-white"
-                    style={{ backgroundColor: "#ef4444" }}
-                    aria-label="New activity"
+                    className="absolute -end-0.5 -top-0.5 size-[10px] rounded-full bg-danger border-2 border-surface"
+                    aria-hidden="true"
                   />
                 </div>
                 <div className="flex flex-col gap-0.5">
-                  <span
-                    className="text-[11px] font-medium uppercase tracking-wide"
-                    style={{ color: "#787574" }}
-                  >
+                  <span className="text-[11px] font-medium uppercase tracking-wide text-danger">
                     New activity
                   </span>
-                  <Card.Title className="text-sm" style={{ color: "#000000", letterSpacing: "-0.014em" }}>
+                  <Card.Title className="text-sm text-foreground tracking-[-0.014em]">
                     Someone liked your product
                   </Card.Title>
-                  <span className="text-[11px]" style={{ color: "#787574" }}>
-                    2 min ago
-                  </span>
+                  <span className="text-[11px] text-muted">2 min ago</span>
                 </div>
               </Card.Header>
-              <div className="absolute end-3 top-3 z-10">
-                <CloseButton aria-label="Dismiss notification" />
-              </div>
             </Card>
             {/* Bottom cards */}
             <div className="col-span-12 grid grid-cols-12 gap-2">
