@@ -73,7 +73,7 @@ export function DynamicPosterCard({
               <div className="relative group cursor-pointer">
                 <div className="w-32 h-32 md:w-36 md:h-36 rounded-[20px] bg-gradient-to-b from-surface to-surface-secondary p-4 flex flex-col items-center justify-center text-center shadow-inner transition-transform duration-300 group-hover:scale-105">
                   <div className="w-16 h-16 rounded-full bg-surface/80 shadow-xs flex items-center justify-center mb-2">
-                    <span className="text-xs font-bold text-foreground/80 tracking-wider">OSEA</span>
+                    <span className="text-xs font-semibold text-foreground/80 tracking-wider">OSEA</span>
                   </div>
                   <span className="text-[11px] font-medium text-foreground/70 line-clamp-1">Undaria Algae</span>
                   <span className="text-[10px] text-muted">Body Butter</span>
@@ -83,7 +83,7 @@ export function DynamicPosterCard({
               <div className="relative group cursor-pointer">
                 <div className="w-32 h-32 md:w-36 md:h-36 rounded-[20px] bg-gradient-to-b from-surface to-surface-secondary p-4 flex flex-col items-center justify-center text-center shadow-inner transition-transform duration-300 group-hover:scale-105">
                   <div className="w-16 h-16 rounded-full bg-surface/80 shadow-xs flex items-center justify-center mb-2">
-                    <span className="text-[10px] font-bold text-foreground/80 tracking-wider">SALT & STONE</span>
+                    <span className="text-[10px] font-semibold text-foreground/80 tracking-wider">SALT & STONE</span>
                   </div>
                   <span className="text-[11px] font-medium text-foreground/70 line-clamp-1">Natural Wash</span>
                   <span className="text-[10px] text-muted">Bergamot & Hinoki</span>

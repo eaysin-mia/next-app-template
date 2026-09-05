@@ -21,7 +21,7 @@ export function SidebarNavRail() {
       <aside className="fixed top-0 left-0 z-30 hidden h-screen w-[64px] flex-col items-center justify-between bg-background py-4 md:flex">
         {/* Top App Logo / Brand Badge */}
         <Link href="/" className="group flex flex-col items-center no-underline pt-1">
-          <div className="flex size-9 items-center justify-center rounded-full bg-accent text-base font-extrabold text-accent-foreground shadow-sm transition-transform group-hover:scale-105">
+          <div className="flex size-9 items-center justify-center rounded-full bg-accent text-base font-semibold text-accent-foreground shadow-sm transition-transform group-hover:scale-105">
             d
           </div>
         </Link>
@@ -44,7 +44,7 @@ export function SidebarNavRail() {
             <div className="flex size-9 items-center justify-center rounded-full text-foreground/75 transition-colors group-hover:text-foreground">
               <User className="size-5" />
             </div>
-            <span className="text-[10px] font-medium tracking-tight text-foreground/70 group-hover:text-foreground">
+            <span className="text-[11px] font-medium tracking-[-0.014em] text-foreground/70 group-hover:text-foreground">
               Sign in
             </span>
           </Link>

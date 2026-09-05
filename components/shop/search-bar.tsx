@@ -50,10 +50,10 @@ export function ShopSearchBar({
             <Camera className="w-[18px] h-[18px] stroke-[1.8]" />
           </button>
 
-          {/* Search Input Field */}
+          {/* Search Input Field — 16px GTStandard-MRegular at -0.031em tracking */}
           <SearchField.Input
             placeholder={placeholder}
-            className="flex-1 bg-transparent border-0 outline-none text-[15px] text-foreground placeholder:text-muted tracking-tight w-full font-normal pl-3 pr-2"
+            className="flex-1 bg-transparent border-0 outline-none text-[16px] text-foreground placeholder:text-muted tracking-[-0.031em] w-full font-normal pl-3 pr-2"
           />
 
           {/* Right Circular Submit Button */}

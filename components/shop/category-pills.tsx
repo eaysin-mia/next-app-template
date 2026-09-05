@@ -138,8 +138,8 @@ export function CategoryPills({
                   <Icon className="size-5 stroke-[2.2]" />
                 </div>
 
-                {/* 14px-15px Category Label */}
-                <span className="text-[14px] sm:text-[14.5px] font-medium text-foreground tracking-[-0.015em] whitespace-nowrap select-none">
+                {/* 15px Category Label — GTStandard Regular/Medium with -0.025em tracking */}
+                <span className="text-[14px] sm:text-[15px] font-medium text-foreground tracking-[-0.025em] whitespace-nowrap select-none">
                   {cat.label}
                 </span>
               </Chip>

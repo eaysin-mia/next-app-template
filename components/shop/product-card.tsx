@@ -93,12 +93,12 @@ export function ProductCard({
               </span>
             )}
           </div>
-          <span className="text-[11px] text-muted font-medium tracking-tight">
+          <span className="text-[11px] text-muted font-normal tracking-[-0.014em]">
             ({reviewCount})
           </span>
 
           {price && (
-            <span className="ml-auto text-[13px] font-bold text-foreground">
+            <span className="ml-auto text-[13px] font-semibold text-foreground tracking-[-0.014em]">
               {price}
             </span>
           )}

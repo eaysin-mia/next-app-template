@@ -147,7 +147,7 @@ export const CATEGORY_GRIDS: CategoryBlock[] = [
   },
   {
     id: "baby",
-    name: "Baby",
+    name: "Baby & toddler",
     tiles: [
       {
         label: "Formula & feeding",
@@ -259,16 +259,16 @@ export function CategoryGrid({
             key={category.id}
             className="flex flex-col shrink-0 select-none"
           >
-            {/* Category Header with Chevron */}
+            {/* Category Header with Chevron — 20px GTStandard-MSemibold at -0.05em tracking */}
             <button
               type="button"
               className="flex items-center gap-1.5 mb-2.5 text-left group w-fit cursor-pointer focus:outline-none"
             >
-              <span className="text-[16px] sm:text-[18px] font-semibold text-foreground tracking-[-0.02em] leading-tight group-hover:opacity-75 transition-opacity">
+              <span className="text-[17px] sm:text-[20px] font-semibold text-foreground tracking-[-0.05em] leading-tight group-hover:opacity-75 transition-opacity">
                 {category.name}
               </span>
               <ChevronRight
-                className="size-4 text-foreground stroke-[2.2] transition-transform group-hover:translate-x-0.5 shrink-0"
+                className="size-4 text-foreground stroke-[2] transition-transform group-hover:translate-x-0.5 shrink-0"
                 aria-hidden="true"
               />
             </button>
@@ -294,9 +294,9 @@ export function CategoryGrid({
                     aria-hidden="true"
                   />
 
-                  {/* Clean Direct White Text Label */}
+                  {/* Clean Direct White Text Label — 14px Semibold/Medium at -0.014em tracking */}
                   <div className="absolute bottom-0 inset-x-0 p-2.5 sm:p-3 pb-2.5 sm:pb-3 pointer-events-none">
-                    <span className="text-white text-[13px] sm:text-[14px] font-medium tracking-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] whitespace-nowrap overflow-hidden text-ellipsis block select-none">
+                    <span className="text-white text-[13px] sm:text-[14px] font-medium tracking-[-0.014em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] whitespace-nowrap overflow-hidden text-ellipsis block select-none">
                       {tile.label}
                     </span>
                   </div>
