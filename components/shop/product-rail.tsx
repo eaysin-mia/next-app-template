@@ -214,17 +214,17 @@ export function ProductRail({
         </button>
       </div>
 
-      {/* Scrollable Product Rail: exactly 6 cards in one screen row on desktop */}
+      {/* Scrollable Product Rail: starts flush on left matching CategoryGrid and flows seamlessly to right edge */}
       <div
         ref={scrollRef}
-        className="flex items-start gap-2.5 sm:gap-3 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth w-full py-1"
+        className="flex items-start gap-3 sm:gap-3.5 lg:gap-4 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth w-full px-0 py-1"
       >
         {products.map((product) => (
           <ProductCard
             key={product.id}
             product={product}
             onClick={onProductClick}
-            className="w-[calc((100%-10px)/2)] sm:w-[calc((100%-20px)/3)] md:w-[calc((100%-36px)/4)] lg:w-[calc((100%-60px)/6)] min-w-[calc((100%-10px)/2)] sm:min-w-[calc((100%-20px)/3)] md:min-w-[calc((100%-36px)/4)] lg:min-w-[calc((100%-60px)/6)] shrink-0"
+            className="w-[170px] sm:w-[195px] lg:w-[218px] shrink-0"
           />
         ))}
       </div>
@@ -235,7 +235,7 @@ export function ProductRail({
           type="button"
           onClick={() => scroll("right")}
           aria-label="Next products"
-          className="absolute right-0 sm:right-0.5 top-[36%] -translate-y-1/2 z-20 size-8 sm:size-8.5 rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.12)] border border-[#ebebeb] flex items-center justify-center transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+          className="absolute right-1 sm:right-2 top-[36%] -translate-y-1/2 z-20 size-8 sm:size-8.5 rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.12)] border border-[#ebebeb] flex items-center justify-center transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
         >
           <ChevronRight className="size-4 text-foreground stroke-[2.2]" />
         </button>
@@ -247,7 +247,7 @@ export function ProductRail({
           type="button"
           onClick={() => scroll("left")}
           aria-label="Previous products"
-          className="absolute left-0 sm:left-0.5 top-[36%] -translate-y-1/2 z-20 size-8 sm:size-8.5 rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.12)] border border-[#ebebeb] flex items-center justify-center transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+          className="absolute left-1 sm:left-2 top-[36%] -translate-y-1/2 z-20 size-8 sm:size-8.5 rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.12)] border border-[#ebebeb] flex items-center justify-center transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
         >
           <ChevronLeft className="size-4 text-foreground stroke-[2.2]" />
         </button>

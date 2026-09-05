@@ -252,7 +252,7 @@ export function CategoryGrid({
       {/* Scrollable Category Rail */}
       <div
         ref={scrollRef}
-        className="flex items-start gap-4 sm:gap-5 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth px-2 sm:px-4 py-1"
+        className="flex items-start gap-3.5 sm:gap-4 lg:gap-5 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth w-full px-0 py-1"
       >
         {categories.map((category) => (
           <div
