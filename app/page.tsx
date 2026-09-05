@@ -1,6 +1,5 @@
 import {
   HeroConstellation,
-  ShopWordmark,
   ShopSearchBar,
   CategoryPills,
   CategoryGrid,
@@ -9,29 +8,24 @@ import {
 
 export default function Home() {
   return (
-    <div className="w-full mx-auto flex flex-col gap-6 sm:gap-8 lg:gap-10 pt-0 pb-12">
-      {/* 1. Top Dynamic Hero Constellation */}
-      <section className="w-full flex justify-center pr-6 sm:pr-8 md:pr-10 lg:pr-12">
+    <div className="w-full mx-auto flex flex-col gap-6 sm:gap-8 lg:gap-10 pt-2 pb-20 md:pt-3 md:pb-12">
+      <section className="w-full flex justify-center px-6 sm:px-8 md:px-10 lg:px-12">
         <HeroConstellation />
       </section>
 
-      {/* 2. Main Search Discovery Bar */}
-      <section className="w-full px-3 pr-6 sm:pr-8 md:pr-10 lg:pr-12 flex justify-center">
+      <section className="w-full px-6 sm:px-8 md:px-10 lg:px-12 flex justify-center">
         <ShopSearchBar />
       </section>
 
-      {/* 3. Category Pills Navigation Bar */}
-      <section className="w-full pt-0.5 pr-6 sm:pr-8 md:pr-10 lg:pr-12 flex justify-center">
+      <section className="w-full pt-0.5 px-6 sm:px-8 md:px-10 lg:px-12 flex justify-center">
         <CategoryPills />
       </section>
 
-      {/* 4. Horizontal Category Grid Rail (starts flush on left, bleeds right with no gap) */}
-      <section className="w-full pt-1 sm:pt-2">
+      <section className="w-full pt-1 sm:pt-2 pl-6 sm:pl-8 md:pl-10 lg:pl-12">
         <CategoryGrid />
       </section>
 
-      {/* 5. Bestsellers Horizontal Product Rail (starts flush on left, bleeds right with no gap) */}
-      <section className="w-full pt-2 sm:pt-4">
+      <section className="w-full pt-2 sm:pt-4 pl-6 sm:pl-8 md:pl-10 lg:pl-12">
         <ProductRail />
       </section>
     </div>

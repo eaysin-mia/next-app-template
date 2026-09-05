@@ -17,16 +17,13 @@ export function SidebarNavRail() {
 
   return (
     <>
-      {/* Desktop Navigation Rail (Hidden on Mobile) */}
       <aside className="fixed top-0 left-0 z-30 hidden h-screen w-[64px] flex-col items-center justify-between bg-background py-4 md:flex">
-        {/* Top App Logo / Brand Badge */}
         <Link href="/" className="group flex flex-col items-center no-underline pt-1">
           <div className="flex size-9 items-center justify-center rounded-full bg-accent text-base font-semibold text-accent-foreground shadow-sm transition-transform group-hover:scale-105">
             d
           </div>
         </Link>
 
-        {/* Middle Navigation Rail Items */}
         <nav className="my-auto flex flex-col items-center gap-5">
           <NavItem href="/" icon={Home} isActive={isHome} label="Home" />
           <NavItem href="/categories" icon={Grid} isActive={isCategories} label="Categories" />
@@ -35,7 +32,6 @@ export function SidebarNavRail() {
           <NavItem href="/wishlist" icon={Heart} isActive={isWishlist} label="Wishlist" />
         </nav>
 
-        {/* Bottom User Account / Sign In */}
         <div className="flex flex-col items-center pb-2">
           <Link
             href="/account"
@@ -51,7 +47,6 @@ export function SidebarNavRail() {
         </div>
       </aside>
 
-      {/* Mobile Bottom Navigation Bar (Visible only on Mobile) */}
       <nav
         aria-label="Mobile Navigation"
         className="fixed bottom-0 left-0 right-0 z-40 flex h-16 items-center justify-around bg-surface border-t border-black/5 px-4 pb-[max(env(safe-area-inset-bottom),0.5rem)] md:hidden rounded-t-[28px] shadow-[0_-4px_24px_rgba(0,0,0,0.08)]"
