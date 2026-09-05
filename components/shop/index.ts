@@ -6,3 +6,4 @@ export * from "./category-pills";
 export * from "./shop-wordmark";
 export * from "./category-grid";
 export * from "./product-rail";
+export * from "./carousel-nav-button";
