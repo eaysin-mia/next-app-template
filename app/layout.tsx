@@ -56,7 +56,7 @@ export default function RootLayout({
                 {/* Main Content Surface */}
                 <main className="flex-1 w-full flex flex-col min-w-0">
                   <Surface
-                    className="flex-1 w-full flex flex-col min-w-0 px-3 pt-2 pb-20 md:px-6 md:pt-3 md:pb-12"
+                    className="flex-1 w-full flex flex-col min-w-0 px-3 pt-2 pb-20 md:pt-3 md:pb-12"
                     variant="secondary"
                   >
                     <div className="w-full mx-auto flex-1 flex flex-col">

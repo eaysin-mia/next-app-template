@@ -3,6 +3,7 @@ import {
   ShopWordmark,
   ShopSearchBar,
   CategoryPills,
+  CategoryGrid,
 } from "@/components/shop";
 
 export default function Home() {
@@ -19,8 +20,13 @@ export default function Home() {
       </section>
 
       {/* 4. Category Pills Navigation Bar */}
-      <section className="w-full px-2 pt-0.5">
+      <section className="w-full md:ps-12 pt-0.5">
         <CategoryPills />
+      </section>
+
+      {/* 5. Horizontal Category Grid Rail */}
+      <section className="w-full pt-1 sm:pt-2">
+        <CategoryGrid />
       </section>
     </div>
   );
