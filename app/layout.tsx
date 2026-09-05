@@ -6,7 +6,9 @@ import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
-import { Navbar } from "@/components/navbar";
+import { SidebarNavRail } from "@/components/sidebar-rail";
+import { AppBanner } from "@/components/app-banner";
+import { Surface } from "@heroui/react";
 
 export const metadata: Metadata = {
   title: {
@@ -32,31 +34,38 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang="en" className="light" data-theme="light">
       <head />
       <body
         className={clsx(
-          "min-h-screen text-foreground bg-background font-sans antialiased",
+          "min-h-screen bg-background text-foreground font-sans antialiased",
           fontSans.variable,
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="relative flex flex-col h-screen">
-            <Navbar />
-            <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
-              {children}
-            </main>
-            <footer className="w-full flex items-center justify-center py-3">
-              <a
-                className="flex items-center gap-1 text-current no-underline"
-                href="https://heroui.com?utm_source=next-app-template"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <span className="text-muted">Powered by</span>
-                <p className="text-accent">HeroUI</p>
-              </a>
-            </footer>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+          <div className="relative flex min-h-screen">
+            {/* Left 48px Navigation Rail */}
+            <SidebarNavRail />
+
+            {/* Content Area Container: mobile full-bleed, desktop offset and elevated card */}
+            <div className="flex-1 w-full md:pl-[64px] p-0 md:p-2 flex flex-col min-h-screen min-w-0">
+              <div className="flex-1 w-full flex flex-col min-w-0 rounded-none md:rounded-2xl overflow-hidden shadow-xs">
+                {/* Top Download Shop App Banner */}
+                <AppBanner />
+
+                {/* Main Content Surface */}
+                <main className="flex-1 w-full flex flex-col min-w-0">
+                  <Surface
+                    className="flex-1 w-full flex flex-col min-w-0 px-4 pt-6 pb-24 md:px-8 md:py-10"
+                    variant="default"
+                  >
+                    <div className="w-full max-w-[1200px] mx-auto flex-1 flex flex-col">
+                      {children}
+                    </div>
+                  </Surface>
+                </main>
+              </div>
+            </div>
           </div>
         </Providers>
       </body>
