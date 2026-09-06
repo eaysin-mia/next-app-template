@@ -1,7 +1,11 @@
-"use client";
+import { Metadata } from "next";
+import { CategoryCatalogView } from "@/components/shop";
 
-import CategoryPage from "../categories/[category]/page";
+export const metadata: Metadata = {
+  title: "Products - Shop",
+  description: "Browse all trending products, accessories, and collections on Shop.",
+};
 
 export default function ProductsPage() {
-  return <CategoryPage params={Promise.resolve({ category: "products" })} />;
+  return <CategoryCatalogView initialCategory="products" />;
 }

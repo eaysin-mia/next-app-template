@@ -6,7 +6,7 @@ import { FloatingSearchBar } from "@/components/shop/floating-search-bar";
 export function GlobalSearchBar() {
   const pathname = usePathname();
 
-  if (pathname === "/") {
+  if (pathname === "/" || pathname.startsWith("/checkout")) {
     return null;
   }
 

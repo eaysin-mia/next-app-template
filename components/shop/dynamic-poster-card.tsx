@@ -1,18 +1,16 @@
-"use client";
-
 import React from "react";
 import { Card } from "@heroui/react";
 import { Sparkles, ArrowRight } from "lucide-react";
 
 export interface DynamicPosterCardProps {
-  title?: string;
-  subtitle?: string;
-  tag?: string;
-  brand?: string;
-  rating?: number;
-  reviewCount?: string;
-  className?: string;
-  children?: React.ReactNode;
+  readonly title?: string;
+  readonly subtitle?: string;
+  readonly tag?: string;
+  readonly brand?: string;
+  readonly rating?: number;
+  readonly reviewCount?: string;
+  readonly className?: string;
+  readonly children?: React.ReactNode;
 }
 
 /**

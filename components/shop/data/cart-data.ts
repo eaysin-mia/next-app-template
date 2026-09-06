@@ -1,34 +1,36 @@
 export interface CartItemDetail {
-  id: string;
-  title: string;
-  variant: string;
-  unitPrice: number;
-  unitPriceFormatted: string;
-  quantity: number;
-  imageUrl: string;
-  productId?: string;
+  readonly id: string;
+  readonly title: string;
+  readonly variant: string;
+  readonly unitPrice: number;
+  readonly unitPriceFormatted: string;
+  readonly quantity: number;
+  readonly imageUrl: string;
+  readonly productId?: string;
 }
+
+export type CartItem = CartItemDetail;
 
 export interface CartBrandGroup {
-  id: string;
-  brand: string;
-  brandAvatarText: string;
-  brandAvatarBg?: string;
-  brandAvatarTextColor?: string;
-  subtotal: string;
-  subtotalValue: number;
-  quantity: number;
-  imageUrl: string;
-  productTitle: string;
-  productId?: string;
-  variant?: string;
-  currencyCode: string;
-  currencySymbol: string;
-  freeShippingThreshold?: number;
-  items: CartItemDetail[];
+  readonly id: string;
+  readonly brand: string;
+  readonly brandAvatarText: string;
+  readonly brandAvatarBg?: string;
+  readonly brandAvatarTextColor?: string;
+  readonly subtotal: string;
+  readonly subtotalValue: number;
+  readonly quantity: number;
+  readonly imageUrl: string;
+  readonly productTitle: string;
+  readonly productId?: string;
+  readonly variant?: string;
+  readonly currencyCode: string;
+  readonly currencySymbol: string;
+  readonly freeShippingThreshold?: number;
+  readonly items: readonly CartItemDetail[];
 }
 
-export const IN_YOUR_CART_ITEMS: CartBrandGroup[] = [
+export const IN_YOUR_CART_ITEMS: readonly CartBrandGroup[] = [
   {
     id: "cart-flag-nor-fail",
     brand: "FLAG NOR FAIL",

@@ -1,5 +1,3 @@
-"use client";
-
 import React, { type ReactNode } from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
