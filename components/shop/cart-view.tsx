@@ -106,7 +106,7 @@ export function CartView() {
                     {/* Brand Avatar Circle matching CartCard */}
                     <div
                       className={cn(
-                        "size-8 rounded-full flex items-center justify-center font-black text-[7.5px] uppercase tracking-tighter shrink-0 border border-border/70",
+                        "size-8 rounded-full flex items-center justify-center font-bold text-[9px] uppercase tracking-tight shrink-0 border border-border/70",
                         store.brandAvatarBg || "bg-black",
                         store.brandAvatarTextColor || "text-white"
                       )}
@@ -120,7 +120,7 @@ export function CartView() {
                       <span className="text-xs font-bold text-foreground uppercase tracking-wide truncate">
                         {store.brand}
                       </span>
-                      <span className="text-[11px] text-muted font-normal">
+                      <span className="text-xs text-muted font-normal">
                         {store.items.length} {store.items.length === 1 ? "item" : "items"}
                       </span>
                     </div>
@@ -138,14 +138,14 @@ export function CartView() {
                   {store.items.map((item) => (
                     <div
                       key={item.id}
-                      className="py-3.5 first:pt-0 last:pb-0 flex items-start justify-between gap-3.5"
+                      className="py-3.5 first:pt-0 last:pb-0 flex items-start justify-between gap-3 sm:gap-3.5"
                     >
                       {/* Left: Product Thumbnail with Quantity Badge matching CartCard */}
                       <Link
                         href={item.productId ? `/product/${item.productId}` : "#"}
                         className="relative shrink-0 cursor-pointer group"
                       >
-                        <span className="absolute -top-1.5 -left-1.5 z-10 size-5 rounded-full bg-black text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
+                        <span className="absolute -top-1.5 -left-1.5 z-10 size-5 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center shadow-xs">
                           {item.quantity}
                         </span>
                         <div className="size-14 sm:size-16 rounded-xl overflow-hidden bg-surface-secondary border border-border/50 transition-transform group-hover:scale-102">
@@ -161,11 +161,11 @@ export function CartView() {
                       <div className="flex-1 min-w-0 flex flex-col gap-1">
                         <Link
                           href={item.productId ? `/product/${item.productId}` : "#"}
-                          className="text-xs font-bold text-foreground uppercase tracking-tight truncate hover:text-[#2f5cf6] transition-colors no-underline block"
+                          className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-tight truncate hover:text-[#2f5cf6] transition-colors no-underline block"
                         >
                           {item.title}
                         </Link>
-                        <span className="text-[11px] font-medium text-muted uppercase">
+                        <span className="text-xs font-medium text-muted uppercase">
                           {item.variant}
                         </span>
 
@@ -196,7 +196,7 @@ export function CartView() {
                           <button
                             type="button"
                             onClick={() => handleRemoveItem(store.id, item.id)}
-                            className="text-[11px] text-muted hover:text-danger font-medium transition-colors cursor-pointer ml-1"
+                            className="text-xs text-muted hover:text-danger font-medium transition-colors cursor-pointer ml-1"
                           >
                             Remove
                           </button>
@@ -209,7 +209,7 @@ export function CartView() {
                           {store.currencySymbol}
                           {(item.unitPrice * item.quantity).toLocaleString()}.00
                         </span>
-                        <span className="text-[10px] text-muted">
+                        <span className="text-xs text-muted">
                           {store.currencySymbol}
                           {item.unitPrice.toLocaleString()}.00 each
                         </span>
@@ -223,7 +223,7 @@ export function CartView() {
                   <button
                     type="button"
                     onClick={() => router.push(`/checkout?brand=${store.id}`)}
-                    className="w-full py-2.5 rounded-full bg-[#f2f4f7] hover:bg-[#e6e8ec] text-slate-800 font-semibold text-xs transition-all text-center cursor-pointer active:scale-[0.99]"
+                    className="w-full py-2.5 rounded-full bg-[#f2f4f7] dark:bg-zinc-800 hover:bg-[#e6e8ec] dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-100 font-semibold text-xs transition-all text-center cursor-pointer active:scale-[0.99]"
                   >
                     Continue to checkout
                   </button>
@@ -238,7 +238,7 @@ export function CartView() {
               Order Summary
             </h2>
 
-            <div className="flex flex-col gap-2.5 text-xs">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm">
               <div className="flex justify-between text-muted">
                 <span>Total stores</span>
                 <span className="font-semibold text-foreground">{cartStores.length}</span>
@@ -260,13 +260,13 @@ export function CartView() {
                 </span>
                 <div className="flex flex-col items-end">
                   {cartStores.map((s) => (
-                    <span key={s.id} className="text-sm font-black text-foreground">
+                    <span key={s.id} className="text-sm sm:text-base font-bold text-foreground">
                       {s.subtotal}
                     </span>
                   ))}
                 </div>
               </div>
-              <p className="text-[11px] text-muted leading-tight">
+              <p className="text-xs text-muted leading-relaxed">
                 Taxes and shipping calculated at checkout.
               </p>
             </div>
@@ -277,12 +277,12 @@ export function CartView() {
               onClick={() =>
                 router.push(`/checkout?brand=${cartStores[0]?.id || "cart-flag-nor-fail"}`)
               }
-              className="w-full py-2.5 rounded-full bg-[#2f5cf6] hover:bg-[#254edb] text-white font-semibold text-xs transition-all text-center cursor-pointer active:scale-[0.99] shadow-xs"
+              className="w-full py-2.5 rounded-full bg-[#2f5cf6] hover:bg-[#254edb] text-white font-semibold text-xs sm:text-sm transition-all text-center cursor-pointer active:scale-[0.99] shadow-xs"
             >
               Continue to checkout
             </button>
 
-            <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted pt-0.5">
+            <div className="flex items-center justify-center gap-1.5 text-xs text-muted pt-0.5">
               <ShieldCheck className="size-3.5 text-emerald-600" />
               <span>Safe & Secure Checkout</span>
             </div>
