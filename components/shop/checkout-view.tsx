@@ -16,6 +16,9 @@ import {
   ShieldCheck,
   MapPin,
   Truck,
+  Banknote,
+  Smartphone,
+  Building2,
 } from "lucide-react";
 import { cn } from "@heroui/react";
 import { PageContainer } from "./page-container";
@@ -47,15 +50,20 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
   const [step, setStep] = useState<"signin" | "signedin" | "shipping" | "payment" | "success">("signin");
   const [isProcessingPasskey, setIsProcessingPasskey] = useState(false);
   const [isProcessingShop, setIsProcessingShop] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<
+    "cod" | "bkash" | "nagad" | "rocket" | "card" | "bank"
+  >("cod");
 
   // Shipping form fields
   const [shippingAddress, setShippingAddress] = useState({
     firstName: "Jane",
     lastName: "Morgan",
     address: "123 Fashion Blvd, Apt 4B",
+    area: "Gulshan",
     city: "Dhaka",
     postalCode: "1212",
     country: "Bangladesh",
+    phone: "+880 1712-345678",
   });
 
   const baseSubtotal = brandGroup.subtotalValue;
@@ -101,6 +109,54 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
   const handleCompleteOrder = () => {
     setStep("success");
   };
+
+  const paymentMethodLabel = {
+    cod: "Cash on delivery",
+    bkash: "bKash",
+    nagad: "Nagad",
+    rocket: "Rocket",
+    card: "Card",
+    bank: "Bank transfer",
+  }[paymentMethod];
+
+  const paymentOptions = [
+    {
+      id: "cod" as const,
+      label: "Cash on delivery",
+      description: "Pay in cash when your parcel arrives",
+      icon: Banknote,
+    },
+    {
+      id: "bkash" as const,
+      label: "bKash",
+      description: "Pay securely with your bKash account",
+      icon: Smartphone,
+    },
+    {
+      id: "nagad" as const,
+      label: "Nagad",
+      description: "Pay securely with your Nagad account",
+      icon: Smartphone,
+    },
+    {
+      id: "rocket" as const,
+      label: "Rocket",
+      description: "Pay securely with your Rocket account",
+      icon: Smartphone,
+    },
+    {
+      id: "card" as const,
+      label: "Credit or debit card",
+      description: "Visa, Mastercard, Amex and local cards",
+      icon: CreditCard,
+    },
+    {
+      id: "bank" as const,
+      label: "Bank transfer",
+      description: "Pay through your bank using the order reference",
+      icon: Building2,
+    },
+  ];
 
   const primaryItem = brandGroup.items?.[0] || {
     id: "default-item",
@@ -386,9 +442,9 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     </span>
                     <span>{shippingAddress.address}</span>
                     <span>
-                      {shippingAddress.city}, {shippingAddress.postalCode}, {shippingAddress.country}
+                      {shippingAddress.area}, {shippingAddress.city}, {shippingAddress.postalCode}
                     </span>
-                    <span className="text-muted/80 mt-0.5">+880 1712-345678</span>
+                    <span className="text-muted/80 mt-0.5">{shippingAddress.phone}</span>
                   </div>
 
                   {/* Delivery Method line */}
@@ -419,17 +475,26 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
 
                   <div className="flex items-center justify-between text-xs pl-5.5">
                     <div className="flex items-center gap-2">
-                      <div className="px-1.5 py-0.5 rounded bg-blue-600 text-white font-extrabold text-[9px] tracking-tight">
-                        SHOP PAY
+                      <div className="px-1.5 py-0.5 rounded bg-accent text-accent-foreground font-extrabold text-[9px] tracking-tight">
+                        {paymentMethod === "cod" ? "COD" : paymentMethodLabel.toUpperCase()}
                       </div>
-                      <span className="text-foreground font-medium">VISA ending in 4242</span>
-                      <span className="text-muted text-[11px]">Exp 12/28</span>
+                      <span className="text-foreground font-medium">
+                        {paymentMethod === "cod"
+                          ? "Pay when your order arrives"
+                          : paymentMethod === "card"
+                            ? "VISA ending in 4242"
+                            : "Payment selected at checkout"}
+                      </span>
                     </div>
                   </div>
 
                   <div className="pt-2 border-t border-border/50 flex items-center gap-2 text-xs text-muted pl-5.5">
                     <Check className="size-3 text-emerald-600 stroke-[3]" />
-                    <span>Billing address same as shipping address</span>
+                    <span>
+                      {paymentMethod === "cod"
+                        ? "No payment is collected until delivery"
+                        : "Billing address same as shipping address"}
+                    </span>
                   </div>
                 </div>
 
@@ -441,7 +506,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     onChange={(e) => setOptInSms(e.target.checked)}
                     className="size-3.5 rounded accent-accent cursor-pointer"
                   />
-                  <span>Text me with news and order updates</span>
+                  <span>Text me with delivery and order updates</span>
                 </label>
 
                 {/* Primary Pay Action Button */}
@@ -451,7 +516,9 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                   className="w-full h-11 rounded-full bg-accent hover:bg-accent/90 active:scale-[0.99] text-accent-foreground font-semibold text-sm transition-all shadow-xs cursor-pointer mt-1 flex items-center justify-center gap-2"
                 >
                   <Lock className="size-3.5" />
-                  <span>Pay {formatCurrency(totalValue)}</span>
+                  <span>
+                    {paymentMethod === "cod" ? "Place order" : `Pay ${formatCurrency(totalValue)}`}
+                  </span>
                 </button>
 
                 {/* Return & Policies Footer */}
@@ -520,7 +587,25 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     }
                     className="h-11 px-3.5 rounded-xl border border-border bg-surface text-sm outline-none focus:border-blue-500"
                   />
+                  <input
+                    type="tel"
+                    placeholder="Mobile number (e.g. 01XXXXXXXXX)"
+                    value={shippingAddress.phone}
+                    onChange={(e) =>
+                      setShippingAddress({ ...shippingAddress, phone: e.target.value })
+                    }
+                    className="h-11 px-3.5 rounded-xl border border-border bg-surface text-sm outline-none focus:border-blue-500"
+                  />
                   <div className="grid grid-cols-2 gap-2.5">
+                    <input
+                      type="text"
+                      placeholder="Area / thana"
+                      value={shippingAddress.area}
+                      onChange={(e) =>
+                        setShippingAddress({ ...shippingAddress, area: e.target.value })
+                      }
+                      className="h-11 px-3.5 rounded-xl border border-border bg-surface text-sm outline-none focus:border-blue-500"
+                    />
                     <input
                       type="text"
                       placeholder="City"
@@ -530,6 +615,8 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                       }
                       className="h-11 px-3.5 rounded-xl border border-border bg-surface text-sm outline-none focus:border-blue-500"
                     />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2.5">
                     <input
                       type="text"
                       placeholder="Postal code"
@@ -562,34 +649,105 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                   </span>
                 </div>
 
-                <div className="p-4 rounded-2xl border border-blue-500 bg-blue-50/20 dark:bg-blue-950/20 flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-foreground flex items-center gap-2">
-                      <CreditCard className="size-4.5 text-accent" /> Credit / Debit Card
-                    </span>
-                    <span className="text-xs font-bold text-blue-600">Selected</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Card number"
-                    defaultValue="•••• •••• •••• 4242"
-                    className="h-10 px-3.5 rounded-lg border border-border bg-surface text-sm outline-none"
-                  />
-                  <div className="grid grid-cols-2 gap-2.5">
-                    <input
-                      type="text"
-                      placeholder="MM / YY"
-                      defaultValue="12/28"
-                      className="h-10 px-3.5 rounded-lg border border-border bg-surface text-sm outline-none"
-                    />
-                    <input
-                      type="text"
-                      placeholder="CVC"
-                      defaultValue="737"
-                      className="h-10 px-3.5 rounded-lg border border-border bg-surface text-sm outline-none"
-                    />
-                  </div>
+                <div className="flex flex-col gap-2">
+                  {paymentOptions.map((option) => {
+                    const Icon = option.icon;
+                    const isSelected = paymentMethod === option.id;
+
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        onClick={() => setPaymentMethod(option.id)}
+                        className={cn(
+                          "w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-colors cursor-pointer",
+                          isSelected
+                            ? "border-accent bg-accent/5"
+                            : "border-border bg-surface hover:bg-surface-secondary",
+                        )}
+                      >
+                        <span
+                          className={cn(
+                            "size-8 rounded-full flex items-center justify-center shrink-0",
+                            isSelected
+                              ? "bg-accent text-accent-foreground"
+                              : "bg-surface-secondary text-muted",
+                          )}
+                        >
+                          <Icon className="size-4" />
+                        </span>
+                        <span className="flex flex-col min-w-0 flex-1">
+                          <span className="text-sm font-semibold text-foreground">
+                            {option.label}
+                          </span>
+                          <span className="text-xs text-muted leading-snug">
+                            {option.description}
+                          </span>
+                        </span>
+                        <span
+                          className={cn(
+                            "size-4 rounded-full border flex items-center justify-center shrink-0",
+                            isSelected ? "border-accent" : "border-border",
+                          )}
+                        >
+                          {isSelected && <span className="size-2 rounded-full bg-accent" />}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
+
+                {paymentMethod === "cod" && (
+                  <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 dark:bg-amber-950/30 dark:border-amber-900 dark:text-amber-200">
+                    Please keep {formatCurrency(totalValue)} ready in cash. Our delivery partner may not be able to provide change.
+                  </div>
+                )}
+
+                {paymentMethod === "bkash" ||
+                  paymentMethod === "nagad" ||
+                  paymentMethod === "rocket" ? (
+                  <div className="p-3 rounded-xl bg-surface-secondary border border-border flex flex-col gap-2">
+                    <p className="text-xs text-muted leading-relaxed">
+                      You will be redirected to the secure {paymentMethodLabel} payment flow. Never share your wallet PIN or OTP with anyone.
+                    </p>
+                    <input
+                      type="tel"
+                      placeholder="Wallet mobile number"
+                      defaultValue={shippingAddress.phone}
+                      className="h-10 px-3.5 rounded-lg border border-border bg-surface text-sm outline-none focus:border-accent"
+                    />
+                  </div>
+                ) : null}
+
+                {paymentMethod === "card" && (
+                  <div className="p-3 rounded-xl border border-border bg-surface flex flex-col gap-2.5">
+                    <input
+                      type="text"
+                      placeholder="Card number"
+                      className="h-10 px-3.5 rounded-lg border border-border bg-surface-secondary text-sm outline-none focus:border-accent"
+                    />
+                    <div className="grid grid-cols-2 gap-2.5">
+                      <input
+                        type="text"
+                        placeholder="MM / YY"
+                        className="h-10 px-3.5 rounded-lg border border-border bg-surface-secondary text-sm outline-none focus:border-accent"
+                      />
+                      <input
+                        type="text"
+                        placeholder="CVC"
+                        className="h-10 px-3.5 rounded-lg border border-border bg-surface-secondary text-sm outline-none focus:border-accent"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod === "bank" && (
+                  <div className="p-3 rounded-xl bg-surface-secondary border border-border text-xs text-muted leading-relaxed">
+                    After placing the order, transfer the total to the merchant account using your order reference. Your order ships after the transfer is verified.
+                  </div>
+                )}
 
                 <button
                   type="button"
