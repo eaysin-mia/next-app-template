@@ -26,6 +26,8 @@ export interface ProductDetailData {
     avatarInitial: string;
     rating: number;
     text: string;
+    size?: string;
+    helpfulCount?: number;
   }[];
 }
 
@@ -103,12 +105,58 @@ export const PRODUCT_DETAILS_DATABASE: Record<string, ProductDetailData> = {
     reviews: [
       {
         id: "r1",
+        author: "Cacie",
+        date: "June 29, 2026",
+        avatarBg: "bg-emerald-100 text-emerald-800",
+        avatarInitial: "C",
+        rating: 5,
+        size: "SMALL",
+        helpfulCount: 12,
+        text: "Snug but still comfortable. I missed the blurb that said size up.",
+      },
+      {
+        id: "r2",
+        author: "Sheryn",
+        date: "July 11, 2026",
+        avatarBg: "bg-emerald-100 text-emerald-800",
+        avatarInitial: "S",
+        rating: 5,
+        size: "LARGE",
+        helpfulCount: 8,
+        text: "I love the quality of your clothing.",
+      },
+      {
+        id: "r3",
+        author: "Sophie",
+        date: "June 5, 2026",
+        avatarBg: "bg-emerald-100 text-emerald-800",
+        avatarInitial: "S",
+        rating: 5,
+        size: "MEDIUM",
+        helpfulCount: 15,
+        text: "Buttery soft, well-made, amazing fit. New favorite shirt. Love, love, love!",
+      },
+      {
+        id: "r4",
         author: "Brittany K.",
         date: "September 02, 2026",
         avatarBg: "bg-amber-100 text-amber-800",
         avatarInitial: "B",
         rating: 5,
+        size: "MEDIUM",
+        helpfulCount: 9,
         text: "The ribbed material is unmatched. Incredibly soft, stretchy, and the tan color is so versatile!",
+      },
+      {
+        id: "r5",
+        author: "Amanda R.",
+        date: "May 18, 2026",
+        avatarBg: "bg-blue-100 text-blue-800",
+        avatarInitial: "A",
+        rating: 4,
+        size: "SMALL",
+        helpfulCount: 4,
+        text: "Great quality top. Fits true to size if you like a fitted look with thumbholes.",
       },
     ],
   },

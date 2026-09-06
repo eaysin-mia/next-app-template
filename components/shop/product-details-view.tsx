@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import {
   Heart,
   Share2,
@@ -9,9 +9,12 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   X,
   Truck,
   RotateCcw,
+  Search,
+  ThumbsUp,
 } from "lucide-react";
 import {
   Button,
@@ -31,6 +34,14 @@ import {
   ModalHeading,
   ModalBody,
   ModalFooter,
+  DrawerRoot,
+  DrawerBackdrop,
+  DrawerContent,
+  DrawerDialog,
+  DrawerHeader,
+  DrawerHeading,
+  DrawerBody,
+  DrawerCloseTrigger,
   cn,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
@@ -65,6 +76,51 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
   const [isReviewsOpen, setIsReviewsOpen] = useState(false);
   const [likedItems, setLikedItems] = useState<string[]>([]);
   const [isFollowingBrand, setIsFollowingBrand] = useState(false);
+
+  // Reviews Drawer State
+  const [reviewSearchQuery, setReviewSearchQuery] = useState("");
+  const [reviewSortBy, setReviewSortBy] = useState<"recent" | "highest" | "lowest">("recent");
+  const [reviewRatingFilter, setReviewRatingFilter] = useState<number | "all">("all");
+  const [reviewSizeFilter, setReviewSizeFilter] = useState<string | "all">("all");
+  const [helpfulReviews, setHelpfulReviews] = useState<string[]>([]);
+
+  const toggleHelpful = (id: string) => {
+    setHelpfulReviews((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const filteredReviews = useMemo(() => {
+    let list = [...(product.reviews || [])];
+
+    if (reviewSearchQuery.trim()) {
+      const q = reviewSearchQuery.toLowerCase();
+      list = list.filter(
+        (r) =>
+          r.text.toLowerCase().includes(q) ||
+          r.author.toLowerCase().includes(q) ||
+          (r.size && r.size.toLowerCase().includes(q))
+      );
+    }
+
+    if (reviewRatingFilter !== "all") {
+      list = list.filter((r) => r.rating === reviewRatingFilter);
+    }
+
+    if (reviewSizeFilter !== "all") {
+      list = list.filter(
+        (r) => r.size && r.size.toUpperCase() === reviewSizeFilter.toUpperCase()
+      );
+    }
+
+    if (reviewSortBy === "highest") {
+      list.sort((a, b) => b.rating - a.rating);
+    } else if (reviewSortBy === "lowest") {
+      list.sort((a, b) => a.rating - b.rating);
+    }
+
+    return list;
+  }, [product.reviews, reviewSearchQuery, reviewRatingFilter, reviewSizeFilter, reviewSortBy]);
 
   const toggleLikeItem = (id: string) => {
     setLikedItems((prev) =>
@@ -318,7 +374,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                       key={sz.id}
                       type="button"
                       disabled
-                      className="rounded-full px-5 py-2 bg-[#f4f5f7] text-slate-400 text-xs font-bold uppercase cursor-not-allowed select-none"
+                      className="rounded-full h-9 px-5 flex items-center justify-center bg-[#f4f5f7] border-2 border-transparent text-slate-400 text-xs font-bold uppercase cursor-not-allowed select-none"
                     >
                       {sz.label.toUpperCase()}
                     </button>
@@ -331,10 +387,10 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                     type="button"
                     onClick={() => setSelectedSize(sz.label)}
                     className={cn(
-                      "rounded-full px-5 py-2 text-xs font-bold uppercase transition-all duration-150 cursor-pointer focus:outline-none select-none",
+                      "rounded-full h-9 px-5 flex items-center justify-center text-xs font-bold uppercase transition-colors duration-150 cursor-pointer focus:outline-none select-none border-2",
                       isSelected
-                        ? "bg-white border-2 border-black text-foreground shadow-xs scale-[1.02]"
-                        : "bg-white border border-slate-200 text-slate-700 hover:border-slate-300"
+                        ? "bg-white border-black text-foreground shadow-2xs"
+                        : "bg-white border-slate-200 text-slate-700 hover:border-slate-300"
                     )}
                   >
                     {sz.label.toUpperCase()}
@@ -701,55 +757,289 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
         </ModalContainer>
       </ModalRoot>
 
-      {/* All Reviews Modal */}
-      <ModalRoot isOpen={isReviewsOpen} onOpenChange={setIsReviewsOpen}>
-        <ModalBackdrop className="fixed inset-0 bg-black/40 backdrop-blur-xs z-50" />
-        <ModalContainer className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <ModalDialog className="bg-white rounded-3xl p-6 max-w-xl w-full shadow-2xl flex flex-col gap-4 relative max-h-[85vh] overflow-hidden">
-            <ModalHeader className="flex items-center justify-between">
-              <ModalHeading className="font-bold text-xl text-slate-900 flex items-center gap-2">
-                <span>Customer Reviews</span>
-                <span className="text-sm font-normal text-slate-500">({product.reviewCount})</span>
-              </ModalHeading>
-              <button
-                type="button"
-                onClick={() => setIsReviewsOpen(false)}
-                className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200"
-              >
-                <X className="size-4" />
-              </button>
-            </ModalHeader>
-            <ModalBody className="flex flex-col gap-3 overflow-y-auto pr-1">
-              {product.reviews.map((rev) => (
-                <div key={rev.id} className="p-4 bg-slate-50 rounded-2xl flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className={cn("w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs", rev.avatarBg)}>
-                        {rev.avatarInitial}
-                      </div>
-                      <span className="font-bold text-xs">{rev.author}</span>
-                    </div>
-                    <span className="text-xs text-slate-400">{rev.date}</span>
+      {/* REVIEWS SLIDE-OVER DRAWER (HERO UI SPECIFICATION) */}
+      <DrawerRoot isOpen={isReviewsOpen} onOpenChange={(open) => setIsReviewsOpen(open)}>
+        <DrawerBackdrop variant="opaque" className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs" />
+        <DrawerContent
+          placement="right"
+          className="fixed inset-0 z-50 flex justify-end pointer-events-none"
+        >
+          <DrawerDialog className="p-0 flex flex-col h-full w-full sm:w-[440px] md:w-[480px] max-w-full sm:max-w-[calc(100vw-2rem)] bg-surface text-foreground shadow-2xl border-l border-border sm:rounded-l-[28px] overflow-hidden pointer-events-auto outline-none">
+            {/* Drawer Header Area */}
+            <DrawerHeader className="relative flex flex-col gap-4 px-6 pt-5 pb-4 shrink-0 border-b border-border bg-surface">
+              {/* Top Row: Close Trigger */}
+              <div className="flex items-center justify-between">
+                <DrawerCloseTrigger
+                  aria-label="Close reviews"
+                  className="size-8 rounded-full bg-surface-secondary text-foreground hover:bg-surface-tertiary flex items-center justify-center transition-colors cursor-pointer border-none outline-none"
+                >
+                  <X className="size-4" />
+                </DrawerCloseTrigger>
+              </div>
+
+              {/* Drawer Title */}
+              <DrawerHeading className="text-2xl sm:text-[26px] font-bold tracking-tight text-foreground">
+                Reviews
+              </DrawerHeading>
+
+              {/* Rating Score & Histogram Breakdown */}
+              <div className="flex items-center justify-between gap-6">
+                <div className="flex flex-col">
+                  <span className="text-3xl sm:text-4xl font-extrabold text-foreground leading-none">
+                    {product.reviewScore || 4.7}
+                  </span>
+                  <div className="flex items-center text-amber-400 text-sm mt-1.5 gap-0.5">
+                    {"★".repeat(5)}
                   </div>
-                  <div className="flex items-center text-amber-400 text-xs">
-                    {"★".repeat(rev.rating)}
-                  </div>
-                  <p className="text-xs text-slate-700 leading-relaxed">{rev.text}</p>
+                  <span className="text-xs text-muted font-medium mt-1">
+                    {product.reviewCount} ratings
+                  </span>
                 </div>
-              ))}
-            </ModalBody>
-            <ModalFooter className="pt-2 flex justify-end">
-              <Button
-                variant="tertiary"
-                onPress={() => setIsReviewsOpen(false)}
-                className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold"
-              >
-                Close
-              </Button>
-            </ModalFooter>
-          </ModalDialog>
-        </ModalContainer>
-      </ModalRoot>
+
+                {/* Histogram Bars */}
+                <div className="flex-1 flex flex-col gap-1.5 max-w-[220px]">
+                  {[
+                    { star: "5", width: "w-[80%]" },
+                    { star: "4", width: "w-[18%]" },
+                    { star: "3", width: "w-[5%]" },
+                    { star: "2", width: "w-0" },
+                    { star: "1", width: "w-0" },
+                  ].map((bar) => (
+                    <div key={bar.star} className="flex items-center gap-2">
+                      <span className="text-[11px] text-muted font-medium w-2">
+                        {bar.star}
+                      </span>
+                      <div className="flex-1 h-1.5 bg-surface-secondary rounded-full overflow-hidden">
+                        <div className={cn("h-full bg-foreground rounded-full", bar.width)} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Search Bar Input */}
+              <div className="relative w-full">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={reviewSearchQuery}
+                  onChange={(e) => setReviewSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 bg-surface rounded-full border border-border text-xs sm:text-sm text-foreground placeholder:text-muted outline-none focus:border-foreground transition-colors"
+                />
+              </div>
+
+              {/* Filter Pills: Sort by, Rating, SIZE */}
+              <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pt-0.5">
+                {/* Sort By Dropdown */}
+                <Dropdown>
+                  <Button
+                    size="sm"
+                    variant={reviewSortBy !== "recent" ? "primary" : "outline"}
+                    className={cn(
+                      "rounded-full px-3.5 h-8 font-medium text-xs shrink-0 transition-all cursor-pointer gap-1.5 shadow-none",
+                      reviewSortBy !== "recent"
+                        ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
+                        : "bg-surface text-foreground border border-border hover:bg-surface-secondary"
+                    )}
+                  >
+                    <span>
+                      {reviewSortBy === "recent"
+                        ? "Sort by"
+                        : reviewSortBy === "highest"
+                        ? "Highest Rating"
+                        : "Lowest Rating"}
+                    </span>
+                    <ChevronDown className="size-3 opacity-70" />
+                  </Button>
+                  <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[150px] z-50 p-1">
+                    <Dropdown.Menu
+                      aria-label="Sort reviews"
+                      selectionMode="single"
+                      selectedKeys={new Set([reviewSortBy])}
+                      onSelectionChange={(keys) => {
+                        const selected = Array.from(keys)[0];
+                        if (selected) setReviewSortBy(selected as "recent" | "highest" | "lowest");
+                      }}
+                    >
+                      <Dropdown.Item id="recent" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        Most Recent
+                      </Dropdown.Item>
+                      <Dropdown.Item id="highest" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        Highest Rating
+                      </Dropdown.Item>
+                      <Dropdown.Item id="lowest" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        Lowest Rating
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown.Popover>
+                </Dropdown>
+
+                {/* Rating Filter Dropdown */}
+                <Dropdown>
+                  <Button
+                    size="sm"
+                    variant={reviewRatingFilter !== "all" ? "primary" : "outline"}
+                    className={cn(
+                      "rounded-full px-3.5 h-8 font-medium text-xs shrink-0 transition-all cursor-pointer gap-1.5 shadow-none",
+                      reviewRatingFilter !== "all"
+                        ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
+                        : "bg-surface text-foreground border border-border hover:bg-surface-secondary"
+                    )}
+                  >
+                    <span>{reviewRatingFilter === "all" ? "Rating" : `${reviewRatingFilter} Stars`}</span>
+                    <ChevronDown className="size-3 opacity-70" />
+                  </Button>
+                  <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[140px] z-50 p-1">
+                    <Dropdown.Menu
+                      aria-label="Filter by rating"
+                      selectionMode="single"
+                      selectedKeys={new Set([String(reviewRatingFilter)])}
+                      onSelectionChange={(keys) => {
+                        const selected = Array.from(keys)[0];
+                        if (selected !== undefined) {
+                          setReviewRatingFilter(selected === "all" ? "all" : Number(selected));
+                        }
+                      }}
+                    >
+                      <Dropdown.Item id="all" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        All Ratings
+                      </Dropdown.Item>
+                      <Dropdown.Item id="5" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        5 Stars
+                      </Dropdown.Item>
+                      <Dropdown.Item id="4" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        4 Stars
+                      </Dropdown.Item>
+                      <Dropdown.Item id="3" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        3 Stars
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown.Popover>
+                </Dropdown>
+
+                {/* Size Filter Dropdown */}
+                <Dropdown>
+                  <Button
+                    size="sm"
+                    variant={reviewSizeFilter !== "all" ? "primary" : "outline"}
+                    className={cn(
+                      "rounded-full px-3.5 h-8 font-medium text-xs shrink-0 transition-all cursor-pointer gap-1.5 shadow-none",
+                      reviewSizeFilter !== "all"
+                        ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
+                        : "bg-surface text-foreground border border-border hover:bg-surface-secondary"
+                    )}
+                  >
+                    <span>{reviewSizeFilter === "all" ? "SIZE" : reviewSizeFilter.toUpperCase()}</span>
+                    <ChevronDown className="size-3 opacity-70" />
+                  </Button>
+                  <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[130px] z-50 p-1">
+                    <Dropdown.Menu
+                      aria-label="Filter by size"
+                      selectionMode="single"
+                      selectedKeys={new Set([reviewSizeFilter])}
+                      onSelectionChange={(keys) => {
+                        const selected = Array.from(keys)[0];
+                        if (selected !== undefined) {
+                          setReviewSizeFilter(selected as string);
+                        }
+                      }}
+                    >
+                      <Dropdown.Item id="all" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        All Sizes
+                      </Dropdown.Item>
+                      <Dropdown.Item id="SMALL" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        SMALL
+                      </Dropdown.Item>
+                      <Dropdown.Item id="MEDIUM" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        MEDIUM
+                      </Dropdown.Item>
+                      <Dropdown.Item id="LARGE" className="text-xs font-medium py-2 px-3 cursor-pointer">
+                        LARGE
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown.Popover>
+                </Dropdown>
+              </div>
+            </DrawerHeader>
+
+            {/* Drawer Body: Review Cards List */}
+            <DrawerBody className="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-3.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden m-0">
+              {filteredReviews.length === 0 ? (
+                <div className="py-12 text-center text-sm text-muted">
+                  No reviews found matching your search.
+                </div>
+              ) : (
+                filteredReviews.map((rev) => {
+                  const isHelpful = helpfulReviews.includes(rev.id);
+                  return (
+                    <div
+                      key={rev.id}
+                      className="p-4 rounded-2xl border border-border bg-surface shadow-2xs flex flex-col gap-2 transition-shadow hover:shadow-xs"
+                    >
+                      {/* Rating Stars */}
+                      <div className="flex items-center text-amber-400 text-xs gap-0.5">
+                        {"★".repeat(rev.rating)}
+                        {"☆".repeat(5 - rev.rating)}
+                      </div>
+
+                      {/* Size Tag */}
+                      {rev.size && (
+                        <span className="text-[10px] font-bold text-muted uppercase tracking-wider">
+                          {rev.size}
+                        </span>
+                      )}
+
+                      {/* Review Text */}
+                      <p className="text-xs sm:text-[13px] text-foreground leading-relaxed font-normal">
+                        {rev.text}
+                      </p>
+
+                      {/* Review Footer */}
+                      <div className="flex items-center justify-between pt-2 border-t border-border mt-1">
+                        <div className="flex items-center gap-2">
+                          <div
+                            className={cn(
+                              "w-6 h-6 rounded-full flex items-center justify-center font-bold text-[11px]",
+                              rev.avatarBg
+                            )}
+                          >
+                            {rev.avatarInitial}
+                          </div>
+                          <span className="text-xs text-foreground font-medium">
+                            {rev.author} <span className="text-muted">· {rev.date}</span>
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => toggleHelpful(rev.id)}
+                            className={cn(
+                              "flex items-center gap-1.5 text-[11px] font-medium transition-colors cursor-pointer",
+                              isHelpful ? "text-primary font-semibold" : "text-muted hover:text-foreground"
+                            )}
+                          >
+                            <ThumbsUp className={cn("size-3.5", isHelpful && "fill-primary text-primary")} />
+                            <span>Helpful</span>
+                          </button>
+                          <button
+                            type="button"
+                            className="text-muted hover:text-foreground transition-colors p-0.5 cursor-pointer"
+                            aria-label="More options"
+                          >
+                            <MoreHorizontal className="size-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </DrawerBody>
+          </DrawerDialog>
+        </DrawerContent>
+      </DrawerRoot>
     </div>
   );
 }
