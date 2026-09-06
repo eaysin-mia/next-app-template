@@ -47,7 +47,7 @@ export function ProductCard({
 }: ProductCardProps) {
   const router = useRouter();
   const [wishlisted, setWishlisted] = useState(
-    isWishlisted ?? product.isWishlisted ?? false
+    isWishlisted ?? product.isWishlisted ?? false,
   );
 
   const handleCardClick = () => {
@@ -74,7 +74,7 @@ export function ProductCard({
       onClick={handleCardClick}
       className={cn(
         "group flex flex-col shrink-0 select-none cursor-pointer min-w-0",
-        className
+        className,
       )}
     >
       {/* 1. 1:1 Product Image Container on HeroUI secondary surface */}
@@ -97,7 +97,7 @@ export function ProductCard({
           loading="lazy"
           className={cn(
             "w-full h-full transition-transform duration-300 ease-out group-hover:scale-105",
-            isContain ? "object-contain p-2.5" : "object-cover"
+            isContain ? "object-contain p-2.5" : "object-cover",
           )}
         />
 
@@ -112,13 +112,15 @@ export function ProductCard({
             "absolute bottom-2.5 right-2.5 z-10 rounded-full transition-all duration-200",
             wishlisted
               ? "bg-accent text-accent-foreground shadow-xs scale-105"
-              : "bg-foreground/25 hover:bg-foreground/35 text-background backdrop-blur-xs active:scale-95"
+              : "bg-foreground/25 hover:bg-foreground/35 text-background backdrop-blur-xs active:scale-95",
           )}
         >
           <Heart
             className={cn(
               "size-3.5 transition-transform",
-              wishlisted ? "fill-accent-foreground stroke-accent-foreground" : "stroke-current stroke-[2]"
+              wishlisted
+                ? "fill-accent-foreground stroke-accent-foreground"
+                : "stroke-current stroke-[2]",
             )}
           />
         </Button>
@@ -128,38 +130,38 @@ export function ProductCard({
       <div className="pt-2 px-0.5 flex flex-col flex-1 min-w-0">
         {/* Brand Name (only if present) */}
         {product.brand && (
-          <p className="text-xs text-muted font-normal leading-tight tracking-tight truncate">
+          <p className="text-[12px] font-normal text-foreground leading-[1.33] tracking-[-0.2px] truncate line-clamp-1">
             {product.brand}
           </p>
         )}
 
         {/* Product Title */}
-        <h3 className="text-xs sm:text-sm font-medium text-foreground leading-snug tracking-tight truncate group-hover:opacity-80 transition-opacity">
+        <h3 className="text-[12px] font-semibold text-foreground leading-[1.33] tracking-[-0.2px] truncate line-clamp-1 group-hover:opacity-80 transition-opacity">
           {product.title}
         </h3>
 
         {/* Rating Row */}
         {!minimal && product.rating !== undefined && product.rating > 0 && (
           <div className="flex items-center gap-1 pt-0.5">
-            <div className="flex items-center text-foreground/70 text-[11px] leading-none tracking-tight">
+            <div className="flex items-center text-foreground/70 text-[12px] leading-[1.33] tracking-[-0.2px]">
               {"★".repeat(Math.min(5, Math.floor(product.rating)))}
               {"☆".repeat(Math.max(0, 5 - Math.floor(product.rating)))}
             </div>
             {product.reviewCount !== undefined && (
-              <span className="text-[11px] text-muted font-normal tracking-tight leading-none">
+              <p className="text-[12px] font-medium text-foreground leading-[1.33] tracking-[-0.2px]">
                 ({product.reviewCount})
-              </span>
+              </p>
             )}
           </div>
         )}
 
         {/* Price Row */}
         <div className="flex items-center gap-1.5 pt-0.5 mt-auto">
-          <span className="text-xs sm:text-sm font-medium text-foreground tracking-tight">
+          <span className="text-[12px] font-semibold text-foreground leading-[1.33] tracking-[-0.2px]">
             {product.price}
           </span>
           {product.originalPrice && (
-            <span className="text-xs text-muted line-through font-normal">
+            <span className="text-[12px] text-muted line-through font-normal leading-[1.33] tracking-[-0.2px]">
               {product.originalPrice}
             </span>
           )}
@@ -175,5 +177,3 @@ export function ProductCard({
     </div>
   );
 }
-
-
