@@ -161,7 +161,7 @@ export function CartView() {
                       {store.items.map((item) => (
                         <div
                           key={item.id}
-                          className="py-4 first:pt-3.5 last:pb-2 flex items-center gap-3.5 sm:gap-4"
+                          className="py-4 first:pt-3.5 last:pb-2 flex items-start gap-3.5 sm:gap-4"
                         >
                           <Link
                             href={
@@ -171,10 +171,7 @@ export function CartView() {
                             }
                             className="relative shrink-0 group no-underline"
                           >
-                            <span className="absolute -top-1.5 -left-1.5 z-10 size-5 rounded-full bg-surface-secondary border border-border/80 text-foreground font-bold text-[10px] flex items-center justify-center shadow-xs">
-                              {item.quantity}
-                            </span>
-                            <div className="size-16 sm:size-18 rounded-xl overflow-hidden bg-surface-secondary border border-border/50 transition-transform group-hover:scale-102">
+                            <div className="size-20 sm:size-22 rounded-xl overflow-hidden bg-surface-secondary border border-border/50 transition-transform group-hover:scale-102">
                               <img
                                 src={item.imageUrl}
                                 alt={item.title}
@@ -184,34 +181,58 @@ export function CartView() {
                           </Link>
 
                           {/* Middle: Details & Stepper */}
-                          <div className="flex-1 min-w-0 flex flex-col gap-1">
-                            <Link
-                              href={
-                                item.productId
-                                  ? `/product/${item.productId}`
-                                  : "#"
-                              }
-                              className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-tight truncate hover:text-accent transition-colors no-underline block"
-                            >
-                              {item.title}
-                            </Link>
-                            <span className="text-xs font-medium text-muted uppercase">
-                              {item.variant}
-                            </span>
+                          <div className="flex-1 min-w-0 flex flex-col justify-between self-stretch gap-2.5">
+                            {/* Top row: Title and Total Price */}
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="flex flex-col min-w-0 pr-1">
+                                <Link
+                                  href={
+                                    item.productId
+                                      ? `/product/${item.productId}`
+                                      : "#"
+                                  }
+                                  className="text-sm font-semibold text-foreground line-clamp-2 hover:text-accent transition-colors no-underline leading-snug"
+                                >
+                                  {item.title}
+                                </Link>
+                                {item.variant && (
+                                  <span className="text-xs text-muted mt-0.5">
+                                    {item.variant}
+                                  </span>
+                                )}
+                              </div>
 
-                            <div className="flex items-center gap-2 mt-1">
-                              <div className="flex items-center gap-1 bg-surface-secondary rounded-full p-0.5 border border-border/60">
+                              <div className="flex flex-col items-end shrink-0 pt-0.5 text-right">
+                                <span className="text-sm font-bold text-foreground">
+                                  {store.currencySymbol}
+                                  {(
+                                    item.unitPrice * item.quantity
+                                  ).toLocaleString()}
+                                  .00
+                                </span>
+                                {item.quantity > 1 && (
+                                  <span className="text-[11px] text-muted">
+                                    {store.currencySymbol}
+                                    {item.unitPrice.toLocaleString()}.00 each
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Bottom row: Stepper & Remove */}
+                            <div className="flex items-center justify-between pt-1">
+                              <div className="flex items-center gap-1.5 bg-surface-secondary rounded-full p-1 border border-border/70">
                                 <button
                                   type="button"
                                   onClick={() =>
                                     handleUpdateQuantity(store.id, item.id, -1)
                                   }
-                                  className="size-5 rounded-full flex items-center justify-center text-foreground hover:bg-surface active:scale-95 transition-all cursor-pointer text-xs font-bold"
+                                  className="size-6 rounded-full flex items-center justify-center text-foreground hover:bg-surface active:scale-95 transition-all cursor-pointer"
                                   aria-label="Decrease quantity"
                                 >
-                                  <Minus className="size-2.5 stroke-[2.5]" />
+                                  <Minus className="size-3 stroke-[2.5]" />
                                 </button>
-                                <span className="text-xs font-bold w-4 text-center font-mono select-none">
+                                <span className="text-xs font-semibold w-5 text-center font-mono select-none">
                                   {item.quantity}
                                 </span>
                                 <button
@@ -219,10 +240,10 @@ export function CartView() {
                                   onClick={() =>
                                     handleUpdateQuantity(store.id, item.id, 1)
                                   }
-                                  className="size-5 rounded-full flex items-center justify-center text-foreground hover:bg-surface active:scale-95 transition-all cursor-pointer text-xs font-bold"
+                                  className="size-6 rounded-full flex items-center justify-center text-foreground hover:bg-surface active:scale-95 transition-all cursor-pointer"
                                   aria-label="Increase quantity"
                                 >
-                                  <Plus className="size-2.5 stroke-[2.5]" />
+                                  <Plus className="size-3 stroke-[2.5]" />
                                 </button>
                               </div>
 
@@ -231,33 +252,18 @@ export function CartView() {
                                 onClick={() =>
                                   handleRemoveItem(store.id, item.id)
                                 }
-                                className="text-xs text-muted hover:text-danger font-medium transition-colors cursor-pointer ml-1"
+                                className="text-xs text-muted hover:text-danger font-medium transition-colors cursor-pointer"
                               >
                                 Remove
                               </button>
                             </div>
-                          </div>
-
-                          {/* Right: Item Total */}
-                          <div className="flex flex-col items-end shrink-0 pt-0.5">
-                            <span className="text-xs sm:text-sm font-bold text-foreground">
-                              {store.currencySymbol}
-                              {(
-                                item.unitPrice * item.quantity
-                              ).toLocaleString()}
-                              .00
-                            </span>
-                            <span className="text-xs text-muted">
-                              {store.currencySymbol}
-                              {item.unitPrice.toLocaleString()}.00 each
-                            </span>
                           </div>
                         </div>
                       ))}
                     </div>
 
                     {/* Bottom Store Footer */}
-                    <div className="flex items-center justify-between pt-3.5 border-t border-border/60 mt-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3.5 border-t border-border/60 mt-1">
                       <div className="flex items-baseline gap-1.5">
                         <span className="text-xs text-muted">
                           Store subtotal
@@ -271,7 +277,7 @@ export function CartView() {
                         onClick={() =>
                           router.push(`/checkout?brand=${store.id}`)
                         }
-                        className="px-4 sm:px-5 py-2 rounded-full bg-surface-secondary hover:bg-surface-tertiary text-foreground border border-border/70 font-semibold text-xs transition-all cursor-pointer active:scale-[0.99]"
+                        className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-xs transition-all cursor-pointer active:scale-[0.99] text-center"
                       >
                         Check out with {store.brand}
                       </button>
