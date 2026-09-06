@@ -32,15 +32,142 @@ export interface ProductDetailData {
 }
 
 export const PRODUCT_DETAILS_DATABASE: Record<string, ProductDetailData> = {
+  "bgv-collagen-powder": {
+    id: "bgv-collagen-powder",
+    brand: "black girl vitamins",
+    brandAvatarText: "BGV",
+    brandRating: "4.9 ★ (24.1K)",
+    title: "BGV Collagen Powder",
+    rating: 5,
+    reviewScore: 4.7,
+    reviewCount: 14800,
+    boughtBadge: "10k+ bought in past month",
+    price: "$36.99",
+    originalPrice: "$45.00",
+    discountBadge: "18% off",
+    sizes: [
+      { id: "1-bottle", label: "1 Bottle", available: true },
+      { id: "2-bottles", label: "2 Bottles", available: true },
+      { id: "3-bottles", label: "3 Bottles", available: true },
+    ],
+    descriptionParagraphs: [
+      "FINALLY HERE!",
+      "A unique blend of collagen peptides targeted to give you:",
+      "• More supple, better-looking skin",
+      "• Fewer fine lines and wrinkles",
+      "• Stronger, thicker and shinier hair.",
+      "• Less nail breakage",
+      "• Better joint movement & flexibility",
+      "• Support gut health and digestive wellness",
+    ],
+    galleryImages: [
+      {
+        id: "bgv-1",
+        alt: "BGV Collagen Powder with Model",
+        url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bgv-2",
+        alt: "BGV Collagen Jar Front",
+        url: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bgv-3",
+        alt: "Collagen Powder Texture",
+        url: "https://images.unsplash.com/photo-1556760544-74068565f05c?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bgv-4",
+        alt: "BGV Lifestyle Morning Drink",
+        url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bgv-5",
+        alt: "Collagen Smoothie Scoop",
+        url: "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bgv-6",
+        alt: "BGV Packaging and Ingredients",
+        url: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bgv-7",
+        alt: "Customer using BGV Collagen",
+        url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bgv-8",
+        alt: "BGV Product Family",
+        url: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=1000&auto=format&fit=crop&q=80",
+      },
+    ],
+    customerPhotos: [
+      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80",
+    ],
+    reviews: [
+      {
+        id: "bgv-r1",
+        author: "Mary",
+        date: "August 30, 2026",
+        avatarBg: "bg-rose-100 text-rose-800",
+        avatarInitial: "M",
+        rating: 5,
+        size: "1 Bottle",
+        helpfulCount: 3,
+        text: "I love the product, I can definitely see changes in my hair and nails. I noticed that the container of collagen is only half full. It wasn't like this when I first started getting it. Same cost, less product. 🥺",
+      },
+      {
+        id: "bgv-r2",
+        author: "Demetria",
+        date: "August 29, 2026",
+        avatarBg: "bg-emerald-100 text-emerald-800",
+        avatarInitial: "D",
+        rating: 4,
+        size: "1 Bottle",
+        helpfulCount: 1,
+        text: "*Late post* This was my first purchase of BGV products. A friend recommended the collagen. I must say - I was extremely disappointed to at the container was only about two-thirds to three-quarters full. For the cost and the number of weeks it took to arrive, this is my last time purchasing this product.",
+      },
+      {
+        id: "bgv-r3",
+        author: "Keisha P.",
+        date: "August 15, 2026",
+        avatarBg: "bg-amber-100 text-amber-800",
+        avatarInitial: "K",
+        rating: 5,
+        size: "2 Bottles",
+        helpfulCount: 8,
+        text: "Mixes smoothly without clumps in my morning coffee! My skin has a natural glow and my joints feel so much better after my workouts.",
+      },
+      {
+        id: "bgv-r4",
+        author: "Tanya B.",
+        date: "July 22, 2026",
+        avatarBg: "bg-purple-100 text-purple-800",
+        avatarInitial: "T",
+        rating: 5,
+        size: "3 Bottles",
+        helpfulCount: 14,
+        text: "Been on this for 3 months now. Nails are no longer brittle and breaking. Customer for life!",
+      },
+    ],
+  },
   "womens-ribbed-henley-tan": {
     id: "womens-ribbed-henley-tan",
     brand: "FLAG NOR FAIL",
     brandAvatarText: "FNF",
     brandRating: "4.9 ★ (19.4K)",
-    title: "WOMENS RIBBED HENLEY - TAN",
+    title: "Women's Ribbed Henley - Tan",
     rating: 5,
     reviewScore: 4.7,
     reviewCount: 32,
+    boughtBadge: "100+ bought in past month",
     price: "BDT 4,200.00",
     originalPrice: "BDT 6,000.00",
     discountBadge: "30% off",
@@ -450,6 +577,15 @@ export const PRODUCT_DETAILS_DATABASE: Record<string, ProductDetailData> = {
 export function getProductData(id?: string): ProductDetailData {
   if (id && PRODUCT_DETAILS_DATABASE[id]) {
     return PRODUCT_DETAILS_DATABASE[id];
+  }
+  if (
+    id &&
+    (id.toLowerCase().includes("collagen") ||
+      id.toLowerCase().includes("bgv") ||
+      id.toLowerCase().includes("powder") ||
+      id.toLowerCase().includes("vitamin"))
+  ) {
+    return PRODUCT_DETAILS_DATABASE["bgv-collagen-powder"];
   }
   if (
     id &&

@@ -42,6 +42,9 @@ import {
   DrawerHeading,
   DrawerBody,
   DrawerCloseTrigger,
+  Avatar,
+  Chip,
+  Separator,
   cn,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
@@ -200,8 +203,8 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                     className={cn(
                       "relative w-9 h-12 sm:w-11 sm:h-14 lg:w-[48px] lg:h-[62px] rounded-xl overflow-hidden shrink-0 transition-all duration-150 focus:outline-none cursor-pointer p-0.5",
                       isSelected
-                        ? "border-2 border-black p-[2px] bg-white shadow-xs scale-[1.02]"
-                        : "border border-transparent hover:border-slate-300 opacity-75 hover:opacity-100 bg-surface-secondary hover:scale-[1.03]",
+                        ? "border-2 border-foreground p-[2px] bg-surface shadow-xs scale-[1.02]"
+                        : "border border-transparent hover:border-border opacity-75 hover:opacity-100 bg-surface-secondary hover:scale-[1.03]",
                     )}
                   >
                     <img
@@ -216,14 +219,15 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
 
             {/* Centered Left Arrow - Desktop Only */}
             <div className="hidden lg:flex items-center justify-center shrink-0 px-2.5 sm:px-4 md:px-6 xl:px-8">
-              <button
-                type="button"
-                onClick={handlePrevImage}
+              <Button
+                isIconOnly
+                variant="outline"
+                onPress={handlePrevImage}
                 aria-label="Previous image"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-md hover:shadow-lg border border-slate-200/90 flex items-center justify-center text-slate-800 transition-all duration-150 active:scale-95 cursor-pointer hover:bg-slate-50 shrink-0"
+                className="size-10 rounded-full bg-surface shadow-md hover:shadow-lg border-border text-foreground hover:bg-surface-secondary active:scale-95 cursor-pointer shrink-0"
               >
-                <ChevronLeft className="size-4.5 stroke-[2.2] text-slate-700" />
-              </button>
+                <ChevronLeft className="size-5 stroke-[2.2]" />
+              </Button>
             </div>
 
             {/* 2. Main Hero Image Container: Responsive */}
@@ -235,41 +239,46 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
               />
 
               {/* Mobile Floating Left Arrow */}
-              <button
-                type="button"
-                onClick={handlePrevImage}
+              <Button
+                isIconOnly
+                variant="outline"
+                size="sm"
+                onPress={handlePrevImage}
                 aria-label="Previous image"
-                className="lg:hidden absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-xs shadow-md border border-slate-200/90 flex items-center justify-center text-slate-800 active:scale-95 cursor-pointer hover:bg-white"
+                className="lg:hidden absolute left-3 top-1/2 -translate-y-1/2 z-10 size-9 rounded-full bg-surface/90 backdrop-blur-xs shadow-md border-border text-foreground active:scale-95 cursor-pointer"
               >
                 <ChevronLeft className="size-4 stroke-[2.2]" />
-              </button>
+              </Button>
 
               {/* Mobile Floating Right Arrow */}
-              <button
-                type="button"
-                onClick={handleNextImage}
+              <Button
+                isIconOnly
+                variant="outline"
+                size="sm"
+                onPress={handleNextImage}
                 aria-label="Next image"
-                className="lg:hidden absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-xs shadow-md border border-slate-200/90 flex items-center justify-center text-slate-800 active:scale-95 cursor-pointer hover:bg-white"
+                className="lg:hidden absolute right-3 top-1/2 -translate-y-1/2 z-10 size-9 rounded-full bg-surface/90 backdrop-blur-xs shadow-md border-border text-foreground active:scale-95 cursor-pointer"
               >
                 <ChevronRight className="size-4 stroke-[2.2]" />
-              </button>
+              </Button>
 
               {/* Mobile Image Index Pill */}
-              <div className="lg:hidden absolute bottom-3 right-3 z-10 bg-black/60 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-full pointer-events-none">
+              <div className="lg:hidden absolute bottom-3 right-3 z-10 bg-foreground/75 backdrop-blur-xs text-background text-xs font-semibold px-2.5 py-1 rounded-full pointer-events-none">
                 {selectedImageIndex + 1} / {gallery.length}
               </div>
             </div>
 
             {/* Centered Right Arrow - Desktop Only */}
             <div className="hidden lg:flex items-center justify-center shrink-0 px-2.5 sm:px-4 md:px-6 xl:px-8">
-              <button
-                type="button"
-                onClick={handleNextImage}
+              <Button
+                isIconOnly
+                variant="outline"
+                onPress={handleNextImage}
                 aria-label="Next image"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-md hover:shadow-lg border border-slate-200/90 flex items-center justify-center text-slate-800 transition-all duration-150 active:scale-95 cursor-pointer hover:bg-slate-50 shrink-0"
+                className="size-10 rounded-full bg-surface shadow-md hover:shadow-lg border-border text-foreground hover:bg-surface-secondary active:scale-95 cursor-pointer shrink-0"
               >
-                <ChevronRight className="size-4.5 stroke-[2.2] text-slate-700" />
-              </button>
+                <ChevronRight className="size-5 stroke-[2.2]" />
+              </Button>
             </div>
 
             {/* Mobile Horizontal Thumbnail Strip */}
@@ -284,8 +293,8 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                     className={cn(
                       "relative w-11 h-14 sm:w-12 sm:h-16 rounded-xl overflow-hidden shrink-0 transition-all duration-150 focus:outline-none cursor-pointer p-0.5",
                       isSelected
-                        ? "border-2 border-black p-[2px] bg-white shadow-xs scale-105"
-                        : "border border-transparent hover:border-slate-300 opacity-70 hover:opacity-100 bg-surface-secondary",
+                        ? "border-2 border-foreground p-[2px] bg-surface shadow-xs scale-105"
+                        : "border border-transparent hover:border-border opacity-70 hover:opacity-100 bg-surface-secondary",
                     )}
                   >
                     <img
@@ -304,15 +313,18 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
             {/* Brand Header & More Menu */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                {/* Brand Avatar */}
-                <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center overflow-hidden font-bold text-[8px] tracking-tight uppercase text-center leading-tight">
-                  <span>{product.brandAvatarText}</span>
-                </div>
+                {/* Brand Avatar with HeroUI Avatar */}
+                <Avatar
+                  size="sm"
+                  className="size-8 rounded-full bg-foreground text-background font-bold text-[9px] tracking-tight uppercase shrink-0"
+                >
+                  <Avatar.Fallback>{product.brandAvatarText}</Avatar.Fallback>
+                </Avatar>
                 <div className="flex flex-col whitespace-nowrap">
                   <span className="text-xs sm:text-[13px] font-bold text-foreground uppercase tracking-wide leading-tight">
                     {product.brand}
                   </span>
-                  <span className="text-[11px] text-slate-500 font-medium leading-tight">
+                  <span className="text-xs text-muted font-medium leading-tight">
                     {product.brandRating}
                   </span>
                 </div>
@@ -325,11 +337,11 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                   variant="ghost"
                   size="sm"
                   aria-label="More options"
-                  className="w-8 h-8 min-w-8 rounded-full text-slate-600 hover:bg-slate-100 cursor-pointer"
+                  className="size-8 min-w-8 rounded-full text-muted hover:text-foreground hover:bg-surface-secondary cursor-pointer"
                 >
                   <MoreHorizontal className="size-4" />
                 </Button>
-                <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-white text-foreground min-w-[160px] z-50 p-1">
+                <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[160px] z-50 p-1">
                   <Dropdown.Menu aria-label="Brand Actions">
                     <Dropdown.Item
                       id="visit-store"
@@ -356,19 +368,19 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
 
             {/* Title & Star Ratings */}
             <div className="flex flex-col gap-1.5">
-              <h1 className="text-lg sm:text-xl xl:text-[22px] font-extrabold text-foreground tracking-tight leading-snug uppercase">
+              <h1 className="text-[24px] font-semibold text-foreground tracking-[-1px] leading-[1.17] uppercase">
                 {product.title}
               </h1>
 
               {/* Ratings Row */}
               <div className="flex items-center gap-1.5">
-                <div className="flex items-center text-amber-400 text-sm tracking-tighter">
+                <div className="flex items-center text-warning text-xs tracking-tight">
                   {"★".repeat(product.rating)}
                 </div>
                 <button
                   type="button"
                   onClick={scrollToReviews}
-                  className="text-xs sm:text-[13px] text-slate-600 font-semibold underline underline-offset-2 hover:opacity-80 transition-opacity cursor-pointer ml-0.5"
+                  className="text-xs text-muted font-medium underline underline-offset-4 hover:text-foreground transition-colors cursor-pointer ml-1"
                 >
                   {product.reviewCount} ratings
                 </button>
@@ -376,27 +388,31 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
 
               {/* Price Row */}
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight">
+                <span className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
                   {product.price}
                 </span>
                 {product.originalPrice && (
-                  <span className="text-sm text-slate-400 line-through font-normal ml-1">
+                  <span className="text-sm sm:text-base text-muted line-through font-normal ml-1">
                     {product.originalPrice}
                   </span>
                 )}
                 {product.discountBadge && (
-                  <span className="bg-black text-white text-xs font-bold px-2.5 py-0.5 rounded-full ml-1.5">
+                  <Chip
+                    size="sm"
+                    variant="primary"
+                    className="bg-foreground text-background font-bold text-[11px] ml-1.5 shadow-2xs"
+                  >
                     {product.discountBadge}
-                  </span>
+                  </Chip>
                 )}
               </div>
             </div>
 
             {/* Size Selection */}
-            <div className="flex flex-col gap-2 pt-0.5">
-              <div className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+            <div className="flex flex-col gap-1.5 pt-0.5">
+              <div className="text-xs font-bold text-foreground uppercase tracking-wider">
                 SIZE{" "}
-                <span className="font-extrabold text-slate-900">
+                <span className="font-extrabold">
                   {selectedSize.toUpperCase()}
                 </span>
               </div>
@@ -411,7 +427,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                         key={sz.id}
                         type="button"
                         disabled
-                        className="rounded-full h-9 px-5 flex items-center justify-center bg-surface-secondary border-2 border-transparent text-muted text-xs font-bold uppercase cursor-not-allowed select-none"
+                        className="rounded-full h-8 px-4 flex items-center justify-center bg-surface-secondary border border-transparent text-muted text-xs font-semibold uppercase cursor-not-allowed select-none"
                       >
                         {sz.label.toUpperCase()}
                       </button>
@@ -424,10 +440,10 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                       type="button"
                       onClick={() => setSelectedSize(sz.label)}
                       className={cn(
-                        "rounded-full h-9 px-5 flex items-center justify-center text-xs font-bold uppercase transition-colors duration-150 cursor-pointer focus:outline-none select-none border-2",
+                        "rounded-full h-8 px-4 flex items-center justify-center text-xs font-semibold uppercase transition-colors duration-150 cursor-pointer focus:outline-none select-none border",
                         isSelected
-                          ? "bg-white border-black text-foreground shadow-2xs"
-                          : "bg-white border-slate-200 text-slate-700 hover:border-slate-300",
+                          ? "bg-surface border-foreground text-foreground shadow-2xs font-bold"
+                          : "bg-surface border-border text-muted hover:text-foreground hover:border-border/80",
                       )}
                     >
                       {sz.label.toUpperCase()}
@@ -439,25 +455,25 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
 
             {/* Quantity Selector */}
             <div className="flex flex-col gap-1.5 pt-0.5">
-              <span className="text-xs font-bold text-foreground">
+              <span className="text-xs sm:text-sm font-bold text-foreground">
                 Quantity
               </span>
-              <div className="bg-surface-secondary rounded-full px-3.5 py-1 flex items-center gap-3.5 w-fit select-none">
+              <div className="bg-surface-secondary rounded-full px-3.5 py-1.5 flex items-center gap-3.5 w-fit select-none border border-border/50">
                 <button
                   type="button"
                   onClick={() => handleQuantityChange(-1)}
-                  className="text-slate-600 hover:text-black font-semibold text-sm px-1 focus:outline-none cursor-pointer"
+                  className="text-muted hover:text-foreground font-bold text-base px-1 focus:outline-none cursor-pointer"
                   aria-label="Decrease quantity"
                 >
                   -
                 </button>
-                <span className="text-xs font-bold text-foreground min-w-[14px] text-center">
+                <span className="text-sm font-bold text-foreground min-w-[16px] text-center">
                   {quantity}
                 </span>
                 <button
                   type="button"
                   onClick={() => handleQuantityChange(1)}
-                  className="text-slate-600 hover:text-black font-semibold text-sm px-1 focus:outline-none cursor-pointer"
+                  className="text-muted hover:text-foreground font-bold text-base px-1 focus:outline-none cursor-pointer"
                   aria-label="Increase quantity"
                 >
                   +
@@ -474,7 +490,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                 className={cn(
                   "w-full rounded-full font-bold text-sm sm:text-base py-3 sm:py-3.5 shadow-xs transition-all duration-200 cursor-pointer",
                   isAddedToCart
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-success text-success-foreground"
                     : "bg-accent hover:bg-accent/90 active:scale-[0.99] text-accent-foreground",
                 )}
               >
@@ -490,45 +506,43 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
               {/* Buy Now */}
               <Button
                 size="lg"
-                className="w-full bg-black hover:bg-neutral-900 active:scale-[0.99] text-white font-bold text-sm sm:text-base py-3 sm:py-3.5 rounded-full shadow-xs cursor-pointer"
+                className="w-full bg-foreground hover:bg-foreground/90 active:scale-[0.99] text-background font-bold text-sm sm:text-base py-3 sm:py-3.5 rounded-full shadow-xs cursor-pointer"
               >
                 Buy now
               </Button>
 
               {/* Save & Share Dual Buttons */}
               <div className="flex items-center gap-2.5 pt-0.5">
-                <button
-                  type="button"
-                  onClick={() => setIsSaved(!isSaved)}
+                <Button
+                  variant="outline"
+                  onPress={() => setIsSaved(!isSaved)}
                   className={cn(
-                    "flex-1 bg-white hover:bg-slate-50 border text-xs sm:text-sm font-semibold py-2.5 px-4 rounded-full flex items-center justify-center gap-2 transition-all shadow-2xs cursor-pointer",
+                    "flex-1 rounded-full text-xs sm:text-sm font-semibold h-11 transition-all cursor-pointer",
                     isSaved
-                      ? "border-rose-300 text-rose-600 bg-rose-50/50"
-                      : "border-slate-200 text-slate-800",
+                      ? "border-danger/30 text-danger bg-danger/10"
+                      : "border-border text-foreground hover:bg-surface-secondary bg-surface",
                   )}
                 >
                   <Heart
                     className={cn(
                       "size-4",
-                      isSaved
-                        ? "fill-rose-500 stroke-rose-500"
-                        : "stroke-current",
+                      isSaved ? "fill-danger stroke-danger" : "stroke-current",
                     )}
                   />
                   {isSaved ? "Saved" : "Save"}
-                </button>
+                </Button>
 
                 <PopoverRoot>
                   <PopoverTrigger>
-                    <button
-                      type="button"
-                      className="flex-1 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 text-xs sm:text-sm font-semibold py-2.5 px-4 rounded-full flex items-center justify-center gap-2 transition-all shadow-2xs cursor-pointer"
+                    <Button
+                      variant="outline"
+                      className="flex-1 rounded-full text-xs sm:text-sm font-semibold h-11 border-border text-foreground hover:bg-surface-secondary bg-surface transition-all cursor-pointer"
                     >
                       <Share2 className="size-4" />
                       Share
-                    </button>
+                    </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="p-0 rounded-xl shadow-lg border border-slate-200 bg-white text-slate-800 z-50">
+                  <PopoverContent className="p-0 rounded-2xl shadow-xl border border-border bg-surface text-foreground z-50">
                     <PopoverDialog className="p-3 text-xs font-medium">
                       <p>Product link copied to clipboard!</p>
                     </PopoverDialog>
@@ -538,93 +552,110 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
             </div>
 
             {/* Description Section */}
-            <div className="flex flex-col gap-1.5 pt-2.5 border-t border-slate-100">
-              <h3 className="text-xs sm:text-sm font-bold text-foreground">
+            <div className="flex flex-col gap-2 pt-3 border-t border-border/60">
+              <p className="text-[16px] font-semibold text-foreground leading-[1.38] tracking-[-0.5px]">
                 Description
-              </h3>
+              </p>
 
-              <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal">
-                {!isDescriptionExpanded ? (
+              <div className="text-[14px] font-normal text-foreground leading-[1.29] tracking-[-0.2px] flex flex-col gap-1.5">
+                {product.descriptionParagraphs &&
+                product.descriptionParagraphs.length > 0 ? (
                   <>
-                    Designed for everyday wear with endless possibilities, our
-                    new Women's Henley's is a staple piece for any closet.
-                    Crafted from our premium, lightweight ribbed material (also
-                    used in our Women's Ribbed Athletic Collection) these
-                    Henley's fea...{" "}
-                    <button
-                      type="button"
-                      onClick={() => setIsDescriptionExpanded(true)}
-                      className="font-bold text-foreground hover:underline cursor-pointer inline"
-                    >
-                      View more
-                    </button>
+                    {!isDescriptionExpanded ? (
+                      <>
+                        {product.descriptionParagraphs
+                          .slice(0, 4)
+                          .map((para, idx) => (
+                            <p key={idx}>{para}</p>
+                          ))}
+                        {product.descriptionParagraphs.length > 4 && (
+                          <button
+                            type="button"
+                            onClick={() => setIsDescriptionExpanded(true)}
+                            className="font-semibold text-foreground hover:underline cursor-pointer inline text-left mt-0.5 text-[14px]"
+                          >
+                            View more
+                          </button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {product.descriptionParagraphs.map((para, idx) => (
+                          <p key={idx}>{para}</p>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() => setIsDescriptionExpanded(false)}
+                          className="font-semibold text-foreground hover:underline cursor-pointer inline text-left mt-0.5 text-[14px]"
+                        >
+                          View less
+                        </button>
+                      </>
+                    )}
                   </>
                 ) : (
-                  <>
-                    Designed for everyday wear with endless possibilities, our
-                    new Women's Henley's is a staple piece for any closet.
-                    Crafted from our premium, lightweight ribbed material (also
-                    used in our Women's Ribbed Athletic Collection) these
-                    Henley's feature a flattering contoured fit, custom tonal
-                    buttons, and an embroidered sleeve emblem. Perfect for
-                    casual layering or athletic downtime.{" "}
-                    <button
-                      type="button"
-                      onClick={() => setIsDescriptionExpanded(false)}
-                      className="font-bold text-foreground hover:underline cursor-pointer inline ml-1"
-                    >
-                      View less
-                    </button>
-                  </>
+                  <p>Designed for everyday comfort and premium durability.</p>
                 )}
-              </p>
+              </div>
             </div>
 
             {/* Reviews Card Section */}
             <div
               id="reviews-section"
-              className="bg-white rounded-[24px] p-5 border border-slate-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] flex flex-col gap-3 mt-1"
+              className="bg-surface rounded-2xl p-4 sm:p-5 border border-border/80 shadow-2xs flex flex-col gap-3.5 mt-1 text-foreground"
             >
-              <h3 className="text-xs sm:text-sm font-bold text-foreground">
+              <h3 className="text-[16px] font-semibold text-foreground leading-[1.38] tracking-[-0.5px]">
                 Reviews
               </h3>
 
               {/* Rating Overview & Histogram */}
-              <div className="flex items-center gap-6">
-                {/* Score summary */}
-                <div className="flex flex-col items-start">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-none">
+              <div className="flex items-center gap-4 sm:gap-5">
+                {/* Score */}
+                <div className="flex flex-col items-start shrink-0">
+                  <span className="text-3xl sm:text-[32px] font-black text-foreground tracking-tight leading-none">
                     {product.reviewScore
                       ? product.reviewScore.toFixed(1)
                       : `${product.rating}.0`}
                   </span>
-                  <div className="flex items-center text-amber-400 text-xs tracking-tighter mt-1.5">
-                    {"★".repeat(product.rating)}
+                  <div className="flex items-center gap-0.5 text-warning text-xs mt-1.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span
+                        key={i}
+                        className={
+                          i < product.rating ? "text-warning" : "text-muted/30"
+                        }
+                      >
+                        ★
+                      </span>
+                    ))}
                   </div>
-                  <span className="text-xs text-slate-500 font-medium mt-0.5">
-                    {product.reviewCount} ratings
+                  <span className="text-[11px] text-muted font-normal mt-1">
+                    {product.reviewCount
+                      ? product.reviewCount >= 1000
+                        ? `${(product.reviewCount / 1000).toFixed(1)}K`
+                        : product.reviewCount
+                      : "14.8K"}{" "}
+                    ratings
                   </span>
                 </div>
 
-                {/* Histogram rating bars */}
-                <div className="flex-1 flex flex-col gap-1.5 max-w-[210px]">
+                {/* Histogram bars */}
+                <div className="flex-1 flex flex-col gap-1.5">
                   {[
-                    { star: "5", width: "w-[85%]" },
-                    { star: "4", width: "w-[15%]" },
-                    { star: "3", width: "w-0" },
-                    { star: "2", width: "w-0" },
-                    { star: "1", width: "w-0" },
+                    { star: 5, pct: 85 },
+                    { star: 4, pct: 12 },
+                    { star: 3, pct: 2 },
+                    { star: 2, pct: 1 },
+                    { star: 1, pct: 0 },
                   ].map((item) => (
                     <div key={item.star} className="flex items-center gap-2">
-                      <span className="text-[10px] text-slate-500 font-medium w-2">
+                      <span className="text-[10px] text-muted font-medium w-2 shrink-0">
                         {item.star}
                       </span>
-                      <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="flex-1 h-1 bg-surface-secondary rounded-full overflow-hidden">
                         <div
-                          className={cn(
-                            "h-full bg-black rounded-full",
-                            item.width,
-                          )}
+                          className="h-full bg-foreground rounded-full transition-all"
+                          style={{ width: `${item.pct}%` }}
                         />
                       </div>
                     </div>
@@ -632,82 +663,110 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                 </div>
               </div>
 
-              {/* Featured Customer Reviews */}
-              {product.reviews && product.reviews.length > 0 && (
-                <div className="flex flex-col gap-2.5 pt-3 border-t border-slate-100">
-                  {product.reviews.slice(0, 2).map((rev) => (
-                    <div
-                      key={rev.id}
-                      className="p-3 bg-slate-50/80 rounded-2xl flex flex-col gap-1.5"
+              {/* Customer Photo Strip */}
+              {product.customerPhotos && product.customerPhotos.length > 0 && (
+                <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden py-0.5">
+                  {product.customerPhotos.map((url, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setIsReviewsOpen(true)}
+                      className="size-11 sm:size-12 shrink-0 rounded-xl overflow-hidden bg-surface-secondary cursor-pointer hover:opacity-85 transition-opacity border border-border/40"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <div
-                            className={cn(
-                              "w-5 h-5 rounded-full flex items-center justify-center font-bold text-[9px]",
-                              rev.avatarBg,
-                            )}
+                      <img
+                        src={url}
+                        alt="Customer review photo"
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* 2-Column Mini Review Cards */}
+              {product.reviews && product.reviews.length > 0 && (
+                <div className="flex flex-col gap-3">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
+                    {product.reviews.slice(0, 2).map((rev) => (
+                      <div
+                        key={rev.id}
+                        className="flex flex-col gap-1.5 p-3 bg-surface-secondary/60 rounded-xl border border-border/50"
+                      >
+                        {/* Stars */}
+                        <div className="flex items-center gap-0.5">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <span
+                              key={i}
+                              className={`text-[10px] ${i < rev.rating ? "text-warning" : "text-muted/30"}`}
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                        {/* Text */}
+                        <p className="text-[11px] text-foreground/90 leading-[1.35] line-clamp-4 font-normal">
+                          {rev.text}
+                        </p>
+                        {/* Footer */}
+                        <div className="flex items-center gap-1.5 mt-auto pt-1">
+                          <Avatar
+                            size="sm"
+                            className="size-4 text-[8px] font-bold bg-foreground text-background"
                           >
-                            {rev.avatarInitial}
-                          </div>
-                          <span className="font-bold text-xs text-foreground">
-                            {rev.author}
-                          </span>
-                          <span className="text-[10px] bg-emerald-50 text-emerald-700 font-medium px-1.5 py-0.5 rounded-full">
-                            Verified
+                            <Avatar.Fallback>
+                              {rev.avatarInitial}
+                            </Avatar.Fallback>
+                          </Avatar>
+                          <span className="text-[10px] text-muted truncate">
+                            <span className="font-semibold text-foreground">
+                              {rev.author}
+                            </span>{" "}
+                            · {rev.date}
                           </span>
                         </div>
-                        <span className="text-[10px] text-slate-400">
-                          {rev.date}
-                        </span>
                       </div>
-                      <div className="flex items-center text-amber-400 text-xs">
-                        {"★".repeat(rev.rating)}
-                      </div>
-                      <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                        {rev.text}
-                      </p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setIsReviewsOpen(true)}
-                    className="w-full text-center py-2 text-xs font-semibold text-foreground hover:bg-slate-50 rounded-xl border border-slate-200/70 transition-colors cursor-pointer mt-0.5"
+                  {/* Read more reviews button */}
+                  <Button
+                    variant="secondary"
+                    onPress={() => setIsReviewsOpen(true)}
+                    className="w-full h-9 rounded-xl text-xs font-semibold text-foreground bg-surface-secondary hover:bg-surface-tertiary border-0 transition-colors cursor-pointer"
                   >
-                    View all {product.reviewCount} reviews
-                  </button>
+                    Read more reviews
+                  </Button>
                 </div>
               )}
             </div>
 
             {/* Delivery & Returns Section */}
-            <div className="bg-white rounded-[24px] p-5 border border-slate-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] flex flex-col gap-3.5 mt-1">
-              <h3 className="text-xs sm:text-sm font-bold text-foreground">
+            <div className="bg-surface rounded-[24px] p-5 border border-border/80 shadow-2xs flex flex-col gap-4 mt-1 text-foreground">
+              <h3 className="text-sm sm:text-base font-bold text-foreground">
                 Delivery & Returns
               </h3>
 
-              <div className="flex flex-col gap-3 text-xs text-slate-600">
+              <div className="flex flex-col gap-3 text-xs sm:text-sm text-muted">
                 <div className="flex items-start gap-3">
-                  <Truck className="size-4 text-slate-700 shrink-0 mt-0.5" />
+                  <Truck className="size-4.5 text-foreground shrink-0 mt-0.5" />
                   <div className="flex flex-col">
-                    <span className="font-semibold text-slate-900">
+                    <span className="font-semibold text-foreground text-xs sm:text-sm">
                       Standard Delivery
                     </span>
-                    <span className="text-slate-500 mt-0.5">
+                    <span className="text-muted mt-0.5 leading-relaxed">
                       Estimated delivery within 3–5 business days. Free shipping
                       on orders over BDT 5,000.
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 pt-2.5 border-t border-slate-100">
-                  <RotateCcw className="size-4 text-slate-700 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 pt-3 border-t border-border/60">
+                  <RotateCcw className="size-4.5 text-foreground shrink-0 mt-0.5" />
                   <div className="flex flex-col">
-                    <span className="font-semibold text-slate-900">
+                    <span className="font-semibold text-foreground text-xs sm:text-sm">
                       30-Day Hassle-Free Returns
                     </span>
-                    <span className="text-slate-500 mt-0.5">
+                    <span className="text-muted mt-0.5 leading-relaxed">
                       Not completely satisfied? Return unworn items within 30
                       days.{" "}
                       <button
@@ -724,33 +783,37 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
             </div>
 
             {/* Brand Follow Banner */}
-            <div className="bg-black text-white rounded-2xl p-4 flex items-center justify-between mt-1 shadow-sm">
+            <div className="bg-foreground text-background rounded-2xl p-4 flex items-center justify-between mt-1 shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center font-bold text-[9px] uppercase tracking-wider text-white">
-                  {product.brandAvatarText}
-                </div>
+                <Avatar
+                  size="md"
+                  className="size-9 rounded-full bg-background text-foreground font-bold text-[9px] uppercase tracking-wider shrink-0"
+                >
+                  <Avatar.Fallback>{product.brandAvatarText}</Avatar.Fallback>
+                </Avatar>
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold uppercase tracking-wider text-white">
+                  <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-background">
                     {product.brand}
                   </span>
-                  <span className="text-[11px] text-neutral-400 font-medium">
+                  <span className="text-xs text-background/70 font-medium">
                     {product.brandRating}
                   </span>
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setIsFollowingBrand(!isFollowingBrand)}
+              <Button
+                size="sm"
+                variant="secondary"
+                onPress={() => setIsFollowingBrand(!isFollowingBrand)}
                 className={cn(
-                  "text-xs font-semibold px-4 py-1.5 rounded-full transition-all cursor-pointer",
+                  "rounded-full text-xs font-semibold px-4 cursor-pointer transition-all",
                   isFollowingBrand
-                    ? "bg-white/20 text-white border border-white/30 hover:bg-white/30"
-                    : "bg-white text-black hover:bg-neutral-100",
+                    ? "bg-background/20 text-background border border-background/30 hover:bg-background/30"
+                    : "bg-background text-foreground hover:bg-background/90",
                 )}
               >
                 {isFollowingBrand ? "Following" : "Follow"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -780,21 +843,23 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
 
       {/* FLOATING SEARCH INPUT PILL AT BOTTOM CENTER */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-full max-w-[460px] px-4 pointer-events-auto">
-        <div className="bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl rounded-full px-5 py-2.5 flex items-center justify-between gap-3 w-full transition-shadow hover:shadow-2xl">
+        <div className="bg-surface/95 backdrop-blur-md border border-border shadow-xl rounded-full px-5 py-2.5 flex items-center justify-between gap-3 w-full transition-shadow hover:shadow-2xl">
           <input
             type="text"
             placeholder="What are you shopping for today?"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            className="w-full bg-transparent text-xs sm:text-sm text-foreground placeholder:text-slate-400 outline-none font-normal"
+            className="w-full bg-transparent text-sm text-foreground placeholder:text-muted outline-none font-normal"
           />
-          <button
-            type="button"
-            className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 flex items-center justify-center text-slate-700 transition-all shrink-0 cursor-pointer"
+          <Button
+            isIconOnly
+            size="sm"
+            variant="secondary"
+            className="size-8 rounded-full bg-surface-secondary hover:bg-surface-tertiary text-foreground transition-all shrink-0 cursor-pointer"
             aria-label="Search"
           >
             <ArrowRight className="size-4" />
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -805,14 +870,14 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
       >
         <ModalBackdrop className="fixed inset-0 bg-black/40 backdrop-blur-xs z-50" />
         <ModalContainer className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <ModalDialog className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl flex flex-col gap-4 relative">
+          <ModalDialog className="bg-surface text-foreground border border-border rounded-3xl p-6 max-w-md w-full shadow-2xl flex flex-col gap-4 relative">
             <ModalHeader>
-              <ModalHeading className="font-bold text-lg text-slate-900">
+              <ModalHeading className="font-bold text-lg text-foreground">
                 Return Policy
               </ModalHeading>
             </ModalHeader>
-            <ModalBody className="text-xs text-slate-600 leading-relaxed">
-              <p className="font-semibold text-slate-800 mb-1">
+            <ModalBody className="text-sm text-muted leading-relaxed">
+              <p className="font-semibold text-foreground mb-1">
                 30-Day Hassle-Free Returns & Exchanges
               </p>
               <p>
@@ -833,7 +898,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
               <Button
                 variant="primary"
                 onPress={() => setIsReturnPolicyOpen(false)}
-                className="rounded-full font-semibold bg-black text-white hover:bg-slate-800"
+                className="rounded-full font-semibold bg-foreground text-background hover:bg-foreground/90"
               >
                 Got it
               </Button>
@@ -842,7 +907,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
         </ModalContainer>
       </ModalRoot>
 
-      {/* REVIEWS SLIDE-OVER DRAWER (HERO UI SPECIFICATION) */}
+      {/* REVIEWS SLIDE-OVER DRAWER */}
       <DrawerRoot
         isOpen={isReviewsOpen}
         onOpenChange={(open) => setIsReviewsOpen(open)}
@@ -855,57 +920,67 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
           placement="right"
           className="fixed inset-0 z-50 flex justify-end pointer-events-none"
         >
-          <DrawerDialog className="p-0 flex flex-col h-full w-full sm:w-[440px] md:w-[480px] max-w-full sm:max-w-[calc(100vw-2rem)] bg-surface text-foreground shadow-2xl border-l border-border sm:rounded-l-[28px] overflow-hidden pointer-events-auto outline-none">
-            {/* Drawer Header Area */}
-            <DrawerHeader className="relative flex flex-col gap-4 px-6 pt-5 pb-4 shrink-0 border-b border-border bg-surface">
-              {/* Top Row: Close Trigger */}
-              <div className="flex items-center justify-between">
-                <DrawerCloseTrigger
-                  aria-label="Close reviews"
-                  className="size-8 rounded-full bg-surface-secondary text-foreground hover:bg-surface-tertiary flex items-center justify-center transition-colors cursor-pointer border-none outline-none"
-                >
-                  <X className="size-4" />
-                </DrawerCloseTrigger>
-              </div>
+          <DrawerDialog className="p-0 flex flex-col h-full w-full sm:w-[460px] md:w-[500px] max-w-full bg-surface text-foreground shadow-2xl border-l border-border sm:rounded-l-[28px] overflow-hidden pointer-events-auto outline-none">
+            {/* Sticky Drawer Header */}
+            <DrawerHeader className="flex flex-col gap-3 px-5 sm:px-6 pt-5 pb-4 shrink-0 border-b border-border/60 bg-surface">
+              {/* Close button at top-left */}
+              <DrawerCloseTrigger
+                aria-label="Close reviews"
+                className="size-7 sm:size-8 rounded-full bg-surface-secondary text-foreground hover:bg-surface-tertiary flex items-center justify-center transition-colors cursor-pointer border-none outline-none self-start"
+              >
+                <X className="size-4" />
+              </DrawerCloseTrigger>
 
-              {/* Drawer Title */}
-              <DrawerHeading className="text-2xl sm:text-[26px] font-bold tracking-tight text-foreground">
+              <DrawerHeading className="text-[24px] font-semibold text-foreground tracking-[-1px] leading-[1.17] -mt-0.5">
                 Reviews
               </DrawerHeading>
 
-              {/* Rating Score & Histogram Breakdown */}
-              <div className="flex items-center justify-between gap-6">
-                <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-foreground leading-none">
-                    {product.reviewScore || 4.7}
+              {/* Score + Histogram */}
+              <div className="flex items-center gap-4 sm:gap-5">
+                {/* Score */}
+                <div className="flex flex-col shrink-0">
+                  <span className="text-3xl sm:text-[32px] font-black text-foreground leading-none tracking-tight">
+                    {product.reviewScore
+                      ? product.reviewScore.toFixed(1)
+                      : `${product.rating}.0`}
                   </span>
-                  <div className="flex items-center text-amber-400 text-sm mt-1.5 gap-0.5">
-                    {"★".repeat(5)}
+                  <div className="flex items-center gap-0.5 mt-1.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span
+                        key={i}
+                        className={`text-xs ${i < product.rating ? "text-warning" : "text-muted/30"}`}
+                      >
+                        ★
+                      </span>
+                    ))}
                   </div>
-                  <span className="text-xs text-muted font-medium mt-1">
-                    {product.reviewCount} ratings
+                  <span className="text-[11px] text-muted font-normal mt-0.5">
+                    {product.reviewCount
+                      ? product.reviewCount >= 1000
+                        ? `${(product.reviewCount / 1000).toFixed(1)}K`
+                        : product.reviewCount
+                      : "14.8K"}{" "}
+                    ratings
                   </span>
                 </div>
 
-                {/* Histogram Bars */}
-                <div className="flex-1 flex flex-col gap-1.5 max-w-[220px]">
+                {/* Histogram */}
+                <div className="flex-1 flex flex-col gap-1.5">
                   {[
-                    { star: "5", width: "w-[80%]" },
-                    { star: "4", width: "w-[18%]" },
-                    { star: "3", width: "w-[5%]" },
-                    { star: "2", width: "w-0" },
-                    { star: "1", width: "w-0" },
-                  ].map((bar) => (
-                    <div key={bar.star} className="flex items-center gap-2">
-                      <span className="text-[11px] text-muted font-medium w-2">
-                        {bar.star}
+                    { star: 5, pct: 85 },
+                    { star: 4, pct: 12 },
+                    { star: 3, pct: 2 },
+                    { star: 2, pct: 1 },
+                    { star: 1, pct: 0 },
+                  ].map((item) => (
+                    <div key={item.star} className="flex items-center gap-2">
+                      <span className="text-[10px] text-muted font-medium w-2 shrink-0">
+                        {item.star}
                       </span>
-                      <div className="flex-1 h-1.5 bg-surface-secondary rounded-full overflow-hidden">
+                      <div className="flex-1 h-1 bg-surface-secondary rounded-full overflow-hidden">
                         <div
-                          className={cn(
-                            "h-full bg-foreground rounded-full",
-                            bar.width,
-                          )}
+                          className="h-full bg-foreground rounded-full"
+                          style={{ width: `${item.pct}%` }}
                         />
                       </div>
                     </div>
@@ -913,69 +988,86 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                 </div>
               </div>
 
-              {/* Search Bar Input */}
+              {/* Customer photo strip */}
+              {product.customerPhotos && product.customerPhotos.length > 0 && (
+                <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden py-0.5">
+                  {product.customerPhotos.map((url, i) => (
+                    <div
+                      key={i}
+                      className="size-14 sm:size-16 shrink-0 rounded-xl overflow-hidden bg-surface-secondary border border-border/40"
+                    >
+                      <img
+                        src={url}
+                        alt={`Customer photo ${i + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Search Bar */}
               <div className="relative w-full">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-3.5 text-muted" />
                 <input
                   type="text"
                   placeholder="Search"
                   value={reviewSearchQuery}
                   onChange={(e) => setReviewSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-surface rounded-full border border-border text-xs sm:text-sm text-foreground placeholder:text-muted outline-none focus:border-foreground transition-colors"
+                  className="w-full h-9 pl-9 pr-3.5 bg-surface-secondary rounded-full border border-border/50 text-xs text-foreground placeholder:text-muted outline-none focus:border-border transition-colors"
                 />
               </div>
 
-              {/* Filter Pills: Sort by, Rating, SIZE */}
-              <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pt-0.5">
-                {/* Sort By Dropdown */}
+              {/* Filter Pills */}
+              <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                {/* Sort by */}
                 <Dropdown>
                   <Button
                     size="sm"
-                    variant={reviewSortBy !== "recent" ? "primary" : "outline"}
                     className={cn(
-                      "rounded-full px-3.5 h-8 font-medium text-xs shrink-0 transition-all cursor-pointer gap-1.5 shadow-none",
+                      "rounded-full px-3 h-7.5 font-medium text-xs shrink-0 gap-1 shadow-none border cursor-pointer",
                       reviewSortBy !== "recent"
-                        ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
-                        : "bg-surface text-foreground border border-border hover:bg-surface-secondary",
+                        ? "bg-foreground text-background border-transparent"
+                        : "bg-surface text-foreground border-border hover:bg-surface-secondary",
                     )}
                   >
                     <span>
                       {reviewSortBy === "recent"
                         ? "Sort by"
                         : reviewSortBy === "highest"
-                          ? "Highest Rating"
-                          : "Lowest Rating"}
+                          ? "Highest"
+                          : "Lowest"}
                     </span>
-                    <ChevronDown className="size-3 opacity-70" />
+                    <ChevronDown className="size-3 opacity-60" />
                   </Button>
-                  <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[150px] z-50 p-1">
+                  <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface min-w-[160px] z-[60] p-1">
                     <Dropdown.Menu
                       aria-label="Sort reviews"
                       selectionMode="single"
                       selectedKeys={new Set([reviewSortBy])}
                       onSelectionChange={(keys) => {
-                        const selected = Array.from(keys)[0];
-                        if (selected)
+                        const val = Array.from(keys)[0];
+                        if (val)
                           setReviewSortBy(
-                            selected as "recent" | "highest" | "lowest",
+                            val as "recent" | "highest" | "lowest",
                           );
                       }}
                     >
                       <Dropdown.Item
                         id="recent"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         Most Recent
                       </Dropdown.Item>
                       <Dropdown.Item
                         id="highest"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         Highest Rating
                       </Dropdown.Item>
                       <Dropdown.Item
                         id="lowest"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         Lowest Rating
                       </Dropdown.Item>
@@ -983,18 +1075,15 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                   </Dropdown.Popover>
                 </Dropdown>
 
-                {/* Rating Filter Dropdown */}
+                {/* Rating */}
                 <Dropdown>
                   <Button
                     size="sm"
-                    variant={
-                      reviewRatingFilter !== "all" ? "primary" : "outline"
-                    }
                     className={cn(
-                      "rounded-full px-3.5 h-8 font-medium text-xs shrink-0 transition-all cursor-pointer gap-1.5 shadow-none",
+                      "rounded-full px-3 h-7.5 font-medium text-xs shrink-0 gap-1 shadow-none border cursor-pointer",
                       reviewRatingFilter !== "all"
-                        ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
-                        : "bg-surface text-foreground border border-border hover:bg-surface-secondary",
+                        ? "bg-foreground text-background border-transparent"
+                        : "bg-surface text-foreground border-border hover:bg-surface-secondary",
                     )}
                   >
                     <span>
@@ -1002,43 +1091,42 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                         ? "Rating"
                         : `${reviewRatingFilter} Stars`}
                     </span>
-                    <ChevronDown className="size-3 opacity-70" />
+                    <ChevronDown className="size-3 opacity-60" />
                   </Button>
-                  <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[140px] z-50 p-1">
+                  <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface min-w-[140px] z-[60] p-1">
                     <Dropdown.Menu
                       aria-label="Filter by rating"
                       selectionMode="single"
                       selectedKeys={new Set([String(reviewRatingFilter)])}
                       onSelectionChange={(keys) => {
-                        const selected = Array.from(keys)[0];
-                        if (selected !== undefined) {
+                        const val = Array.from(keys)[0];
+                        if (val !== undefined)
                           setReviewRatingFilter(
-                            selected === "all" ? "all" : Number(selected),
+                            val === "all" ? "all" : Number(val),
                           );
-                        }
                       }}
                     >
                       <Dropdown.Item
                         id="all"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         All Ratings
                       </Dropdown.Item>
                       <Dropdown.Item
                         id="5"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         5 Stars
                       </Dropdown.Item>
                       <Dropdown.Item
                         id="4"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         4 Stars
                       </Dropdown.Item>
                       <Dropdown.Item
                         id="3"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         3 Stars
                       </Dropdown.Item>
@@ -1046,58 +1134,56 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                   </Dropdown.Popover>
                 </Dropdown>
 
-                {/* Size Filter Dropdown */}
+                {/* Choose Your Supply / Size */}
                 <Dropdown>
                   <Button
                     size="sm"
-                    variant={reviewSizeFilter !== "all" ? "primary" : "outline"}
                     className={cn(
-                      "rounded-full px-3.5 h-8 font-medium text-xs shrink-0 transition-all cursor-pointer gap-1.5 shadow-none",
+                      "rounded-full px-3 h-7.5 font-medium text-xs shrink-0 gap-1 shadow-none border cursor-pointer whitespace-nowrap",
                       reviewSizeFilter !== "all"
-                        ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
-                        : "bg-surface text-foreground border border-border hover:bg-surface-secondary",
+                        ? "bg-foreground text-background border-transparent"
+                        : "bg-surface text-foreground border-border hover:bg-surface-secondary",
                     )}
                   >
                     <span>
                       {reviewSizeFilter === "all"
-                        ? "SIZE"
+                        ? "Choose Your Supply"
                         : reviewSizeFilter.toUpperCase()}
                     </span>
-                    <ChevronDown className="size-3 opacity-70" />
+                    <ChevronDown className="size-3 opacity-60" />
                   </Button>
-                  <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[130px] z-50 p-1">
+                  <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface min-w-[140px] z-[60] p-1">
                     <Dropdown.Menu
                       aria-label="Filter by size"
                       selectionMode="single"
                       selectedKeys={new Set([reviewSizeFilter])}
                       onSelectionChange={(keys) => {
-                        const selected = Array.from(keys)[0];
-                        if (selected !== undefined) {
-                          setReviewSizeFilter(selected as string);
-                        }
+                        const val = Array.from(keys)[0];
+                        if (val !== undefined)
+                          setReviewSizeFilter(val as string);
                       }}
                     >
                       <Dropdown.Item
                         id="all"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
-                        All Sizes
+                        All
                       </Dropdown.Item>
                       <Dropdown.Item
                         id="SMALL"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         SMALL
                       </Dropdown.Item>
                       <Dropdown.Item
                         id="MEDIUM"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         MEDIUM
                       </Dropdown.Item>
                       <Dropdown.Item
                         id="LARGE"
-                        className="text-xs font-medium py-2 px-3 cursor-pointer"
+                        className="text-xs py-2 px-3 cursor-pointer"
                       >
                         LARGE
                       </Dropdown.Item>
@@ -1107,11 +1193,11 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
               </div>
             </DrawerHeader>
 
-            {/* Drawer Body: Review Cards List */}
-            <DrawerBody className="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-3.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden m-0">
+            {/* Scrollable Review Cards */}
+            <DrawerBody className="flex-1 overflow-y-auto px-5 py-5 flex flex-col gap-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {filteredReviews.length === 0 ? (
-                <div className="py-12 text-center text-sm text-muted">
-                  No reviews found matching your search.
+                <div className="py-16 text-center text-xs text-muted">
+                  No reviews match your search.
                 </div>
               ) : (
                 filteredReviews.map((rev) => {
@@ -1119,68 +1205,79 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                   return (
                     <div
                       key={rev.id}
-                      className="p-4 rounded-2xl border border-border bg-surface shadow-2xs flex flex-col gap-2 transition-shadow hover:shadow-xs"
+                      className="p-4 rounded-2xl border border-border/70 bg-surface shadow-2xs flex flex-col gap-2.5 transition-shadow hover:shadow-xs"
                     >
-                      {/* Rating Stars */}
-                      <div className="flex items-center text-amber-400 text-xs gap-0.5">
-                        {"★".repeat(rev.rating)}
-                        {"☆".repeat(5 - rev.rating)}
+                      {/* Stars */}
+                      <div className="flex items-center gap-0.5">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <span
+                            key={i}
+                            className={`text-xs ${i < rev.rating ? "text-warning" : "text-muted/30"}`}
+                          >
+                            ★
+                          </span>
+                        ))}
                       </div>
 
-                      {/* Size Tag */}
+                      {/* Variant / Size tag */}
                       {rev.size && (
-                        <span className="text-[10px] font-bold text-muted uppercase tracking-wider">
+                        <span className="text-[11px] font-semibold text-muted tracking-tight">
                           {rev.size}
                         </span>
                       )}
 
-                      {/* Review Text */}
-                      <p className="text-xs sm:text-[13px] text-foreground leading-relaxed font-normal">
+                      {/* Review body */}
+                      <p className="text-xs text-foreground leading-relaxed font-normal">
                         {rev.text}
                       </p>
 
-                      {/* Review Footer */}
-                      <div className="flex items-center justify-between pt-2 border-t border-border mt-1">
-                        <div className="flex items-center gap-2">
-                          <div
-                            className={cn(
-                              "w-6 h-6 rounded-full flex items-center justify-center font-bold text-[11px]",
-                              rev.avatarBg,
-                            )}
+                      {/* Footer row */}
+                      <div className="flex items-center justify-between pt-1 mt-0.5">
+                        <div className="flex items-center gap-1.5">
+                          <Avatar
+                            size="sm"
+                            className="size-5 text-[9px] font-bold bg-foreground text-background"
                           >
-                            {rev.avatarInitial}
-                          </div>
-                          <span className="text-xs text-foreground font-medium">
-                            {rev.author}{" "}
-                            <span className="text-muted">· {rev.date}</span>
+                            <Avatar.Fallback>
+                              {rev.avatarInitial}
+                            </Avatar.Fallback>
+                          </Avatar>
+                          <span className="text-xs text-muted font-normal">
+                            <span className="font-semibold text-foreground">
+                              {rev.author}
+                            </span>{" "}
+                            · {rev.date}
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                           <button
                             type="button"
                             onClick={() => toggleHelpful(rev.id)}
                             className={cn(
-                              "flex items-center gap-1.5 text-[11px] font-medium transition-colors cursor-pointer",
+                              "flex items-center gap-1 text-xs font-medium cursor-pointer transition-colors",
                               isHelpful
-                                ? "text-primary font-semibold"
+                                ? "text-foreground font-semibold"
                                 : "text-muted hover:text-foreground",
                             )}
                           >
                             <ThumbsUp
                               className={cn(
-                                "size-3.5",
-                                isHelpful && "fill-primary text-primary",
+                                "size-3",
+                                isHelpful && "fill-foreground",
                               )}
                             />
-                            <span>Helpful</span>
+                            <span>
+                              Helpful
+                              {rev.helpfulCount ? ` ${rev.helpfulCount}` : ""}
+                            </span>
                           </button>
                           <button
                             type="button"
-                            className="text-muted hover:text-foreground transition-colors p-0.5 cursor-pointer"
-                            aria-label="More options"
+                            className="text-muted hover:text-foreground cursor-pointer transition-colors p-0.5"
+                            aria-label="More"
                           >
-                            <MoreHorizontal className="size-4" />
+                            <MoreHorizontal className="size-3.5" />
                           </button>
                         </div>
                       </div>
