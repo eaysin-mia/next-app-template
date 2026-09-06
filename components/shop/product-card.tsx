@@ -124,35 +124,36 @@ export function ProductCard({
 
       {/* 2. Structured Metadata with HeroUI Typography Tokens */}
       <div className="pt-2 px-0.5 flex flex-col flex-1 min-w-0">
-        {/* Brand Name */}
-        <p className="text-xs text-muted font-normal leading-tight tracking-tight truncate">
-          {product.brand}
-        </p>
+        {/* Brand Name (only if present) */}
+        {product.brand && (
+          <p className="text-xs text-muted font-normal leading-tight tracking-tight truncate">
+            {product.brand}
+          </p>
+        )}
 
         {/* Product Title */}
-        <h3 className="text-sm font-medium text-foreground leading-snug tracking-tight truncate group-hover:opacity-80 transition-opacity">
+        <h3 className="text-xs sm:text-sm font-medium text-foreground leading-snug tracking-tight truncate group-hover:opacity-80 transition-opacity">
           {product.title}
         </h3>
 
         {/* Rating Row */}
-        <div className="h-4 flex items-center gap-1 pt-0.5">
-          {product.rating !== undefined && (
-            <>
-              <div className="flex items-center text-amber-500 text-xs leading-none">
-                {"★".repeat(Math.min(5, Math.floor(product.rating)))}
-              </div>
-              {product.reviewCount !== undefined && (
-                <span className="text-xs text-muted font-normal tracking-tight leading-none">
-                  ({product.reviewCount})
-                </span>
-              )}
-            </>
-          )}
-        </div>
+        {product.rating !== undefined && product.rating > 0 && (
+          <div className="flex items-center gap-1 pt-0.5">
+            <div className="flex items-center text-foreground/70 text-[11px] leading-none tracking-tight">
+              {"★".repeat(Math.min(5, Math.floor(product.rating)))}
+              {"☆".repeat(Math.max(0, 5 - Math.floor(product.rating)))}
+            </div>
+            {product.reviewCount !== undefined && (
+              <span className="text-[11px] text-muted font-normal tracking-tight leading-none">
+                ({product.reviewCount})
+              </span>
+            )}
+          </div>
+        )}
 
         {/* Price Row */}
         <div className="flex items-center gap-1.5 pt-0.5 mt-auto">
-          <span className="text-sm font-medium text-foreground tracking-tight">
+          <span className="text-xs sm:text-sm font-medium text-foreground tracking-tight">
             {product.price}
           </span>
           {product.originalPrice && (

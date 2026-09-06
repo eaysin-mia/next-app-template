@@ -1,5 +1,7 @@
-import { ProductDetailsView } from "@/components/shop";
+"use client";
 
-export default function ProductsIndexPage() {
-  return <ProductDetailsView productId="m1-grey-syzygy" />;
+import CategoryPage from "../categories/[category]/page";
+
+export default function ProductsPage() {
+  return <CategoryPage params={Promise.resolve({ category: "products" })} />;
 }

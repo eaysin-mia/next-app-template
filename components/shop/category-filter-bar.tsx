@@ -84,33 +84,129 @@ export function CategoryFilterBar({
     onFilterChange({ ...filters, onSale: !filters.onSale });
   };
 
+  const toggleInStock = () => {
+    onFilterChange({ ...filters, inStock: !filters.inStock });
+  };
+
   return (
-    <div className={cn("flex items-center justify-start sm:justify-center gap-2 overflow-x-auto py-2 px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full max-w-full min-w-0", className)}>
+    <div className={cn("flex items-center justify-start gap-2 overflow-x-auto py-1 px-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full max-w-full min-w-0", className)}>
       {/* 1. Drawer Trigger Button */}
       <Button
         isIconOnly
         size="sm"
-        variant="primary"
+        variant="outline"
         onPress={() => setIsDrawerOpen(true)}
         aria-label="Open filter sidebar"
-        className="rounded-full size-9 shrink-0 bg-foreground text-background hover:opacity-90 cursor-pointer shadow-xs"
+        className="rounded-full size-8.5 shrink-0 bg-surface text-foreground border border-border/80 hover:bg-surface-secondary cursor-pointer shadow-2xs"
       >
-        <SlidersHorizontal className="size-4 stroke-[2]" />
+        <SlidersHorizontal className="size-3.5 stroke-[2]" />
       </Button>
 
-      {/* 2. On Sale Toggle Button */}
+      {/* 2. Sort by HeroUI Dropdown */}
+      <Dropdown>
+        <Button
+          size="sm"
+          variant={filters.sortBy !== "recommended" ? "primary" : "outline"}
+          className={cn(
+            "rounded-full px-3.5 h-8.5 font-medium text-xs sm:text-sm shrink-0 transition-all cursor-pointer gap-1.5",
+            filters.sortBy !== "recommended"
+              ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
+              : "bg-surface text-foreground border border-border/80 hover:bg-surface-secondary"
+          )}
+        >
+          <span>{filters.sortBy !== "recommended" ? SORT_OPTIONS.find(s => s.id === filters.sortBy)?.label : "Sort by"}</span>
+          <ChevronDown className="size-3.5 opacity-70 stroke-[2.5]" />
+        </Button>
+        <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[220px] z-50">
+          <Dropdown.Menu
+            aria-label="Sort options"
+            selectionMode="single"
+            selectedKeys={new Set([filters.sortBy])}
+            onSelectionChange={(keys) => {
+              const selected = Array.from(keys)[0] as string;
+              if (selected) {
+                onFilterChange({ ...filters, sortBy: selected });
+              }
+            }}
+          >
+            {SORT_OPTIONS.map((opt) => (
+              <Dropdown.Item key={opt.id} id={opt.id} className="text-xs sm:text-sm font-medium py-2 px-3 cursor-pointer">
+                {opt.label}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown.Popover>
+      </Dropdown>
+
+      {/* 3. On Sale Toggle Button */}
       <Button
         size="sm"
         variant={filters.onSale ? "primary" : "outline"}
         onPress={toggleOnSale}
         className={cn(
-          "rounded-full px-4 h-9 font-medium text-xs sm:text-sm shrink-0 transition-all cursor-pointer",
+          "rounded-full px-3.5 h-8.5 font-medium text-xs sm:text-sm shrink-0 transition-all cursor-pointer",
           filters.onSale
             ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
-            : "bg-surface text-foreground border border-border hover:bg-surface-secondary"
+            : "bg-surface text-foreground border border-border/80 hover:bg-surface-secondary"
         )}
       >
         On sale
+      </Button>
+
+      {/* 4. Price Range Popover */}
+      <PopoverRoot>
+        <PopoverTrigger>
+          <Button
+            size="sm"
+            variant={filters.minPrice > 0 || filters.maxPrice < 2000 ? "primary" : "outline"}
+            className={cn(
+              "rounded-full px-3.5 h-8.5 font-medium text-xs sm:text-sm shrink-0 transition-all cursor-pointer gap-1.5",
+              filters.minPrice > 0 || filters.maxPrice < 2000
+                ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
+                : "bg-surface text-foreground border border-border/80 hover:bg-surface-secondary"
+            )}
+          >
+            <span>Price</span>
+            <ChevronDown className="size-3.5 opacity-70 stroke-[2.5]" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-4 rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[260px] z-50">
+          <PopoverDialog className="flex flex-col gap-3 outline-none">
+            <p className="text-xs sm:text-sm text-muted font-medium">Price Range ($)</p>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                value={filters.minPrice}
+                onChange={(e) => onFilterChange({ ...filters, minPrice: Number(e.target.value) || 0 })}
+                className="w-22 px-3 py-1.5 bg-surface-secondary border border-border rounded-full text-xs sm:text-sm font-medium text-foreground outline-none text-center"
+                placeholder="Min"
+              />
+              <span className="text-xs text-muted">-</span>
+              <input
+                type="number"
+                value={filters.maxPrice}
+                onChange={(e) => onFilterChange({ ...filters, maxPrice: Number(e.target.value) || 2000 })}
+                className="w-22 px-3 py-1.5 bg-surface-secondary border border-border rounded-full text-xs sm:text-sm font-medium text-foreground outline-none text-center"
+                placeholder="Max"
+              />
+            </div>
+          </PopoverDialog>
+        </PopoverContent>
+      </PopoverRoot>
+
+      {/* 5. In-stock Toggle Button */}
+      <Button
+        size="sm"
+        variant={filters.inStock ? "primary" : "outline"}
+        onPress={toggleInStock}
+        className={cn(
+          "rounded-full px-3.5 h-8.5 font-medium text-xs sm:text-sm shrink-0 transition-all cursor-pointer",
+          filters.inStock
+            ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
+            : "bg-surface text-foreground border border-border/80 hover:bg-surface-secondary"
+        )}
+      >
+        In-stock
       </Button>
 
       {/* 3. Ratings HeroUI Dropdown */}
@@ -260,82 +356,6 @@ export function CategoryFilterBar({
         </Dropdown.Popover>
       </Dropdown>
 
-      {/* 7. Price Range Popover */}
-      <PopoverRoot>
-        <PopoverTrigger>
-          <Button
-            size="sm"
-            variant={filters.minPrice > 0 || filters.maxPrice < 2000 ? "primary" : "outline"}
-            className={cn(
-              "rounded-full px-4 h-9 font-medium text-xs sm:text-sm shrink-0 transition-all cursor-pointer gap-1.5",
-              filters.minPrice > 0 || filters.maxPrice < 2000
-                ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
-                : "bg-surface text-foreground border border-border hover:bg-surface-secondary"
-            )}
-          >
-            <span>Price</span>
-            <ChevronDown className="size-3.5 opacity-70 stroke-[2.5]" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="p-4 rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[260px] z-50">
-          <PopoverDialog className="flex flex-col gap-3 outline-none">
-            <p className="text-xs sm:text-sm text-muted font-medium">Price Range ($)</p>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                value={filters.minPrice}
-                onChange={(e) => onFilterChange({ ...filters, minPrice: Number(e.target.value) || 0 })}
-                className="w-22 px-3 py-1.5 bg-surface-secondary border border-border rounded-full text-xs sm:text-sm font-medium text-foreground outline-none text-center"
-                placeholder="Min"
-              />
-              <span className="text-xs text-muted">-</span>
-              <input
-                type="number"
-                value={filters.maxPrice}
-                onChange={(e) => onFilterChange({ ...filters, maxPrice: Number(e.target.value) || 2000 })}
-                className="w-22 px-3 py-1.5 bg-surface-secondary border border-border rounded-full text-xs sm:text-sm font-medium text-foreground outline-none text-center"
-                placeholder="Max"
-              />
-            </div>
-          </PopoverDialog>
-        </PopoverContent>
-      </PopoverRoot>
-
-      {/* 8. Sort by HeroUI Dropdown */}
-      <Dropdown>
-        <Button
-          size="sm"
-          variant={filters.sortBy !== "recommended" ? "primary" : "outline"}
-          className={cn(
-            "rounded-full px-4 h-9 font-medium text-xs sm:text-sm shrink-0 transition-all cursor-pointer gap-1.5",
-            filters.sortBy !== "recommended"
-              ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
-              : "bg-surface text-foreground border border-border hover:bg-surface-secondary"
-          )}
-        >
-          <span>{filters.sortBy !== "recommended" ? SORT_OPTIONS.find(s => s.id === filters.sortBy)?.label : "Sort by"}</span>
-          <ChevronDown className="size-3.5 opacity-70 stroke-[2.5]" />
-        </Button>
-        <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[220px] z-50">
-          <Dropdown.Menu
-            aria-label="Sort options"
-            selectionMode="single"
-            selectedKeys={new Set([filters.sortBy])}
-            onSelectionChange={(keys) => {
-              const selected = Array.from(keys)[0] as string;
-              if (selected) {
-                onFilterChange({ ...filters, sortBy: selected });
-              }
-            }}
-          >
-            {SORT_OPTIONS.map((opt) => (
-              <Dropdown.Item key={opt.id} id={opt.id} className="text-xs sm:text-sm font-medium py-2 px-3 cursor-pointer">
-                {opt.label}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown.Popover>
-      </Dropdown>
 
       {/* Slide-out Drawer */}
       <FilterDrawer

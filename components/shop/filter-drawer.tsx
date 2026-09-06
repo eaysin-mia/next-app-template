@@ -19,6 +19,8 @@ import {
 
 export interface FilterState {
   onSale: boolean;
+  inStock?: boolean;
+  searchQuery?: string;
   rating: number; // 0 for all, 4, 3, 2, 1
   shipsTo: string;
   size?: string;

@@ -1,22 +1,26 @@
 "use client";
 
 import React, { use, useState, useMemo } from "react";
+import { Search } from "lucide-react";
 import {
-  CategoryHeader,
   CategoryFilterBar,
   ProductCard,
   ShopSearchBar,
   type FilterState,
 } from "@/components/shop";
-import { PANTS_PRODUCTS, type CategoryProductItem } from "@/components/shop/data/categories";
+import {
+  ULLA_JOHNSON_PRODUCTS,
+  type CategoryProductItem,
+} from "@/components/shop/data/categories";
 
 const INITIAL_FILTERS: FilterState = {
+  inStock: true,
   onSale: false,
   rating: 0,
   shipsTo: "BD",
   color: "All",
   minPrice: 0,
-  maxPrice: 2000,
+  maxPrice: 200000,
   sortBy: "recommended",
 };
 
@@ -26,14 +30,27 @@ interface CategoryPageProps {
 
 export default function CategoryPage({ params }: CategoryPageProps) {
   const resolvedParams = use(params);
-  const rawCategory = resolvedParams.category || "pants";
-  const categoryTitle = rawCategory.charAt(0).toUpperCase() + rawCategory.slice(1);
+  const rawCategory = resolvedParams.category || "products";
+  const categoryTitle =
+    rawCategory === "pants" || rawCategory === "products" || rawCategory === "women"
+      ? "Products"
+      : rawCategory.charAt(0).toUpperCase() + rawCategory.slice(1);
 
   const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filter & Sort Logic
   const filteredProducts = useMemo(() => {
-    let result = [...PANTS_PRODUCTS];
+    let result = [...ULLA_JOHNSON_PRODUCTS];
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      result = result.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          (p.brand && p.brand.toLowerCase().includes(q))
+      );
+    }
 
     if (filters.onSale) {
       result = result.filter((p) => p.onSale);
@@ -44,12 +61,16 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     }
 
     if (filters.color !== "All") {
-      result = result.filter((p) => p.color?.toLowerCase() === filters.color.toLowerCase());
+      result = result.filter(
+        (p) => p.color?.toLowerCase() === filters.color.toLowerCase()
+      );
     }
 
-    if (filters.minPrice > 0 || filters.maxPrice < 2000) {
+    if (filters.minPrice > 0 || filters.maxPrice < 200000) {
       result = result.filter(
-        (p) => (p.priceValue || 0) >= filters.minPrice && (p.priceValue || 0) <= filters.maxPrice
+        (p) =>
+          (p.priceValue || 0) >= filters.minPrice &&
+          (p.priceValue || 0) <= filters.maxPrice
       );
     }
 
@@ -62,24 +83,30 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     }
 
     return result;
-  }, [filters]);
+  }, [filters, searchQuery]);
 
   return (
-    <div className="relative w-full min-h-full flex flex-col pt-2 sm:pt-4 pb-28 px-4 sm:px-6 md:px-8 lg:px-10 max-w-[1440px] mx-auto">
-      {/* 1. Header & Breadcrumbs */}
-      <div className="mb-6 sm:mb-7">
-        <CategoryHeader
-          title={categoryTitle}
-          breadcrumbs={[
-            { label: "All Categories", href: "/categories" },
-            { label: "Men", href: "/categories/men" },
-            { label: categoryTitle },
-          ]}
-        />
+    <div className="relative w-full min-h-full flex flex-col pt-3 sm:pt-5 pb-28 px-4 sm:px-6 md:px-8 lg:px-10 max-w-[1440px] mx-auto bg-surface text-foreground">
+      {/* 1. Header Bar: Title on left, Search on right */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-5">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
+          {categoryTitle}
+        </h1>
+
+        <div className="relative w-full sm:w-64 md:w-72">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted pointer-events-none" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search Ulla Johnson..."
+            className="w-full h-9 sm:h-9.5 pl-9 sm:pl-9.5 pr-4 bg-surface-secondary/70 hover:bg-surface-secondary focus:bg-surface border border-border/80 focus:border-foreground/30 rounded-full text-xs sm:text-sm font-medium text-foreground placeholder:text-muted outline-none transition-all shadow-2xs"
+          />
+        </div>
       </div>
 
-      {/* 2. Filter & Sort Bar */}
-      <div className="w-full flex justify-start sm:justify-center mb-8 sm:mb-10">
+      {/* 2. Filter & Sort Bar (Pills matching screenshot) */}
+      <div className="w-full mb-6 sm:mb-8">
         <CategoryFilterBar
           filters={filters}
           onFilterChange={setFilters}
@@ -101,10 +128,15 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           </div>
         ) : (
           <div className="py-16 text-center text-muted">
-            <p className="text-base font-medium">No products match your selected filters.</p>
+            <p className="text-base font-medium">
+              No products match your selected filters.
+            </p>
             <button
               type="button"
-              onClick={() => setFilters(INITIAL_FILTERS)}
+              onClick={() => {
+                setFilters(INITIAL_FILTERS);
+                setSearchQuery("");
+              }}
               className="mt-3 text-xs font-semibold text-foreground underline cursor-pointer"
             >
               Reset All Filters
