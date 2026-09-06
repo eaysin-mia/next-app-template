@@ -15,4 +15,5 @@ export * from "./product-details-view";
 export * from "./in-your-cart-rail";
 export * from "./cart-view";
 export * from "./checkout-view";
+export * from "./wishlist-view";
 export * from "./data";

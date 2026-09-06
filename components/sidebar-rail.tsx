@@ -12,7 +12,7 @@ export function SidebarNavRail() {
   const isHome = pathname === "/";
   const isCategories = pathname.startsWith("/categories");
   const isCart = pathname.startsWith("/cart");
-  const isWishlist = pathname.startsWith("/wishlist");
+  const isWishlist = pathname.startsWith("/wishlist") || pathname.startsWith("/saved");
   const isAccount = pathname.startsWith("/account");
 
   return (

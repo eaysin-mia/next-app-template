@@ -17,6 +17,8 @@ export interface ProductItem {
   reviewCount?: number | string;
   badge?: string;
   imageFit?: "cover" | "contain";
+  variant?: string;
+  isWishlisted?: boolean;
 }
 
 export interface ProductCardProps {
@@ -24,6 +26,7 @@ export interface ProductCardProps {
   className?: string;
   onWishlistToggle?: (id: string, isWishlisted: boolean) => void;
   onClick?: (product: ProductItem) => void;
+  isWishlisted?: boolean;
 }
 
 /**
@@ -38,9 +41,12 @@ export function ProductCard({
   className = "",
   onWishlistToggle,
   onClick,
+  isWishlisted,
 }: ProductCardProps) {
   const router = useRouter();
-  const [wishlisted, setWishlisted] = useState(false);
+  const [wishlisted, setWishlisted] = useState(
+    isWishlisted ?? product.isWishlisted ?? false
+  );
 
   const handleCardClick = () => {
     if (onClick) {
@@ -103,14 +109,14 @@ export function ProductCard({
           className={cn(
             "absolute bottom-2.5 right-2.5 z-10 rounded-full transition-all duration-200",
             wishlisted
-              ? "bg-surface text-danger shadow-sm scale-105"
+              ? "bg-[#2f5cf6] text-white shadow-xs scale-105"
               : "bg-foreground/25 hover:bg-foreground/35 text-background backdrop-blur-xs active:scale-95"
           )}
         >
           <Heart
             className={cn(
               "size-3.5 transition-transform",
-              wishlisted ? "fill-danger stroke-danger" : "stroke-current stroke-[2]"
+              wishlisted ? "fill-white stroke-white" : "stroke-current stroke-[2]"
             )}
           />
         </Button>
@@ -155,8 +161,16 @@ export function ProductCard({
             </span>
           )}
         </div>
+
+        {/* Optional Variant */}
+        {product.variant && (
+          <span className="text-xs text-muted font-normal leading-tight mt-0.5 truncate">
+            {product.variant}
+          </span>
+        )}
       </div>
     </div>
   );
 }
+
 
