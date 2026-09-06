@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SearchField, Button } from "@heroui/react";
-import { ArrowDown, ArrowRight, Camera, History, X } from "lucide-react";
+import { ArrowDown, ArrowRight, History, X } from "lucide-react";
 
 const SEARCH_SUGGESTIONS = [
   "Best eco-friendly baby products",
@@ -29,6 +29,7 @@ export function ShopSearchBar({
   suggestionsPlacement = "below",
   onRequestClose,
 }: SearchBarProps) {
+  const searchRootRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState("");
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(openOnMount);
   const suggestionPanelPosition =
@@ -38,6 +39,43 @@ export function ShopSearchBar({
     setIsSuggestionsOpen(false);
     onRequestClose?.();
   };
+
+  const handleFocusOut = () => {
+    window.requestAnimationFrame(() => {
+      const activeElement = document.activeElement;
+
+      if (!searchRootRef.current?.contains(activeElement)) {
+        closeSuggestions();
+      }
+    });
+  };
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+
+      if (
+        target instanceof Node &&
+        !searchRootRef.current?.contains(target)
+      ) {
+        closeSuggestions();
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeSuggestions();
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  });
 
   useEffect(() => {
     if (openOnMount) {
@@ -56,39 +94,30 @@ export function ShopSearchBar({
   };
 
   return (
-    <SearchField
-      name="product-search"
-      aria-label="Search products, brands, and categories"
-      value={value}
-      onChange={setValue}
-      onSubmit={handleSubmit}
-      onClear={() => setValue("")}
-      autoFocus={autoFocus}
-      fullWidth
-      className={`relative w-full max-w-[510px] mx-auto ${className}`}
-    >
+    <div ref={searchRootRef} className="w-full">
+      <SearchField
+        name="product-search"
+        aria-label="Search products, brands, and categories"
+        value={value}
+        onChange={setValue}
+        onSubmit={handleSubmit}
+        onClear={() => setValue("")}
+        autoFocus={autoFocus}
+        fullWidth
+        className={`relative w-full max-w-[510px] mx-auto ${className}`}
+      >
       <SearchField.Group
         className={`relative z-10 items-center w-full h-12 sm:h-[60px] overflow-hidden bg-surface rounded-full border border-border shadow-sm hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-md transition-all duration-200 px-2 sm:px-3 ${
           isSuggestionsOpen ? "hidden md:flex" : "flex"
         }`}
       >
-        <button
-          type="button"
-          aria-label="Search by image"
-          className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-border bg-surface text-muted hover:text-foreground hover:border-foreground/30 transition-all cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
-        >
-          <Camera className="size-4 sm:size-[18px] stroke-[1.8]" />
-        </button>
+        <SearchField.SearchIcon className="ml-1 size-4 shrink-0 text-muted sm:size-[18px]" />
 
         <SearchField.Input
           placeholder={placeholder}
           onFocus={() => setIsSuggestionsOpen(true)}
+          onBlur={handleFocusOut}
           className="flex-1 min-w-0 bg-transparent border-0 outline-none text-sm sm:text-base text-foreground placeholder:text-muted tracking-[-0.031em] w-full font-normal px-2 sm:px-3"
-        />
-
-        <SearchField.ClearButton
-          aria-label="Clear search"
-          className="size-8 shrink-0 text-muted hover:text-foreground"
         />
 
         <Button
@@ -186,12 +215,14 @@ export function ShopSearchBar({
               <SearchField.Input
                 value={value}
                 onChange={(event) => setValue(event.target.value)}
+                onBlur={handleFocusOut}
                 placeholder={placeholder}
                 className="w-full h-14 rounded-full bg-surface px-5 text-base text-foreground shadow-lg outline-none border border-border"
               />
             </div>
           </div>
-      </>
-    </SearchField>
+        </>
+      </SearchField>
+    </div>
   );
 }
