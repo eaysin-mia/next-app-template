@@ -21,6 +21,8 @@ export function FloatingSearchBar({ className = "" }: FloatingSearchBarProps) {
         {isExpanded ? (
           <div className="w-full">
             <ShopSearchBar
+              autoFocus
+              openOnMount
               suggestionsPlacement="above"
               onRequestClose={() => setIsExpanded(false)}
             />

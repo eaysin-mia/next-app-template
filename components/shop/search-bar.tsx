@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchField, Button } from "@heroui/react";
 import { ArrowDown, ArrowRight, Camera, History, X } from "lucide-react";
 
@@ -15,6 +15,7 @@ export interface SearchBarProps {
   onSearch?: (query: string) => void;
   className?: string;
   autoFocus?: boolean;
+  openOnMount?: boolean;
   suggestionsPlacement?: "above" | "below";
   onRequestClose?: () => void;
 }
@@ -24,11 +25,12 @@ export function ShopSearchBar({
   onSearch,
   className = "",
   autoFocus = false,
+  openOnMount = false,
   suggestionsPlacement = "below",
   onRequestClose,
 }: SearchBarProps) {
   const [value, setValue] = useState("");
-  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
+  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(openOnMount);
   const suggestionPanelPosition =
     suggestionsPlacement === "above" ? "bottom-full mb-2" : "top-full mt-2";
 
@@ -36,6 +38,12 @@ export function ShopSearchBar({
     setIsSuggestionsOpen(false);
     onRequestClose?.();
   };
+
+  useEffect(() => {
+    if (openOnMount) {
+      setIsSuggestionsOpen(true);
+    }
+  }, [openOnMount]);
 
   const handleSubmit = (query: string) => {
     const normalizedQuery = query.trim();
