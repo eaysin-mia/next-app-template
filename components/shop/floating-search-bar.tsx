@@ -15,12 +15,15 @@ export function FloatingSearchBar({ className = "" }: FloatingSearchBarProps) {
   return (
     <div className={`w-full max-w-[510px] ${className}`}>
       <div className="hidden lg:block">
-        <ShopSearchBar />
+        <ShopSearchBar suggestionsPlacement="above" />
       </div>
       <div className="flex justify-end lg:hidden">
         {isExpanded ? (
           <div className="w-full">
-            <ShopSearchBar />
+            <ShopSearchBar
+              suggestionsPlacement="above"
+              onRequestClose={() => setIsExpanded(false)}
+            />
           </div>
         ) : (
           <Button
