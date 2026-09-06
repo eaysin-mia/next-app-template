@@ -79,7 +79,7 @@ export function CartView() {
 
   return (
     <PageContainer maxWidth="full" rightBleed>
-      <div className="w-full max-w-[1640px] pr-4 sm:pr-6 md:pr-8 lg:pr-10 flex flex-col">
+      <div className="w-full pr-4 sm:pr-6 md:pr-8 lg:pr-10 flex flex-col">
         {/* 1. Header with Breadcrumbs */}
         <PageContainer.Header title="Cart" breadcrumbs={breadcrumbs} />
 
