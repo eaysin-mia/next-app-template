@@ -57,14 +57,9 @@ export default function RootLayout({
               <div className="flex-1 w-full flex flex-col min-w-0 rounded-xl sm:rounded-2xl md:rounded-[28px] overflow-hidden shadow-sm border border-border">
                 <AppBanner />
 
-                <div className="flex-1 w-full flex flex-col min-w-0 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                  <main className="flex-1 w-full flex flex-col min-w-0">
-                    <Surface
-                      className="flex-1 w-full flex flex-col min-w-0 min-h-full"
-                      variant="secondary"
-                    >
-                      {children}
-                    </Surface>
+                <div className="flex-1 w-full flex flex-col min-w-0 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden bg-surface text-foreground">
+                  <main className="flex-1 w-full flex flex-col min-w-0 min-h-full">
+                    {children}
                   </main>
                 </div>
               </div>

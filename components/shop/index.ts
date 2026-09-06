@@ -7,3 +7,7 @@ export * from "./shop-wordmark";
 export * from "./category-grid";
 export * from "./product-rail";
 export * from "./carousel-nav-button";
+export * from "./category-header";
+export * from "./category-filter-bar";
+export * from "./filter-popover";
+export * from "./filter-drawer";
