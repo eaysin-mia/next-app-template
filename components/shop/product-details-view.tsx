@@ -45,6 +45,7 @@ import {
   Avatar,
   Chip,
   Separator,
+  ProgressBar,
   cn,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
@@ -599,25 +600,25 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
               </div>
             </div>
 
-            {/* Reviews Card Section */}
+            {/* Reviews Section */}
             <div
               id="reviews-section"
-              className="bg-surface rounded-2xl p-4 sm:p-5 border border-border/80 shadow-2xs flex flex-col gap-3.5 mt-1 text-foreground"
+              className="flex flex-col gap-3 pt-3.5 border-t border-border/60 text-foreground"
             >
-              <h3 className="text-[16px] font-semibold text-foreground leading-[1.38] tracking-[-0.5px]">
+              <p className="text-[16px] font-semibold text-foreground leading-[1.38] tracking-[-0.5px]">
                 Reviews
-              </h3>
+              </p>
 
               {/* Rating Overview & Histogram */}
-              <div className="flex items-center gap-4 sm:gap-5">
+              <div className="flex items-center gap-5 sm:gap-6">
                 {/* Score */}
                 <div className="flex flex-col items-start shrink-0">
-                  <span className="text-3xl sm:text-[32px] font-black text-foreground tracking-tight leading-none">
+                  <span className="text-[38px] sm:text-4xl font-extrabold text-foreground tracking-tight leading-none">
                     {product.reviewScore
                       ? product.reviewScore.toFixed(1)
                       : `${product.rating}.0`}
                   </span>
-                  <div className="flex items-center gap-0.5 text-warning text-xs mt-1.5">
+                  <div className="flex items-center gap-1 text-warning text-sm sm:text-[15px] mt-1.5">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <span
                         key={i}
@@ -629,18 +630,18 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                       </span>
                     ))}
                   </div>
-                  <span className="text-[11px] text-muted font-normal mt-1">
+                  <p className="text-[12px] font-normal text-muted leading-[1.33] tracking-[-0.2px] mt-1">
                     {product.reviewCount
                       ? product.reviewCount >= 1000
                         ? `${(product.reviewCount / 1000).toFixed(1)}K`
                         : product.reviewCount
                       : "14.8K"}{" "}
                     ratings
-                  </span>
+                  </p>
                 </div>
 
-                {/* Histogram bars */}
-                <div className="flex-1 flex flex-col gap-1.5">
+                {/* Histogram with HeroUI ProgressBar */}
+                <div className="flex-1 flex flex-col gap-2">
                   {[
                     { star: 5, pct: 85 },
                     { star: 4, pct: 12 },
@@ -648,16 +649,19 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                     { star: 2, pct: 1 },
                     { star: 1, pct: 0 },
                   ].map((item) => (
-                    <div key={item.star} className="flex items-center gap-2">
-                      <span className="text-[10px] text-muted font-medium w-2 shrink-0">
+                    <div key={item.star} className="flex items-center gap-2.5">
+                      <span className="text-xs font-medium text-foreground/80 w-2.5 shrink-0 text-left">
                         {item.star}
                       </span>
-                      <div className="flex-1 h-1 bg-surface-secondary rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-foreground rounded-full transition-all"
-                          style={{ width: `${item.pct}%` }}
-                        />
-                      </div>
+                      <ProgressBar
+                        aria-label={`${item.star} star ratings`}
+                        value={item.pct}
+                        className="flex-1"
+                      >
+                        <ProgressBar.Track className="h-1.5 bg-surface-secondary rounded-full overflow-hidden">
+                          <ProgressBar.Fill className="bg-foreground rounded-full transition-all" />
+                        </ProgressBar.Track>
+                      </ProgressBar>
                     </div>
                   ))}
                 </div>
@@ -697,7 +701,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                           {Array.from({ length: 5 }).map((_, i) => (
                             <span
                               key={i}
-                              className={`text-[10px] ${i < rev.rating ? "text-warning" : "text-muted/30"}`}
+                              className={`text-xs ${i < rev.rating ? "text-warning" : "text-muted/30"}`}
                             >
                               ★
                             </span>
@@ -711,13 +715,13 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                         <div className="flex items-center gap-1.5 mt-auto pt-1">
                           <Avatar
                             size="sm"
-                            className="size-4 text-[8px] font-bold bg-foreground text-background"
+                            className="size-5 text-[9px] font-bold bg-foreground text-background"
                           >
                             <Avatar.Fallback>
                               {rev.avatarInitial}
                             </Avatar.Fallback>
                           </Avatar>
-                          <span className="text-[10px] text-muted truncate">
+                          <span className="text-xs text-muted truncate">
                             <span className="font-semibold text-foreground">
                               {rev.author}
                             </span>{" "}
@@ -741,32 +745,32 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
             </div>
 
             {/* Delivery & Returns Section */}
-            <div className="bg-surface rounded-[24px] p-5 border border-border/80 shadow-2xs flex flex-col gap-4 mt-1 text-foreground">
-              <h3 className="text-sm sm:text-base font-bold text-foreground">
+            <div className="flex flex-col gap-3 pt-3.5 border-t border-border/60 text-foreground">
+              <p className="text-[16px] font-semibold text-foreground leading-[1.38] tracking-[-0.5px]">
                 Delivery & Returns
-              </h3>
+              </p>
 
-              <div className="flex flex-col gap-3 text-xs sm:text-sm text-muted">
+              <div className="flex flex-col gap-3 text-[14px] text-muted leading-[1.29]">
                 <div className="flex items-start gap-3">
                   <Truck className="size-4.5 text-foreground shrink-0 mt-0.5" />
                   <div className="flex flex-col">
-                    <span className="font-semibold text-foreground text-xs sm:text-sm">
+                    <span className="font-semibold text-foreground text-[14px]">
                       Standard Delivery
                     </span>
-                    <span className="text-muted mt-0.5 leading-relaxed">
+                    <span className="text-muted mt-0.5 leading-[1.29] text-[14px]">
                       Estimated delivery within 3–5 business days. Free shipping
                       on orders over BDT 5,000.
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 pt-3 border-t border-border/60">
+                <div className="flex items-start gap-3 pt-3 border-t border-border/40">
                   <RotateCcw className="size-4.5 text-foreground shrink-0 mt-0.5" />
                   <div className="flex flex-col">
-                    <span className="font-semibold text-foreground text-xs sm:text-sm">
+                    <span className="font-semibold text-foreground text-[14px]">
                       30-Day Hassle-Free Returns
                     </span>
-                    <span className="text-muted mt-0.5 leading-relaxed">
+                    <span className="text-muted mt-0.5 leading-[1.29] text-[14px]">
                       Not completely satisfied? Return unworn items within 30
                       days.{" "}
                       <button
@@ -936,36 +940,36 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
               </DrawerHeading>
 
               {/* Score + Histogram */}
-              <div className="flex items-center gap-4 sm:gap-5">
+              <div className="flex items-center gap-5 sm:gap-6">
                 {/* Score */}
                 <div className="flex flex-col shrink-0">
-                  <span className="text-3xl sm:text-[32px] font-black text-foreground leading-none tracking-tight">
+                  <span className="text-[38px] sm:text-4xl font-extrabold text-foreground leading-none tracking-tight">
                     {product.reviewScore
                       ? product.reviewScore.toFixed(1)
                       : `${product.rating}.0`}
                   </span>
-                  <div className="flex items-center gap-0.5 mt-1.5">
+                  <div className="flex items-center gap-1 mt-1.5">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <span
                         key={i}
-                        className={`text-xs ${i < product.rating ? "text-warning" : "text-muted/30"}`}
+                        className={`text-sm sm:text-[15px] ${i < product.rating ? "text-warning" : "text-muted/30"}`}
                       >
                         ★
                       </span>
                     ))}
                   </div>
-                  <span className="text-[11px] text-muted font-normal mt-0.5">
+                  <p className="text-[12px] font-normal text-muted leading-[1.33] tracking-[-0.2px] mt-1">
                     {product.reviewCount
                       ? product.reviewCount >= 1000
                         ? `${(product.reviewCount / 1000).toFixed(1)}K`
                         : product.reviewCount
                       : "14.8K"}{" "}
                     ratings
-                  </span>
+                  </p>
                 </div>
 
-                {/* Histogram */}
-                <div className="flex-1 flex flex-col gap-1.5">
+                {/* Histogram with HeroUI ProgressBar */}
+                <div className="flex-1 flex flex-col gap-2">
                   {[
                     { star: 5, pct: 85 },
                     { star: 4, pct: 12 },
@@ -973,16 +977,19 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                     { star: 2, pct: 1 },
                     { star: 1, pct: 0 },
                   ].map((item) => (
-                    <div key={item.star} className="flex items-center gap-2">
-                      <span className="text-[10px] text-muted font-medium w-2 shrink-0">
+                    <div key={item.star} className="flex items-center gap-2.5">
+                      <span className="text-xs font-medium text-foreground/80 w-2.5 shrink-0 text-left">
                         {item.star}
                       </span>
-                      <div className="flex-1 h-1 bg-surface-secondary rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-foreground rounded-full"
-                          style={{ width: `${item.pct}%` }}
-                        />
-                      </div>
+                      <ProgressBar
+                        aria-label={`${item.star} star ratings`}
+                        value={item.pct}
+                        className="flex-1"
+                      >
+                        <ProgressBar.Track className="h-1.5 bg-surface-secondary rounded-full overflow-hidden">
+                          <ProgressBar.Fill className="bg-foreground rounded-full transition-all" />
+                        </ProgressBar.Track>
+                      </ProgressBar>
                     </div>
                   ))}
                 </div>

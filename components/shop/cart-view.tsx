@@ -78,10 +78,22 @@ export function CartView() {
   ] as const;
 
   return (
-    <PageContainer maxWidth="full" rightBleed>
-      <div className="w-full pr-4 sm:pr-6 md:pr-8 lg:pr-10 flex flex-col">
-        {/* 1. Header with Breadcrumbs */}
-        <PageContainer.Header title="Cart" breadcrumbs={breadcrumbs} />
+    <PageContainer maxWidth="full">
+      {/* Centered Cart Container with Max-Width Constraint */}
+      <div className="w-full max-w-[1240px] mx-auto flex flex-col">
+        {/* 1. Header with Breadcrumbs & Action */}
+        <PageContainer.Header
+          title="Cart"
+          breadcrumbs={breadcrumbs}
+          actions={
+            <Link
+              href="/"
+              className="px-4 py-2 rounded-full bg-surface-secondary hover:bg-surface-tertiary border border-border/70 text-xs font-semibold text-foreground transition-all no-underline active:scale-[0.99]"
+            >
+              Continue shopping
+            </Link>
+          }
+        />
 
         <PageContainer.Body className="gap-6 sm:gap-8">
           {cartStores.length === 0 ? (
@@ -107,16 +119,16 @@ export function CartView() {
             </div>
           ) : (
             /* Store Groups & Summary Layout */
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start w-full">
               {/* Left Column: Store Cards */}
-              <div className="lg:col-span-8 flex flex-col gap-4 w-full">
+              <div className="lg:col-span-8 flex flex-col gap-5 w-full">
                 {cartStores.map((store) => (
                   <div
                     key={store.id}
-                    className="flex flex-col rounded-[22px] bg-surface border border-border/80 p-4 sm:p-5 shadow-xs transition-all hover:border-border"
+                    className="flex flex-col rounded-2xl bg-surface border border-border/80 p-5 sm:p-6 shadow-2xs transition-all"
                   >
                     {/* Store Title Bar */}
-                    <div className="flex items-center justify-between pb-3 border-b border-border/60">
+                    <div className="flex items-center justify-between pb-3.5 border-b border-border/60">
                       <div className="flex items-center gap-2.5">
                         <div
                           className={cn(
@@ -129,7 +141,7 @@ export function CartView() {
                         </div>
 
                         <div className="flex flex-col">
-                          <span className="text-xs font-bold text-foreground uppercase tracking-wide truncate">
+                          <span className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wide truncate">
                             {store.brand}
                           </span>
                           <span className="text-[11px] text-muted">
@@ -139,12 +151,9 @@ export function CartView() {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-1 text-xs text-muted">
-                        <span>Subtotal:</span>
-                        <span className="font-bold text-foreground">
-                          {store.subtotal}
-                        </span>
-                      </div>
+                      <span className="text-[11px] font-medium text-muted">
+                        Free shipping eligible
+                      </span>
                     </div>
 
                     {/* Items in this Store */}
@@ -152,7 +161,7 @@ export function CartView() {
                       {store.items.map((item) => (
                         <div
                           key={item.id}
-                          className="py-3.5 first:pt-0 last:pb-0 flex items-center gap-3 sm:gap-4"
+                          className="py-4 first:pt-3.5 last:pb-2 flex items-center gap-3.5 sm:gap-4"
                         >
                           <Link
                             href={
@@ -165,7 +174,7 @@ export function CartView() {
                             <span className="absolute -top-1.5 -left-1.5 z-10 size-5 rounded-full bg-surface-secondary border border-border/80 text-foreground font-bold text-[10px] flex items-center justify-center shadow-xs">
                               {item.quantity}
                             </span>
-                            <div className="size-14 sm:size-16 rounded-xl overflow-hidden bg-surface-secondary border border-border/50 transition-transform group-hover:scale-102">
+                            <div className="size-16 sm:size-18 rounded-xl overflow-hidden bg-surface-secondary border border-border/50 transition-transform group-hover:scale-102">
                               <img
                                 src={item.imageUrl}
                                 alt={item.title}
@@ -247,16 +256,24 @@ export function CartView() {
                       ))}
                     </div>
 
-                    {/* Bottom Checkout Button */}
-                    <div className="pt-2 border-t border-border/60">
+                    {/* Bottom Store Footer */}
+                    <div className="flex items-center justify-between pt-3.5 border-t border-border/60 mt-1">
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-xs text-muted">
+                          Store subtotal
+                        </span>
+                        <span className="font-bold text-foreground text-sm sm:text-base">
+                          {store.subtotal}
+                        </span>
+                      </div>
                       <button
                         type="button"
                         onClick={() =>
                           router.push(`/checkout?brand=${store.id}`)
                         }
-                        className="w-full py-2.5 rounded-full bg-surface-secondary hover:bg-surface-tertiary text-foreground border border-border/70 font-semibold text-xs transition-all text-center cursor-pointer active:scale-[0.99]"
+                        className="px-4 sm:px-5 py-2 rounded-full bg-surface-secondary hover:bg-surface-tertiary text-foreground border border-border/70 font-semibold text-xs transition-all cursor-pointer active:scale-[0.99]"
                       >
-                        Continue to checkout
+                        Check out with {store.brand}
                       </button>
                     </div>
                   </div>
@@ -264,7 +281,7 @@ export function CartView() {
               </div>
 
               {/* Right Column: Order Summary Card */}
-              <div className="lg:col-span-4 bg-surface rounded-[22px] border border-border/80 shadow-xs p-4 sm:p-5 flex flex-col gap-4 sticky top-6 select-none">
+              <div className="lg:col-span-4 bg-surface rounded-2xl border border-border/80 shadow-2xs p-5 sm:p-6 flex flex-col gap-4 sticky top-6 select-none">
                 <h2 className="text-sm font-bold text-foreground uppercase tracking-wide">
                   Order Summary
                 </h2>
@@ -288,7 +305,7 @@ export function CartView() {
                   </div>
                 </div>
 
-                <div className="border-t border-border/60 pt-3 flex flex-col gap-2">
+                <div className="border-t border-border/60 pt-3.5 flex flex-col gap-2">
                   <div className="flex justify-between items-baseline">
                     <span className="text-xs font-bold text-foreground uppercase">
                       Estimated Total
@@ -317,7 +334,7 @@ export function CartView() {
                       `/checkout?brand=${cartStores[0]?.id ?? "cart-flag-nor-fail"}`,
                     )
                   }
-                  className="w-full py-2.5 rounded-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-xs sm:text-sm transition-all text-center cursor-pointer active:scale-[0.99] shadow-xs"
+                  className="w-full py-3 rounded-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-sm transition-all text-center cursor-pointer active:scale-[0.99] shadow-xs mt-1"
                 >
                   Continue to checkout
                 </button>
@@ -328,7 +345,7 @@ export function CartView() {
       </div>
 
       {/* Bottom Recommendations */}
-      <section className="w-full mt-12 sm:mt-16">
+      <section className="w-full mt-14 sm:mt-20 pt-7">
         <ProductRail
           title="You might also like"
           products={BESTSELLER_PRODUCTS}
