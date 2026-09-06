@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
 import { Button, Chip, cn } from "@heroui/react";
 
@@ -38,7 +39,16 @@ export function ProductCard({
   onWishlistToggle,
   onClick,
 }: ProductCardProps) {
+  const router = useRouter();
   const [wishlisted, setWishlisted] = useState(false);
+
+  const handleCardClick = () => {
+    if (onClick) {
+      onClick(product);
+    } else {
+      router.push(`/products/${product.id || "m1-grey-syzygy"}`);
+    }
+  };
 
   const handleHeartClick = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -53,7 +63,7 @@ export function ProductCard({
 
   return (
     <div
-      onClick={() => onClick?.(product)}
+      onClick={handleCardClick}
       className={cn(
         "group flex flex-col shrink-0 select-none cursor-pointer min-w-0",
         className
