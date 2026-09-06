@@ -15,6 +15,7 @@ import {
   RotateCcw,
   Search,
   ThumbsUp,
+  Star,
 } from "lucide-react";
 import {
   Button,
@@ -310,78 +311,38 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
           </div>
 
           {/* RIGHT COLUMN: Dedicated content column */}
-          <div className="w-full lg:w-[400px] xl:w-[440px] shrink-0 flex flex-col gap-3.5 pt-0.5 pb-12 lg:pb-8">
-            {/* Brand Header & More Menu */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                {/* Brand Avatar with HeroUI Avatar */}
-                <Avatar
-                  size="sm"
-                  className="size-8 rounded-full bg-foreground text-background font-bold text-[9px] tracking-tight uppercase shrink-0"
-                >
-                  <Avatar.Fallback>{product.brandAvatarText}</Avatar.Fallback>
-                </Avatar>
-                <div className="flex flex-col whitespace-nowrap">
-                  <span className="text-xs sm:text-[13px] font-bold text-foreground uppercase tracking-wide leading-tight">
-                    {product.brand}
-                  </span>
-                  <span className="text-xs text-muted font-medium leading-tight">
-                    {product.brandRating}
-                  </span>
-                </div>
-              </div>
-
-              {/* Overflow Menu */}
-              <Dropdown>
-                <Button
-                  isIconOnly
-                  variant="ghost"
-                  size="sm"
-                  aria-label="More options"
-                  className="size-8 min-w-8 rounded-full text-muted hover:text-foreground hover:bg-surface-secondary cursor-pointer"
-                >
-                  <MoreHorizontal className="size-4" />
-                </Button>
-                <Dropdown.Popover className="rounded-2xl shadow-xl border border-border bg-surface text-foreground min-w-[160px] z-50 p-1">
-                  <Dropdown.Menu aria-label="Brand Actions">
-                    <Dropdown.Item
-                      id="visit-store"
-                      className="text-xs font-medium py-2 px-3 cursor-pointer"
-                    >
-                      Visit Store
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      id="copy-link"
-                      className="text-xs font-medium py-2 px-3 cursor-pointer"
-                    >
-                      Copy Link
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      id="report"
-                      className="text-xs font-medium py-2 px-3 cursor-pointer text-danger"
-                    >
-                      Report Item
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown.Popover>
-              </Dropdown>
-            </div>
+          <div className="w-full lg:w-[400px] xl:w-[440px] shrink-0 flex flex-col gap-6 pt-0.5 pb-12 lg:pb-8">
+     
 
             {/* Title & Star Ratings */}
-            <div className="flex flex-col gap-1.5">
-              <h1 className="text-[24px] font-semibold text-foreground tracking-[-1px] leading-[1.17] uppercase">
+            <div className="flex flex-col gap-3">
+              <h1 className="text-[24px] font-semibold text-foreground tracking-[-1px] leading-[1.17] uppercase text-pretty">
                 {product.title}
               </h1>
 
               {/* Ratings Row */}
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center text-warning text-xs tracking-tight">
-                  {"★".repeat(product.rating)}
+              <div className="flex items-center gap-2">
+                <div
+                  role="img"
+                  aria-label={`${product.rating} out of 5 stars`}
+                  className="flex items-center gap-0.5 text-warning"
+                >
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <Star
+                      key={index}
+                      aria-hidden="true"
+                      className={cn(
+                        "size-3.5 fill-current stroke-[1.5]",
+                        index >= product.rating &&
+                          "fill-transparent text-foreground/25",
+                      )}
+                    />
+                  ))}
                 </div>
                 <button
                   type="button"
                   onClick={scrollToReviews}
-                  className="text-xs text-muted font-medium underline underline-offset-4 hover:text-foreground transition-colors cursor-pointer ml-1"
+                  className="text-xs text-muted font-medium underline underline-offset-4 hover:text-foreground transition-colors cursor-pointer"
                 >
                   {product.reviewCount} ratings
                 </button>
@@ -410,7 +371,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
             </div>
 
             {/* Size Selection */}
-            <div className="flex flex-col gap-1.5 pt-0.5">
+            <div className="flex flex-col gap-2">
               <div className="text-xs font-bold text-foreground uppercase tracking-wider">
                 SIZE{" "}
                 <span className="font-extrabold">
@@ -428,7 +389,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                         key={sz.id}
                         type="button"
                         disabled
-                        className="rounded-full h-8 px-4 flex items-center justify-center bg-surface-secondary border border-transparent text-muted text-xs font-semibold uppercase cursor-not-allowed select-none"
+                        className="rounded-full h-8 px-3.5 flex items-center justify-center bg-surface-secondary border border-transparent text-muted text-xs font-semibold uppercase cursor-not-allowed select-none"
                       >
                         {sz.label.toUpperCase()}
                       </button>
@@ -441,7 +402,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                       type="button"
                       onClick={() => setSelectedSize(sz.label)}
                       className={cn(
-                        "rounded-full h-8 px-4 flex items-center justify-center text-xs font-semibold uppercase transition-colors duration-150 cursor-pointer focus:outline-none select-none border",
+                        "rounded-full h-8 px-3.5 flex items-center justify-center text-xs font-semibold uppercase transition-colors duration-150 cursor-pointer focus:outline-none select-none border",
                         isSelected
                           ? "bg-surface border-foreground text-foreground shadow-2xs font-bold"
                           : "bg-surface border-border text-muted hover:text-foreground hover:border-border/80",
@@ -455,15 +416,15 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
             </div>
 
             {/* Quantity Selector */}
-            <div className="flex flex-col gap-1.5 pt-0.5">
+            <div className="flex flex-col gap-2">
               <span className="text-xs sm:text-sm font-bold text-foreground">
                 Quantity
               </span>
-              <div className="bg-surface-secondary rounded-full px-3.5 py-1.5 flex items-center gap-3.5 w-fit select-none border border-border/50">
+              <div className="h-10 bg-surface-secondary rounded-full p-1 flex items-center gap-1 w-fit select-none border border-border/50 overflow-hidden">
                 <button
                   type="button"
                   onClick={() => handleQuantityChange(-1)}
-                  className="text-muted hover:text-foreground font-bold text-base px-1 focus:outline-none cursor-pointer"
+                  className="size-8 flex items-center justify-center rounded-full text-muted hover:text-foreground hover:bg-surface font-bold text-base focus:outline-none cursor-pointer"
                   aria-label="Decrease quantity"
                 >
                   -
@@ -474,7 +435,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                 <button
                   type="button"
                   onClick={() => handleQuantityChange(1)}
-                  className="text-muted hover:text-foreground font-bold text-base px-1 focus:outline-none cursor-pointer"
+                  className="size-8 flex items-center justify-center rounded-full text-muted hover:text-foreground hover:bg-surface font-bold text-base focus:outline-none cursor-pointer"
                   aria-label="Increase quantity"
                 >
                   +
@@ -483,13 +444,13 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
             </div>
 
             {/* Main Action CTAs */}
-            <div className="flex flex-col gap-2.5 pt-1">
+            <div className="flex flex-col gap-3 pt-1">
               {/* Add to Cart */}
               <Button
                 size="lg"
                 onPress={handleAddToCart}
                 className={cn(
-                  "w-full rounded-full font-bold text-sm sm:text-base py-3 sm:py-3.5 shadow-xs transition-all duration-200 cursor-pointer",
+                  "w-full min-h-11 rounded-full font-bold text-sm sm:text-base shadow-xs transition-all duration-200 cursor-pointer",
                   isAddedToCart
                     ? "bg-success text-success-foreground"
                     : "bg-accent hover:bg-accent/90 active:scale-[0.99] text-accent-foreground",
@@ -507,7 +468,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
               {/* Buy Now */}
               <Button
                 size="lg"
-                className="w-full bg-foreground hover:bg-foreground/90 active:scale-[0.99] text-background font-bold text-sm sm:text-base py-3 sm:py-3.5 rounded-full shadow-xs cursor-pointer"
+                className="w-full min-h-11 bg-foreground hover:bg-foreground/90 active:scale-[0.99] text-background font-bold text-sm sm:text-base rounded-full shadow-xs cursor-pointer"
               >
                 Buy now
               </Button>
