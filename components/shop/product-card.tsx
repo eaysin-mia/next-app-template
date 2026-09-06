@@ -27,6 +27,7 @@ export interface ProductCardProps {
   onWishlistToggle?: (id: string, isWishlisted: boolean) => void;
   onClick?: (product: ProductItem) => void;
   isWishlisted?: boolean;
+  minimal?: boolean;
 }
 
 /**
@@ -42,6 +43,7 @@ export function ProductCard({
   onWishlistToggle,
   onClick,
   isWishlisted,
+  minimal = false,
 }: ProductCardProps) {
   const router = useRouter();
   const [wishlisted, setWishlisted] = useState(
@@ -78,7 +80,7 @@ export function ProductCard({
       {/* 1. 1:1 Product Image Container on HeroUI secondary surface */}
       <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-surface-secondary flex items-center justify-center">
         {/* Optional Promo Badge with HeroUI Chip */}
-        {product.badge && (
+        {!minimal && product.badge && (
           <Chip
             size="sm"
             variant="secondary"
@@ -137,7 +139,7 @@ export function ProductCard({
         </h3>
 
         {/* Rating Row */}
-        {product.rating !== undefined && product.rating > 0 && (
+        {!minimal && product.rating !== undefined && product.rating > 0 && (
           <div className="flex items-center gap-1 pt-0.5">
             <div className="flex items-center text-foreground/70 text-[11px] leading-none tracking-tight">
               {"★".repeat(Math.min(5, Math.floor(product.rating)))}

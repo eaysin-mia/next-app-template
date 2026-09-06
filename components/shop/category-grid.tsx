@@ -65,20 +65,21 @@ export function CategoryGrid({ categories = CATEGORY_GRIDS, className = "" }: Ca
             </div>
           </div>
         ))}
+        <div className="shrink-0 w-4 sm:w-6 md:w-8 lg:w-10 pointer-events-none" aria-hidden="true" />
       </div>
 
       {canScrollRight && (
         <CarouselNavButton
           direction="right"
           onPress={() => scroll("right")}
-          className="top-[58%]"
+          className="top-[58%] right-4 sm:right-6 md:right-8"
         />
       )}
       {canScrollLeft && (
         <CarouselNavButton
           direction="left"
           onPress={() => scroll("left")}
-          className="top-[58%]"
+          className="top-[58%] left-4 sm:left-6 md:left-8"
         />
       )}
     </div>
