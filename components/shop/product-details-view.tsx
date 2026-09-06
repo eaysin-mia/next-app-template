@@ -181,13 +181,13 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
   };
 
   return (
-    <PageContainer maxWidth="full" rightBleed>
-      {/* Bounded Top Content */}
-      <div className="w-full max-w-[1640px] pr-4 sm:pr-6 md:pr-8 lg:pr-10 flex flex-col">
-        {/* Main 2-Section Balanced Layout: Gallery (Left) + Details Column (Right) */}
-        <div className="flex flex-col lg:flex-row items-start justify-center gap-6 sm:gap-8 lg:gap-10 xl:gap-14 w-full">
-          {/* LEFT GALLERY: Thumbnails + Left Arrow + Main Hero Image + Right Arrow */}
-          <div className="w-full lg:flex-1 flex flex-col lg:flex-row items-center lg:items-center justify-center lg:justify-end lg:sticky lg:top-8 self-start shrink-0 min-w-0">
+    <PageContainer maxWidth="full">
+      {/* Centered content block with max-width cap */}
+      <div className="w-full max-w-[1280px] mx-auto flex flex-col">
+        {/* Main 2-Column Layout: Gallery (Left) + Details Column (Right) */}
+        <div className="flex flex-col lg:flex-row items-start gap-6 sm:gap-8 lg:gap-10 xl:gap-12 w-full">
+          {/* LEFT GALLERY: Thumbnails + Arrows + Main Hero Image */}
+          <div className="w-full lg:flex-1 flex flex-col lg:flex-row items-center justify-center lg:sticky lg:top-8 self-start min-w-0">
             {/* 1. Proportional Vertical Thumbnail Strip (8 items) - Desktop Only */}
             <div className="hidden lg:flex flex-col gap-2 shrink-0 py-0.5">
               {gallery.slice(0, 8).map((img, idx) => {
@@ -300,7 +300,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
           </div>
 
           {/* RIGHT COLUMN: Dedicated content column */}
-          <div className="w-full lg:w-[420px] xl:w-[450px] shrink-0 flex flex-col gap-3.5 pt-0.5 pb-12 lg:pb-8">
+          <div className="w-full lg:w-[400px] xl:w-[440px] shrink-0 flex flex-col gap-3.5 pt-0.5 pb-12 lg:pb-8">
             {/* Brand Header & More Menu */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">

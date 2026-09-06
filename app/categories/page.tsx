@@ -198,7 +198,7 @@ export default function BrowseCategoriesPage() {
   return (
     <PageContainer maxWidth="full" rightBleed>
       {/* Category Grid bounded with right padding */}
-      <div className="w-full max-w-[1640px] pr-4 sm:pr-6 md:pr-8 lg:pr-10 flex flex-col pt-2 sm:pt-4">
+      <div className="w-full pr-4 sm:pr-6 md:pr-8 lg:pr-10 flex flex-col pt-2 sm:pt-4">
         {/* Header */}
         <PageContainer.Header title="Explore" breadcrumbs={breadcrumbs} />
 

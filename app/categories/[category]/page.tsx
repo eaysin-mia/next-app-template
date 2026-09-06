@@ -87,7 +87,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   }, [filters, searchQuery]);
 
   return (
-    <PageContainer>
+    <PageContainer maxWidth="full">
       {/* 1. Header Bar: Breadcrumbs in middle, Title and Search */}
       <PageContainer.Header
         title={categoryTitle}
