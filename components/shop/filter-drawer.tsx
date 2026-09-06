@@ -111,7 +111,7 @@ export function FilterDrawer({
         >
           <DrawerDialog className="p-0 flex flex-col h-full w-[310px] sm:w-[330px] max-w-[calc(100vw-5rem)] bg-surface text-foreground shadow-2xl border-r border-border rounded-r-[28px] overflow-hidden pointer-events-auto outline-none">
             {/* Drawer Header */}
-            <DrawerHeader className="relative flex flex-row items-center justify-between px-6 py-4 shrink-0 border-b border-border">
+            <DrawerHeader className="relative flex flex-row items-center justify-between px-6 pt-5 pb-3 shrink-0 border-b border-border">
               <DrawerHeading className="text-base font-bold tracking-tight text-foreground">
                 Filters
               </DrawerHeading>
@@ -143,7 +143,7 @@ export function FilterDrawer({
                         <span
                           className={cn(
                             "text-xs sm:text-sm font-medium transition-colors",
-                            isSelected ? "text-foreground font-semibold" : "text-foreground/80"
+                            isSelected ? "text-foreground font-semibold" : "text-muted hover:text-foreground"
                           )}
                         >
                           {opt.label}
@@ -177,9 +177,9 @@ export function FilterDrawer({
                     Color
                   </h3>
                   {isColorOpen ? (
-                    <Minus className="size-4 text-foreground/70" />
+                    <Minus className="size-3.5 text-muted" />
                   ) : (
-                    <Plus className="size-4 text-foreground/70" />
+                    <Plus className="size-3.5 text-muted" />
                   )}
                 </button>
                 {isColorOpen && (
@@ -192,7 +192,7 @@ export function FilterDrawer({
                           type="button"
                           onClick={() => setLocalFilters({ ...localFilters, color: c })}
                           className={cn(
-                            "px-3.5 py-1.5 rounded-full text-xs font-medium border transition-all cursor-pointer",
+                            "px-3.5 py-1 rounded-full text-xs font-medium border transition-all cursor-pointer",
                             isSelected
                               ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
                               : "bg-surface-secondary text-foreground border-border hover:bg-surface-tertiary"
@@ -219,9 +219,9 @@ export function FilterDrawer({
                     Size
                   </h3>
                   {isSizeOpen ? (
-                    <Minus className="size-4 text-foreground/70" />
+                    <Minus className="size-3.5 text-muted" />
                   ) : (
-                    <Plus className="size-4 text-foreground/70" />
+                    <Plus className="size-3.5 text-muted" />
                   )}
                 </button>
                 {isSizeOpen && (
@@ -234,7 +234,7 @@ export function FilterDrawer({
                           type="button"
                           onClick={() => setLocalFilters({ ...localFilters, size: sz })}
                           className={cn(
-                            "px-3.5 py-1.5 rounded-full text-xs font-medium border transition-all cursor-pointer",
+                            "px-3.5 py-1 rounded-full text-xs font-medium border transition-all cursor-pointer",
                             isSelected
                               ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
                               : "bg-surface-secondary text-foreground border-border hover:bg-surface-tertiary"
@@ -348,7 +348,7 @@ export function FilterDrawer({
                           <span
                             className={cn(
                               "text-xs sm:text-sm font-medium transition-colors",
-                              isSelected ? "text-foreground font-semibold" : "text-foreground/80"
+                              isSelected ? "text-foreground font-semibold" : "text-muted hover:text-foreground"
                             )}
                           >
                             {opt.label}
