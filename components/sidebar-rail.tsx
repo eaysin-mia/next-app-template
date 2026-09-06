@@ -17,7 +17,7 @@ export function SidebarNavRail() {
 
   return (
     <>
-      <aside className="fixed top-0 left-0 z-30 hidden h-screen w-[64px] flex-col items-center justify-between bg-background py-4 md:flex">
+      <aside className="fixed top-0 left-0 z-[60] hidden h-screen w-[64px] flex-col items-center justify-between bg-background py-4 md:flex">
         <Link href="/" className="group flex flex-col items-center no-underline pt-1">
           <div className="flex size-9 items-center justify-center rounded-full bg-accent text-base font-semibold text-accent-foreground shadow-sm transition-transform group-hover:scale-105">
             d
