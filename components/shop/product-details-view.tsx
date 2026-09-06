@@ -704,7 +704,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                           ))}
                         </div>
                         {/* Text */}
-                        <p className="text-[11px] text-foreground/90 leading-[1.35] line-clamp-4 font-normal">
+                        <p className="text-[13px] sm:text-[14px] font-normal text-foreground leading-[1.29] tracking-[-0.2px] line-clamp-4">
                           {rev.text}
                         </p>
                         {/* Footer */}
@@ -1227,7 +1227,7 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
                       )}
 
                       {/* Review body */}
-                      <p className="text-xs text-foreground leading-relaxed font-normal">
+                      <p className="text-[14px] font-normal text-foreground leading-[1.29] tracking-[-0.2px]">
                         {rev.text}
                       </p>
 
