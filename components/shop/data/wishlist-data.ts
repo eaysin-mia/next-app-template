@@ -7,7 +7,8 @@ export const INITIAL_SAVED_PRODUCTS: ProductItem[] = [
     title: "Freesia Gown - Saffron",
     price: "BDT 125,300.00",
     variant: "Saffron / 00",
-    imageSrc: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=80",
+    imageSrc:
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=80",
     isWishlisted: true,
   },
   {
@@ -18,7 +19,8 @@ export const INITIAL_SAVED_PRODUCTS: ProductItem[] = [
     reviewCount: 5,
     price: "BDT 87,300.00",
     variant: "Geode / 6",
-    imageSrc: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&auto=format&fit=crop&q=80",
+    imageSrc:
+      "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&auto=format&fit=crop&q=80",
     isWishlisted: true,
   },
   {
@@ -29,7 +31,8 @@ export const INITIAL_SAVED_PRODUCTS: ProductItem[] = [
     reviewCount: 392,
     price: "$30.00",
     variant: "2-Pack",
-    imageSrc: "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600&auto=format&fit=crop&q=80",
+    imageSrc:
+      "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600&auto=format&fit=crop&q=80",
     isWishlisted: true,
   },
 ];
