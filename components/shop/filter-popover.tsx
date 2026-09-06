@@ -3,9 +3,10 @@
 import React from "react";
 import { ChevronDown } from "lucide-react";
 import {
-  Popover,
+  PopoverRoot,
   PopoverTrigger,
   PopoverContent,
+  PopoverDialog,
   Button,
   cn,
 } from "@heroui/react";
@@ -46,19 +47,16 @@ export function FilterPopover({
   };
 
   return (
-    <Popover
-      isOpen={isPopoverOpen}
-      onOpenChange={setIsPopoverOpen}
-    >
+    <PopoverRoot isOpen={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
       <PopoverTrigger>
         <Button
           size="sm"
           variant={isActive ? "primary" : "outline"}
           className={cn(
-            "rounded-full px-4 h-9 font-medium text-xs sm:text-sm transition-all shadow-xs gap-1.5 cursor-pointer",
+            "rounded-full px-4 h-9 font-medium text-xs sm:text-sm shrink-0 transition-all shadow-xs gap-1.5 cursor-pointer",
             isActive
               ? "bg-foreground text-background border-transparent font-semibold"
-              : "bg-surface text-foreground border-border hover:bg-surface-secondary"
+              : "bg-surface text-foreground border border-border hover:bg-surface-secondary"
           )}
         >
           <span>{valueLabel || label}</span>
@@ -66,17 +64,19 @@ export function FilterPopover({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="p-0 rounded-2xl shadow-xl border border-border bg-surface text-foreground overflow-hidden min-w-[260px]">
-        <div className="flex flex-col p-4 w-full">
-          <div className="flex flex-col gap-2.5 mb-4">{children}</div>
+      <PopoverContent className="p-0 rounded-2xl shadow-xl border border-border bg-surface text-foreground overflow-hidden min-w-[280px] sm:min-w-[300px] z-50">
+        <PopoverDialog className="p-5 flex flex-col gap-3.5 outline-none">
+          <div className="flex flex-col gap-1.5">{children}</div>
+
+          <div className="h-px w-full bg-border my-1" />
 
           {/* Action Buttons Row */}
-          <div className="flex items-center gap-2 pt-2 border-t border-border mt-1">
+          <div className="flex items-center gap-2 pt-1">
             <Button
               size="sm"
               variant="tertiary"
               onPress={handleReset}
-              className="flex-1 rounded-full bg-surface-secondary text-foreground hover:bg-surface-tertiary font-medium text-xs h-9 cursor-pointer"
+              className="flex-1 rounded-full bg-surface-secondary text-foreground hover:bg-surface-tertiary font-semibold text-xs sm:text-sm h-9 cursor-pointer transition-colors"
             >
               Reset
             </Button>
@@ -84,13 +84,13 @@ export function FilterPopover({
               size="sm"
               variant="primary"
               onPress={handleDone}
-              className="flex-1 rounded-full bg-foreground text-background hover:opacity-90 font-medium text-xs h-9 cursor-pointer"
+              className="flex-1 rounded-full bg-foreground text-background hover:opacity-90 font-semibold text-xs sm:text-sm h-9 cursor-pointer transition-opacity"
             >
               Done
             </Button>
           </div>
-        </div>
+        </PopoverDialog>
       </PopoverContent>
-    </Popover>
+    </PopoverRoot>
   );
 }

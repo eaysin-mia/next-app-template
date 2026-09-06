@@ -4,6 +4,7 @@ import React from "react";
 import { X, Plus, Minus, Star } from "lucide-react";
 import {
   Button,
+  Switch,
   cn,
   DrawerRoot,
   DrawerBackdrop,
@@ -50,7 +51,19 @@ const RATING_OPTIONS = [
   { value: 1, stars: 1 },
 ];
 
-const COLOR_OPTIONS = ["All", "Black", "Blue", "Brown", "Burgundy", "Navy"];
+const COLOR_OPTIONS = [
+  { id: "All", label: "All", bg: "bg-surface-secondary border border-border" },
+  { id: "Black", label: "Black", bg: "bg-black" },
+  { id: "Silver", label: "Silver", bg: "bg-slate-300 border border-slate-400/40" },
+  { id: "White", label: "White", bg: "bg-white border border-border" },
+  { id: "Blue", label: "Blue", bg: "bg-blue-600" },
+  { id: "Grey", label: "Grey", bg: "bg-slate-400" },
+  { id: "Red", label: "Red", bg: "bg-red-600" },
+  { id: "Gold", label: "Gold", bg: "bg-amber-400" },
+  { id: "Burgundy", label: "Burgundy", bg: "bg-rose-900" },
+  { id: "Navy", label: "Navy", bg: "bg-slate-900" },
+];
+
 const SIZE_OPTIONS = ["All", "XS", "S", "M", "L", "XL", "XXL"];
 
 function RatingStarRow({ count }: { count: number }) {
@@ -109,7 +122,7 @@ export function FilterDrawer({
           placement="left"
           className="fixed inset-0 md:left-[64px] z-50 flex justify-start pointer-events-none"
         >
-          <DrawerDialog className="p-0 flex flex-col h-full w-[310px] sm:w-[330px] max-w-[calc(100vw-5rem)] bg-surface text-foreground shadow-2xl border-r border-border rounded-r-[28px] overflow-hidden pointer-events-auto outline-none">
+          <DrawerDialog className="p-0 flex flex-col h-full w-[320px] sm:w-[340px] max-w-[calc(100vw-5rem)] bg-surface text-foreground shadow-2xl border-r border-border rounded-r-[28px] overflow-hidden pointer-events-auto outline-none">
             {/* Drawer Header */}
             <DrawerHeader className="relative flex flex-row items-center justify-between px-6 pt-5 pb-3 shrink-0 border-b border-border">
               <DrawerHeading className="text-base font-bold tracking-tight text-foreground">
@@ -125,8 +138,28 @@ export function FilterDrawer({
 
             {/* Drawer Body Content */}
             <DrawerBody className="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden m-0">
+              {/* 0. On Sale HeroUI Switch */}
+              <div className="flex items-center justify-between py-1 pt-1">
+                <span className="text-xs sm:text-sm font-medium text-foreground">
+                  On sale items only
+                </span>
+                <Switch
+                  aria-label="On sale items only"
+                  isSelected={localFilters.onSale}
+                  onChange={(val) => setLocalFilters({ ...localFilters, onSale: val })}
+                >
+                  <Switch.Content>
+                    <Switch.Control>
+                      <Switch.Thumb />
+                    </Switch.Control>
+                  </Switch.Content>
+                </Switch>
+              </div>
+
+              <div className="h-px w-full bg-border" />
+
               {/* 1. Sort by Section */}
-              <div className="flex flex-col gap-2 pt-1">
+              <div className="flex flex-col gap-2">
                 <h3 className="text-xs font-semibold text-muted tracking-wider uppercase">
                   Sort by
                 </h3>
@@ -166,7 +199,7 @@ export function FilterDrawer({
 
               <div className="h-px w-full bg-border" />
 
-              {/* 2. Color Accordion */}
+              {/* 2. Color Accordion with Color Swatches */}
               <div className="flex flex-col gap-2">
                 <button
                   type="button"
@@ -183,22 +216,25 @@ export function FilterDrawer({
                   )}
                 </button>
                 {isColorOpen && (
-                  <div className="flex flex-wrap gap-1.5 pt-1 pb-1">
+                  <div className="flex flex-col gap-1 pt-1 pb-1">
                     {COLOR_OPTIONS.map((c) => {
-                      const isSelected = localFilters.color === c;
+                      const isSelected = localFilters.color === c.id;
                       return (
                         <button
-                          key={c}
+                          key={c.id}
                           type="button"
-                          onClick={() => setLocalFilters({ ...localFilters, color: c })}
-                          className={cn(
-                            "px-3.5 py-1 rounded-full text-xs font-medium border transition-all cursor-pointer",
-                            isSelected
-                              ? "bg-foreground text-background border-transparent font-semibold shadow-xs"
-                              : "bg-surface-secondary text-foreground border-border hover:bg-surface-tertiary"
-                          )}
+                          onClick={() => setLocalFilters({ ...localFilters, color: c.id })}
+                          className="flex items-center justify-between py-1.5 cursor-pointer text-left w-full group"
                         >
-                          {c}
+                          <div className="flex items-center gap-2.5">
+                            <span className={cn("size-3.5 rounded-full shrink-0 shadow-xs", c.bg)} aria-hidden="true" />
+                            <span className={cn("text-xs sm:text-sm font-medium transition-colors", isSelected ? "text-foreground font-semibold" : "text-muted hover:text-foreground")}>
+                              {c.label}
+                            </span>
+                          </div>
+                          <div className={cn("size-4.5 rounded-full border flex items-center justify-center transition-all shrink-0", isSelected ? "border-foreground bg-foreground text-background" : "border-border bg-surface")}>
+                            {isSelected && <div className="size-1.5 rounded-full bg-background" />}
+                          </div>
                         </button>
                       );
                     })}
