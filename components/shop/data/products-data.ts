@@ -435,3 +435,143 @@ export function getProductData(id?: string): ProductDetailData {
   }
   return PRODUCT_DETAILS_DATABASE["womens-ribbed-henley-tan"];
 }
+
+export interface RecommendedProduct {
+  id: string;
+  type?: "product" | "brand";
+  brand: string;
+  brandRating?: string;
+  title: string;
+  price?: string;
+  originalPrice?: string;
+  discountBadge?: string;
+  rating?: number;
+  reviewCount?: number;
+  imageUrl?: string;
+  thumbnails?: string[];
+}
+
+export const RECOMMENDED_PRODUCTS: RecommendedProduct[] = [
+  {
+    id: "rec-1",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMENS RIBBED HENLEY - BLACK",
+    price: "BDT 4,200.00",
+    originalPrice: "BDT 6,000.00",
+    discountBadge: "30% off",
+    rating: 5,
+    reviewCount: 41,
+    imageUrl: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-2",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMENS OVERSIZED CROP HOODIE - ACID...",
+    price: "BDT 9,800.00",
+    rating: 5,
+    reviewCount: 40,
+    imageUrl: "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-3",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMENS ESSENTIAL OVERSIZED TEE",
+    price: "BDT 4,500.00",
+    rating: 5,
+    reviewCount: 24,
+    imageUrl: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-4",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMENS RIBBED TANK - BLACK",
+    price: "BDT 5,300.00",
+    rating: 5,
+    reviewCount: 17,
+    imageUrl: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-5",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMENS RIBBED TANK - GREY",
+    price: "BDT 5,300.00",
+    rating: 5,
+    reviewCount: 5,
+    imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-6",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMEN'S HOODED FOREVER FLANNEL - ...",
+    price: "BDT 10,800.00",
+    rating: 5,
+    reviewCount: 42,
+    imageUrl: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-7",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "MEN'S HOODED FOREVER FLANNEL - DARK",
+    price: "BDT 10,800.00",
+    rating: 5,
+    reviewCount: 38,
+    imageUrl: "https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-8",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMEN'S HOODED FOREVER FLANNEL - RED",
+    price: "BDT 10,800.00",
+    rating: 5,
+    reviewCount: 29,
+    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-9",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMENS OVERSIZED CROPPED HOODIE - GREY",
+    price: "BDT 9,800.00",
+    rating: 5,
+    reviewCount: 35,
+    imageUrl: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-10",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMENS OVERSIZED BUTTON UP - BROWN",
+    price: "BDT 7,200.00",
+    rating: 5,
+    reviewCount: 14,
+    imageUrl: "https://images.unsplash.com/photo-1598554747436-c9293d6a588f?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-11",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMENS SHERPA FLEECE HALF ZIP - TAN",
+    price: "BDT 11,500.00",
+    rating: 5,
+    reviewCount: 52,
+    imageUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    id: "rec-12",
+    type: "product",
+    brand: "FLAG NOR FAIL",
+    title: "WOMENS ESSENTIAL OVERSIZED HOODIE - BONE",
+    price: "BDT 9,200.00",
+    rating: 5,
+    reviewCount: 68,
+    imageUrl: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80",
+  },
+];

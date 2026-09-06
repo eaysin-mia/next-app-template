@@ -33,13 +33,16 @@ import {
   ModalFooter,
   cn,
 } from "@heroui/react";
-import { getProductData } from "./data/products-data";
+import { useRouter } from "next/navigation";
+import { getProductData, RECOMMENDED_PRODUCTS } from "./data/products-data";
+import { ProductCard } from "./product-card";
 
 export interface ProductDetailsViewProps {
   productId?: string;
 }
 
 export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
+  const router = useRouter();
   const product = getProductData(productId);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(
@@ -60,6 +63,14 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
 
   const [isReturnPolicyOpen, setIsReturnPolicyOpen] = useState(false);
   const [isReviewsOpen, setIsReviewsOpen] = useState(false);
+  const [likedItems, setLikedItems] = useState<string[]>([]);
+  const [isFollowingBrand, setIsFollowingBrand] = useState(false);
+
+  const toggleLikeItem = (id: string) => {
+    setLikedItems((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
 
   const gallery = product.galleryImages;
   const activeImage = gallery[selectedImageIndex] || gallery[0];
@@ -81,14 +92,6 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
     setTimeout(() => setIsAddedToCart(false), 2500);
   };
 
-  const contentScrollRef = useRef<HTMLDivElement>(null);
-
-  const handleWheelOverGallery = (e: React.WheelEvent) => {
-    if (contentScrollRef.current && typeof window !== "undefined" && window.innerWidth >= 1024) {
-      contentScrollRef.current.scrollTop += e.deltaY;
-    }
-  };
-
   const scrollToReviews = () => {
     const reviewsEl = document.getElementById("reviews-section");
     if (reviewsEl) {
@@ -97,15 +100,12 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
   };
 
   return (
-    <div className="w-full min-h-full pb-32 pt-8 sm:pt-12 lg:pt-16 px-4 sm:px-8 lg:px-12 xl:px-16 max-w-[1420px] mx-auto text-foreground flex flex-col justify-start">
+    <div className="w-full min-h-full pb-32 pt-6 sm:pt-8 lg:pt-8 px-4 sm:px-8 lg:px-12 xl:px-16 max-w-[1420px] mx-auto text-foreground flex flex-col justify-start">
       {/* Main 2-Section Balanced Layout: Gallery (Left) + Details Column (Right) */}
       <div className="flex flex-col lg:flex-row items-start justify-center gap-6 sm:gap-8 lg:gap-10 xl:gap-14 w-full">
         
         {/* LEFT GALLERY: Thumbnails + Left Arrow + Main Hero Image + Right Arrow */}
-        <div
-          onWheel={handleWheelOverGallery}
-          className="w-full lg:flex-1 flex flex-col lg:flex-row items-center lg:items-center justify-center lg:justify-end lg:sticky lg:top-8 self-start shrink-0 min-w-0"
-        >
+        <div className="w-full lg:flex-1 flex flex-col lg:flex-row items-center lg:items-center justify-center lg:justify-end lg:sticky lg:top-8 self-start shrink-0 min-w-0">
           
           {/* 1. Proportional Vertical Thumbnail Strip (8 items) - Desktop Only */}
           <div className="hidden lg:flex flex-col gap-2 shrink-0 py-0.5">
@@ -218,11 +218,8 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Dedicated scroll column on desktop */}
-        <div
-          ref={contentScrollRef}
-          className="w-full lg:w-[420px] xl:w-[450px] shrink-0 flex flex-col gap-3.5 pt-0.5 lg:max-h-[calc(100vh-140px)] lg:overflow-y-auto lg:pr-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-20 lg:pb-8 self-start"
-        >
+        {/* RIGHT COLUMN: Dedicated content column */}
+        <div className="w-full lg:w-[420px] xl:w-[450px] shrink-0 flex flex-col gap-3.5 pt-0.5 pb-12 lg:pb-8">
           
           {/* Brand Header & More Menu */}
           <div className="flex items-center justify-between">
@@ -585,6 +582,65 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
               </div>
             </div>
           </div>
+
+          {/* Brand Follow Banner */}
+          <div className="bg-black text-white rounded-2xl p-4 flex items-center justify-between mt-1 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center font-bold text-[9px] uppercase tracking-wider text-white">
+                {product.brandAvatarText}
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold uppercase tracking-wider text-white">
+                  {product.brand}
+                </span>
+                <span className="text-[11px] text-neutral-400 font-medium">
+                  {product.brandRating}
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsFollowingBrand(!isFollowingBrand)}
+              className={cn(
+                "text-xs font-semibold px-4 py-1.5 rounded-full transition-all cursor-pointer",
+                isFollowingBrand
+                  ? "bg-white/20 text-white border border-white/30 hover:bg-white/30"
+                  : "bg-white text-black hover:bg-neutral-100"
+              )}
+            >
+              {isFollowingBrand ? "Following" : "Follow"}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* "YOU MIGHT ALSO LIKE" SECTION */}
+      <div className="w-full mt-14 sm:mt-20 flex flex-col gap-6 pt-10 border-t border-slate-100">
+        <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight">
+          You might also like
+        </h2>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 sm:gap-4">
+          {RECOMMENDED_PRODUCTS.map((item) => (
+            <ProductCard
+              key={item.id}
+              product={{
+                id: item.id,
+                title: item.title,
+                brand: item.brand,
+                imageSrc: item.imageUrl || "",
+                price: item.price || "",
+                originalPrice: item.originalPrice,
+                badge: item.discountBadge,
+                rating: item.rating,
+                reviewCount: item.reviewCount,
+              }}
+              onClick={() => {
+                router.push(`/product/${item.id}`);
+              }}
+            />
+          ))}
         </div>
       </div>
 
