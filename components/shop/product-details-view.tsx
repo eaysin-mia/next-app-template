@@ -47,6 +47,7 @@ import {
 import { useRouter } from "next/navigation";
 import { getProductData, RECOMMENDED_PRODUCTS } from "./data/products-data";
 import { ProductCard } from "./product-card";
+import { ProductRail } from "./product-rail";
 
 export interface ProductDetailsViewProps {
   productId?: string;
@@ -672,33 +673,26 @@ export function ProductDetailsView({ productId }: ProductDetailsViewProps) {
       </div>
 
       {/* "YOU MIGHT ALSO LIKE" SECTION */}
-      <div className="w-full mt-14 sm:mt-20 flex flex-col gap-6 pt-10 border-t border-slate-100">
-        <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight">
-          You might also like
-        </h2>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 sm:gap-4">
-          {RECOMMENDED_PRODUCTS.map((item) => (
-            <ProductCard
-              key={item.id}
-              product={{
-                id: item.id,
-                title: item.title,
-                brand: item.brand,
-                imageSrc: item.imageUrl || "",
-                price: item.price || "",
-                originalPrice: item.originalPrice,
-                badge: item.discountBadge,
-                rating: item.rating,
-                reviewCount: item.reviewCount,
-              }}
-              onClick={() => {
-                router.push(`/product/${item.id}`);
-              }}
-            />
-          ))}
-        </div>
+      <div className="w-full mt-14 sm:mt-20 pt-10 border-t border-slate-100">
+        <ProductRail
+          title="You might also like"
+          products={RECOMMENDED_PRODUCTS.map((item) => ({
+            id: item.id,
+            title: item.title,
+            brand: item.brand,
+            imageSrc: item.imageUrl || "",
+            price: item.price || "",
+            originalPrice: item.originalPrice,
+            badge: item.discountBadge,
+            rating: item.rating,
+            reviewCount: item.reviewCount,
+          }))}
+          onProductClick={(p) => {
+            router.push(`/product/${p.id}`);
+          }}
+        />
       </div>
+
 
 
       {/* FLOATING SEARCH INPUT PILL AT BOTTOM CENTER */}

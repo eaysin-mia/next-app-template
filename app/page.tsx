@@ -2,8 +2,9 @@ import {
   HeroConstellation,
   ShopSearchBar,
   CategoryPills,
-  CategoryGrid,
   ProductRail,
+  CartCard,
+  IN_YOUR_CART_ITEMS,
 } from "@/components/shop";
 
 export default function Home() {
@@ -22,8 +23,17 @@ export default function Home() {
       </section>
 
       <section className="w-full px-6 sm:px-8 md:px-10 lg:px-12">
-        <ProductRail />
+        <ProductRail title="In your cart" headerHref="/cart">
+          {IN_YOUR_CART_ITEMS.map((item) => (
+            <CartCard key={item.id} item={item} />
+          ))}
+        </ProductRail>
+      </section>
+
+      <section className="w-full px-6 sm:px-8 md:px-10 lg:px-12">
+        <ProductRail title="Bestsellers" />
       </section>
     </div>
   );
 }
+

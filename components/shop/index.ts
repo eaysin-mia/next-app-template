@@ -12,4 +12,6 @@ export * from "./category-filter-bar";
 export * from "./filter-popover";
 export * from "./filter-drawer";
 export * from "./product-details-view";
+export * from "./in-your-cart-rail";
+export * from "./data";
 
