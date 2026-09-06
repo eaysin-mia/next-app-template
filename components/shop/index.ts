@@ -20,4 +20,5 @@ export * from "./checkout-view";
 export * from "./wishlist-view";
 export * from "./page-container";
 export * from "./recently-viewed-rail";
+export * from "./account-view";
 export * from "./data";
