@@ -171,7 +171,11 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
   const productHref = `/product/${primaryItem.productId || brandGroup.productId || "womens-ribbed-henley-tan"}`;
 
   return (
-    <PageContainer fullHeight maxWidth="full">
+    <PageContainer
+      fullHeight
+      maxWidth="full"
+      className="h-auto min-h-full overflow-y-auto overscroll-contain lg:h-full lg:overflow-hidden"
+    >
       {/* Mobile Top Collapsible Order Summary Bar */}
       <div className="lg:hidden border-b border-border/80 bg-surface-secondary/50 px-4 py-3.5 shrink-0">
         <button
@@ -272,10 +276,10 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
       </div>
 
       {/* Main 2-Column Split Layout - Fits screen height without scrolling */}
-      <div className="flex-1 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 h-full min-h-0 items-center overflow-hidden">
+      <div className="flex-1 w-full max-w-none mx-auto grid grid-cols-1 lg:grid-cols-2 h-auto lg:h-full min-h-0 items-start lg:items-center overflow-visible lg:overflow-hidden">
         {/* Left Column: Sign In or Signed-In Flow */}
-        <div className="lg:col-span-7 h-full flex flex-col justify-center items-center px-6 sm:px-10 lg:px-12 py-6 overflow-y-auto">
-          <div className="w-full max-w-[370px] flex flex-col items-center my-auto">
+        <div className="h-auto lg:h-full flex flex-col justify-start lg:justify-center items-center lg:items-end px-4 sm:px-10 lg:px-8 xl:px-10 py-6 lg:py-8 overflow-visible lg:overflow-y-auto">
+          <div className="w-full max-w-[460px] flex flex-col items-center my-auto">
             {/* Merchant Header Bar */}
             <div className="flex items-center justify-between w-full pb-3 mb-4 border-b border-border/60">
               <div className="flex items-center gap-2.5">
@@ -290,7 +294,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     {brandGroup.brandAvatarText}
                   </span>
                 </div>
-                <span className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wide">
+                <span className="text-sm font-bold text-foreground uppercase tracking-wide">
                   {brandGroup.brand}
                 </span>
               </div>
@@ -304,7 +308,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
             {/* 1. Sign In Step */}
             {step === "signin" && (
               <div className="w-full flex flex-col items-center">
-                <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight text-center">
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight text-center">
                   Sign in
                 </h1>
                 <p className="text-xs sm:text-sm text-muted text-center mt-1 font-normal">
@@ -395,15 +399,15 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
 
             {/* 2. Signed-In User Checkout View */}
             {step === "signedin" && (
-              <div className="w-full flex flex-col gap-3">
+              <div className="w-full flex flex-col gap-4">
                 {/* Account / Contact Card */}
-                <div className="p-3.5 rounded-xl border border-border/80 bg-surface flex items-center justify-between shadow-2xs">
+                <div className="p-4 rounded-xl border border-border/80 bg-surface flex items-center justify-between shadow-2xs">
                   <div className="flex items-center gap-2.5">
                     <div className="size-8 rounded-full bg-accent/15 text-accent font-bold text-xs flex items-center justify-center">
                       JM
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs sm:text-sm font-bold text-foreground">
+                      <span className="text-sm font-bold text-foreground">
                         Jane Morgan
                       </span>
                       <span className="text-xs text-muted">
@@ -421,9 +425,9 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 </div>
 
                 {/* Delivery Information Card */}
-                <div className="p-3.5 rounded-xl border border-border/80 bg-surface flex flex-col gap-2.5 shadow-2xs">
+                <div className="p-4 rounded-xl border border-border/80 bg-surface flex flex-col gap-3 shadow-2xs">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs font-bold text-foreground uppercase tracking-wide">
+                    <div className="flex items-center gap-2 text-sm font-bold text-foreground uppercase tracking-wide">
                       <MapPin className="size-3.5 text-muted" />
                       <span>Ship to</span>
                     </div>
@@ -436,7 +440,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     </button>
                   </div>
 
-                  <div className="flex flex-col text-xs text-muted leading-relaxed pl-5.5">
+                  <div className="flex flex-col text-sm text-muted leading-relaxed pl-5.5">
                     <span className="font-semibold text-foreground">
                       {shippingAddress.firstName} {shippingAddress.lastName}
                     </span>
@@ -448,7 +452,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                   </div>
 
                   {/* Delivery Method line */}
-                  <div className="pt-2 border-t border-border/50 flex items-center justify-between text-xs pl-5.5">
+                  <div className="pt-3 border-t border-border/50 flex items-center justify-between text-sm pl-5.5">
                     <div className="flex items-center gap-2">
                       <Truck className="size-3 text-muted" />
                       <span className="font-medium text-foreground">Standard Delivery (2–4 days)</span>
@@ -458,9 +462,9 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 </div>
 
                 {/* Payment Information Card */}
-                <div className="p-3.5 rounded-xl border border-border/80 bg-surface flex flex-col gap-2.5 shadow-2xs">
+                <div className="p-4 rounded-xl border border-border/80 bg-surface flex flex-col gap-3 shadow-2xs">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs font-bold text-foreground uppercase tracking-wide">
+                    <div className="flex items-center gap-2 text-sm font-bold text-foreground uppercase tracking-wide">
                       <CreditCard className="size-3.5 text-muted" />
                       <span>Payment</span>
                     </div>
@@ -473,7 +477,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs pl-5.5">
+                  <div className="flex items-center justify-between text-sm pl-5.5">
                     <div className="flex items-center gap-2">
                       <div className="px-1.5 py-0.5 rounded bg-accent text-accent-foreground font-extrabold text-[9px] tracking-tight">
                         {paymentMethod === "cod" ? "COD" : paymentMethodLabel.toUpperCase()}
@@ -488,7 +492,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-border/50 flex items-center gap-2 text-xs text-muted pl-5.5">
+                  <div className="pt-3 border-t border-border/50 flex items-center gap-2 text-sm text-muted pl-5.5">
                     <Check className="size-3 text-emerald-600 stroke-[3]" />
                     <span>
                       {paymentMethod === "cod"
@@ -499,7 +503,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 </div>
 
                 {/* SMS Updates Checkbox */}
-                <label className="flex items-center gap-2 text-xs text-muted cursor-pointer select-none px-0.5">
+                <label className="flex items-center gap-2 text-sm text-muted cursor-pointer select-none px-0.5">
                   <input
                     type="checkbox"
                     checked={optInSms}
@@ -513,7 +517,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 <button
                   type="button"
                   onClick={handleCompleteOrder}
-                  className="w-full h-11 rounded-full bg-accent hover:bg-accent/90 active:scale-[0.99] text-accent-foreground font-semibold text-sm transition-all shadow-xs cursor-pointer mt-1 flex items-center justify-center gap-2"
+                  className="w-full h-12 rounded-full bg-accent hover:bg-accent/90 active:scale-[0.99] text-accent-foreground font-semibold text-base transition-all shadow-xs cursor-pointer mt-1 flex items-center justify-center gap-2"
                 >
                   <Lock className="size-3.5" />
                   <span>
@@ -795,8 +799,8 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
         </div>
 
         {/* Right Column: Order Summary with Clickable Product View */}
-        <div className="hidden lg:flex lg:col-span-5 h-full border-l border-border/70 bg-surface-secondary/40 flex-col justify-center py-6 px-8 xl:px-12 overflow-y-auto">
-          <div className="w-full max-w-[370px] flex flex-col gap-4 my-auto">
+        <div className="hidden lg:flex lg:min-h-full border-l border-border/70 bg-surface-secondary/40 flex-col items-start justify-center py-8 px-4 sm:px-10 lg:px-8 xl:px-10 overflow-y-auto">
+          <div className="w-full max-w-[460px] flex flex-col gap-5 my-auto">
             {/* Clickable Product Line Item linking to Product View */}
             <div className="flex items-start justify-between gap-3.5">
               <Link
@@ -820,7 +824,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
 
                 {/* Product Title & Variant with hover affordance */}
                 <div className="flex flex-col pt-0.5 min-w-0">
-                  <span className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-tight leading-snug truncate group-hover:text-accent transition-colors flex items-center gap-1">
+                  <span className="text-sm font-bold text-foreground uppercase tracking-tight leading-snug truncate group-hover:text-accent transition-colors flex items-center gap-1">
                     {primaryItem.title}
                     <ExternalLink className="size-3 opacity-0 group-hover:opacity-60 transition-opacity" />
                   </span>
@@ -831,7 +835,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
               </Link>
 
               {/* Price */}
-              <span className="text-xs sm:text-sm font-semibold text-foreground whitespace-nowrap pt-0.5">
+              <span className="text-sm font-semibold text-foreground whitespace-nowrap pt-0.5">
                 {formatCurrency(baseSubtotal)}
               </span>
             </div>
@@ -867,7 +871,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
             </div>
 
             {/* Financial Breakdown */}
-            <div className="flex flex-col gap-2.5 pt-1 text-xs sm:text-sm">
+            <div className="flex flex-col gap-3 pt-1 text-sm">
               <div className="flex items-center justify-between">
                 <span className="text-muted font-normal">Subtotal</span>
                 <span className="font-semibold text-foreground">
@@ -898,12 +902,12 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
 
             {/* Total Row */}
             <div className="flex items-baseline justify-between pt-3 border-t border-border/70">
-              <span className="text-sm sm:text-base font-bold text-foreground">Total</span>
+              <span className="text-base sm:text-lg font-bold text-foreground">Total</span>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-xs text-muted font-normal">
                   {brandGroup.currencyCode}
                 </span>
-                <span className="text-lg font-bold text-foreground tracking-tight">
+                <span className="text-xl font-bold text-foreground tracking-tight">
                   {formatCurrency(totalValue)}
                 </span>
               </div>
