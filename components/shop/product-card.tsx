@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Heart } from "lucide-react";
+import { Heart, Star, StarHalf } from "lucide-react";
 import { Button, Chip, cn } from "@heroui/react";
 
 export interface ProductItem {
@@ -68,6 +68,9 @@ export function ProductCard({
   };
 
   const isContain = product.imageFit === "contain";
+  const rating = Math.min(5, Math.max(0, product.rating ?? 0));
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 >= 0.5;
 
   return (
     <div
@@ -141,14 +144,32 @@ export function ProductCard({
         </h3>
 
         {/* Rating Row */}
-        {!minimal && product.rating !== undefined && product.rating > 0 && (
+        {!minimal && rating > 0 && (
           <div className="flex items-center gap-1 pt-0.5">
-            <div className="flex items-center text-foreground/70 text-[12px] leading-[1.33] tracking-[-0.2px]">
-              {"★".repeat(Math.min(5, Math.floor(product.rating)))}
-              {"☆".repeat(Math.max(0, 5 - Math.floor(product.rating)))}
+            <div
+              role="img"
+              aria-label={`${rating} out of 5 stars${product.reviewCount !== undefined ? `, ${product.reviewCount} reviews` : ""}`}
+              className="flex items-center gap-0.5 text-warning"
+            >
+              {Array.from({ length: 5 }, (_, index) => {
+                const isFull = index < fullStars;
+                const isHalf = !isFull && index === fullStars && hasHalfStar;
+                const StarIcon = isHalf ? StarHalf : Star;
+
+                return (
+                  <StarIcon
+                    key={index}
+                    aria-hidden="true"
+                    className={cn(
+                      "size-3 fill-current stroke-[1.5]",
+                      !isFull && !isHalf && "fill-transparent text-foreground/25",
+                    )}
+                  />
+                );
+              })}
             </div>
             {product.reviewCount !== undefined && (
-              <p className="text-[12px] font-medium text-foreground leading-[1.33] tracking-[-0.2px]">
+              <p className="text-[11px] font-medium text-muted leading-[1.33] tracking-[-0.1px]">
                 ({product.reviewCount})
               </p>
             )}
