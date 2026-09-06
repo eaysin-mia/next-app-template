@@ -53,8 +53,8 @@ export default function RootLayout({
           <div className="relative flex h-full w-full overflow-hidden">
             <SidebarNavRail />
 
-            <div className="flex-1 w-full md:pl-[64px] p-1.5 sm:p-2 md:p-2.5 flex flex-col h-full min-w-0 overflow-hidden">
-              <div className="flex-1 w-full flex flex-col min-w-0 rounded-xl sm:rounded-2xl md:rounded-[28px] overflow-hidden shadow-sm border border-border">
+            <div className="flex-1 w-full md:pl-[64px] md:p-2.5 flex flex-col h-full min-w-0 overflow-hidden">
+              <div className="flex-1 w-full flex flex-col min-w-0 md:rounded-[28px] overflow-hidden md:shadow-sm md:border md:border-border">
                 <AppBanner />
 
                 <div className="flex-1 w-full flex flex-col min-w-0 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden bg-surface text-foreground">

@@ -98,10 +98,15 @@ export function PageHeader({
   className = "",
 }: PageHeaderProps) {
   return (
-    <header className={cn("w-full flex flex-col gap-2 mb-4 sm:mb-6", className)}>
+    <header
+      className={cn("w-full flex flex-col gap-2 mb-4 sm:mb-6", className)}
+    >
       {/* 1. Top Breadcrumbs (Middle Central) */}
       {breadcrumbs && breadcrumbs.length > 0 && (
-        <nav aria-label="Breadcrumb" className="flex items-center justify-center text-center gap-1.5 text-xs text-muted font-normal mb-1.5 w-full">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center justify-center text-center gap-1.5 text-xs text-muted font-normal mb-1.5 w-full"
+        >
           {breadcrumbs.map((crumb, index) => {
             const isLast = index === breadcrumbs.length - 1;
 
@@ -109,7 +114,10 @@ export function PageHeader({
               return (
                 <span
                   key={`${crumb.label}-${index}`}
-                  className={cn("truncate", isLast ? "text-foreground font-medium" : "text-muted")}
+                  className={cn(
+                    "truncate",
+                    isLast ? "text-foreground font-medium" : "text-muted",
+                  )}
                   aria-current={isLast ? "page" : undefined}
                 >
                   {crumb.label}
@@ -125,7 +133,10 @@ export function PageHeader({
                 >
                   {crumb.label}
                 </Link>
-                <ChevronRight className="size-3 text-muted/60 shrink-0" aria-hidden="true" />
+                <ChevronRight
+                  className="size-3 text-muted/60 shrink-0"
+                  aria-hidden="true"
+                />
               </React.Fragment>
             );
           })}
