@@ -21,11 +21,11 @@ export default function Home() {
         <CategoryPills />
       </section>
 
-      <section className="w-full pt-1 sm:pt-2 pl-6 sm:pl-8 md:pl-10 lg:pl-12">
+      <section className="w-full pt-1 sm:pt-2 px-6 sm:px-8 md:px-10 lg:px-12">
         <CategoryGrid />
       </section>
 
-      <section className="w-full pt-2 sm:pt-4 pl-6 sm:pl-8 md:pl-10 lg:pl-12">
+      <section className="w-full pt-2 sm:pt-4 px-6 sm:px-8 md:px-10 lg:px-12">
         <ProductRail />
       </section>
     </div>

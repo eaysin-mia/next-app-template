@@ -44,27 +44,29 @@ export default function RootLayout({
       <body
         suppressHydrationWarning
         className={clsx(
-          "min-h-screen bg-background text-foreground font-sans antialiased",
+          "h-screen w-screen overflow-hidden bg-background text-foreground font-sans antialiased",
           fontSans.className,
           fontSans.variable,
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-          <div className="relative flex min-h-screen">
+          <div className="relative flex h-full w-full overflow-hidden">
             <SidebarNavRail />
 
-            <div className="flex-1 w-full md:pl-[64px] p-0 md:p-2 flex flex-col min-h-screen min-w-0">
-              <div className="flex-1 w-full flex flex-col min-w-0 rounded-none md:rounded-2xl overflow-hidden shadow-xs">
+            <div className="flex-1 w-full md:pl-[64px] p-1.5 sm:p-2 md:p-2.5 flex flex-col h-full min-w-0 overflow-hidden">
+              <div className="flex-1 w-full flex flex-col min-w-0 rounded-xl sm:rounded-2xl md:rounded-[28px] overflow-hidden shadow-sm border border-border">
                 <AppBanner />
 
-                <main className="flex-1 w-full flex flex-col min-w-0">
-                  <Surface
-                    className="flex-1 w-full flex flex-col min-w-0"
-                    variant="secondary"
-                  >
-                    {children}
-                  </Surface>
-                </main>
+                <div className="flex-1 w-full flex flex-col min-w-0 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                  <main className="flex-1 w-full flex flex-col min-w-0">
+                    <Surface
+                      className="flex-1 w-full flex flex-col min-w-0 min-h-full"
+                      variant="secondary"
+                    >
+                      {children}
+                    </Surface>
+                  </main>
+                </div>
               </div>
             </div>
           </div>

@@ -56,7 +56,7 @@ export function CategoryGrid({ categories = CATEGORY_GRIDS, className = "" }: Ca
                     aria-hidden="true"
                   />
                   <div className="absolute bottom-0 inset-x-0 px-2 pb-2 pointer-events-none">
-                    <span className="text-white text-xs font-medium tracking-tight truncate block select-none drop-shadow-sm">
+                    <span className="text-white text-sm font-medium tracking-tight truncate block select-none drop-shadow-sm">
                       {tile.label}
                     </span>
                   </div>

@@ -49,7 +49,7 @@ export function SidebarNavRail() {
 
       <nav
         aria-label="Mobile Navigation"
-        className="fixed bottom-0 left-0 right-0 z-40 flex h-16 items-center justify-around bg-surface border-t border-black/5 px-4 pb-[max(env(safe-area-inset-bottom),0.5rem)] md:hidden rounded-t-[28px] shadow-[0_-4px_24px_rgba(0,0,0,0.08)]"
+        className="fixed bottom-0 left-0 right-0 z-40 flex h-16 items-center justify-around bg-surface border-t border-border px-4 pb-[max(env(safe-area-inset-bottom),0.5rem)] md:hidden rounded-t-[28px] shadow-[0_-4px_24px_rgba(0,0,0,0.08)]"
       >
         <MobileNavItem href="/" icon={Home} isActive={isHome} label="Home" />
         <MobileNavItem href="/categories" icon={Grid} isActive={isCategories} label="Categories" />
