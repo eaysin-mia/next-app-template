@@ -123,7 +123,7 @@ export function SidebarNavRail() {
       {/* Mobile Bottom Navigation Bar */}
       <nav
         aria-label="Mobile Navigation"
-        className="fixed bottom-0 left-0 right-0 z-40 flex h-16 items-center justify-around bg-surface/95 backdrop-blur-md border-t border-border px-3 pb-[max(env(safe-area-inset-bottom),0.5rem)] md:hidden rounded-t-[24px] shadow-[0_-4px_24px_rgba(0,0,0,0.06)]"
+        className="fixed bottom-0 left-0 right-0 z-40 flex min-h-16 h-auto items-center justify-around bg-surface/95 backdrop-blur-md border-t border-border px-3 pt-2 pb-[max(env(safe-area-inset-bottom),0.5rem)] md:hidden rounded-t-[24px] shadow-[0_-4px_24px_rgba(0,0,0,0.06)]"
       >
         <MobileNavItem href="/" icon={Home} isActive={isHome} label="Home" />
         <MobileNavItem

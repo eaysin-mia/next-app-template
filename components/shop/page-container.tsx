@@ -80,6 +80,10 @@ export function PageContainer({
       )}
     >
       {children}
+      <div
+        className="h-[calc(4rem+env(safe-area-inset-bottom))] min-h-[4rem] shrink-0 md:hidden"
+        aria-hidden="true"
+      />
     </div>
   );
 }
