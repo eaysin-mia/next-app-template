@@ -9,7 +9,7 @@ export const BESTSELLER_PRODUCTS: readonly ProductItem[] = [
     rating: 5,
     reviewCount: 85,
     price: "$50.00",
-    imageFit: "contain",
+    imageFit: "cover",
   },
   {
     id: "buck-mason-coat",
@@ -19,7 +19,7 @@ export const BESTSELLER_PRODUCTS: readonly ProductItem[] = [
     rating: 5,
     reviewCount: 25,
     price: "$268.00",
-    imageFit: "contain",
+    imageFit: "cover",
   },
   {
     id: "kith-salomon",
@@ -27,7 +27,7 @@ export const BESTSELLER_PRODUCTS: readonly ProductItem[] = [
     title: "Kith for Salomon XT-EVO - Black Coffee /...",
     imageSrc: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop&q=80",
     price: "BDT 25,400.00",
-    imageFit: "contain",
+    imageFit: "cover",
   },
   {
     id: "pool-house-jeans",
@@ -89,7 +89,7 @@ export const BESTSELLER_PRODUCTS: readonly ProductItem[] = [
     rating: 5,
     reviewCount: "8.9k",
     price: "$37.99",
-    imageFit: "contain",
+    imageFit: "cover",
   },
   {
     id: "vuori-short",
@@ -109,7 +109,7 @@ export const BESTSELLER_PRODUCTS: readonly ProductItem[] = [
     rating: 5,
     reviewCount: "2.4k",
     price: "$215.00",
-    imageFit: "contain",
+    imageFit: "cover",
   },
   {
     id: "on-cloud",
@@ -119,6 +119,6 @@ export const BESTSELLER_PRODUCTS: readonly ProductItem[] = [
     rating: 5,
     reviewCount: "6.7k",
     price: "$169.99",
-    imageFit: "contain",
+    imageFit: "cover",
   },
 ];
