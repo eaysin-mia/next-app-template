@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { SidebarNavRail } from "@/components/sidebar-rail";
 import { AppBanner } from "@/components/app-banner";
+import { GlobalSearchBar } from "@/components/global-search-bar";
 import { Surface } from "@heroui/react";
 
 export const metadata: Metadata = {
@@ -62,6 +63,7 @@ export default function RootLayout({
                     {children}
                   </main>
                 </div>
+                <GlobalSearchBar />
               </div>
             </div>
           </div>

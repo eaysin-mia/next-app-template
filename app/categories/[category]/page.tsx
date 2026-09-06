@@ -6,7 +6,6 @@ import {
   PageContainer,
   CategoryFilterBar,
   ProductCard,
-  ShopSearchBar,
   type FilterState,
 } from "@/components/shop";
 import {
@@ -152,10 +151,6 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         </div>
       </PageContainer.Body>
 
-      {/* 4. Bottom Pinned Floating Search Bar */}
-      <PageContainer.FloatingBar>
-        <ShopSearchBar />
-      </PageContainer.FloatingBar>
     </PageContainer>
   );
 }

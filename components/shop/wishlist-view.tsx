@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { PageContainer } from "./page-container";
 import { ProductCard, type ProductItem } from "./product-card";
-import { ShopSearchBar } from "./search-bar";
 import { ProductRail } from "./product-rail";
 import { INITIAL_SAVED_PRODUCTS } from "./data/wishlist-data";
 import { BESTSELLER_PRODUCTS } from "./data/products";
@@ -82,10 +81,6 @@ export function WishlistView() {
         />
       </section>
 
-      {/* 4. Bottom Sticky Floating Search Bar */}
-      <PageContainer.FloatingBar>
-        <ShopSearchBar />
-      </PageContainer.FloatingBar>
     </PageContainer>
   );
 }

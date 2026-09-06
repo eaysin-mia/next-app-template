@@ -2,7 +2,7 @@ import {
   PageContainer,
   PageBody,
   HeroConstellation,
-  ShopSearchBar,
+  HomeSearchBar,
   CategoryPills,
   ProductRail,
   CartCard,
@@ -19,10 +19,10 @@ export default function Home() {
           <HeroConstellation />
         </section>
 
-        {/* Search bar & Category pills centered */}
+        {/* Search bar & category pills centered */}
         <div className="w-full pr-4 sm:pr-6 md:pr-8 lg:pr-10 flex flex-col gap-6 lg:gap-8">
           <section className="w-full pt-2.5 flex justify-center">
-            <ShopSearchBar />
+            <HomeSearchBar />
           </section>
 
           <section className="w-full flex justify-center">

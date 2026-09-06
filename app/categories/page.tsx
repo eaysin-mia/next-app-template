@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { PageContainer, ProductRail, ShopSearchBar } from "@/components/shop";
+import { PageContainer, ProductRail } from "@/components/shop";
 
 interface CategoryTile {
   readonly label: string;
@@ -245,10 +245,6 @@ export default function BrowseCategoriesPage() {
         <ProductRail title="Top rated in home" bleed />
       </section>
 
-      {/* Sticky Bottom Search Bar */}
-      <PageContainer.FloatingBar>
-        <ShopSearchBar />
-      </PageContainer.FloatingBar>
     </PageContainer>
   );
 }

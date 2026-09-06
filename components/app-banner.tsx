@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export function AppBanner() {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/product")) {
+  if (pathname.startsWith("/product") || pathname.startsWith("/checkout")) {
     return null;
   }
   return (
