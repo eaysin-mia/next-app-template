@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ShoppingBag, Minus, Plus, ShieldCheck } from "lucide-react";
+import { ShoppingBag, Minus, Plus } from "lucide-react";
 import { cn } from "@heroui/react";
 import { IN_YOUR_CART_ITEMS } from "./data/cart-data";
 import type { CartBrandGroup } from "./data/cart-data";
@@ -281,11 +281,6 @@ export function CartView() {
             >
               Continue to checkout
             </button>
-
-            <div className="flex items-center justify-center gap-1.5 text-xs text-muted pt-0.5">
-              <ShieldCheck className="size-3.5 text-emerald-600" />
-              <span>Safe & Secure Checkout</span>
-            </div>
           </div>
         </div>
       )}
