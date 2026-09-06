@@ -69,7 +69,10 @@ export function PageContainer({
         fullHeight
           ? "h-full min-h-0 overflow-hidden"
           : cn(
-              "min-h-full pt-3 sm:pt-5 pb-44 sm:pb-56 lg:pb-64",
+              // Mobile default gets generous space; md+ overrides tighten to
+              // a value that still clears GlobalSearchBar (md:bottom-12 ~3rem +
+              // bar height ~3.5rem) with comfortable breathing room.
+              "min-h-full pt-3 sm:pt-5 pb-44 sm:pb-56 md:pb-28 lg:pb-36",
               rightBleed
                 ? "pl-4 sm:pl-6 md:pl-8 lg:pl-10 pr-0"
                 : "px-4 sm:px-6 md:px-8 lg:px-10",
@@ -78,8 +81,22 @@ export function PageContainer({
       )}
     >
       {children}
+      {/*
+       * Mobile dock clearance spacer (hidden on md+ where desktop sidebar
+       * and GlobalSearchBar positioning is handled purely by pb-28/pb-36).
+       *
+       * Height breakdown:
+       *   4rem  – SidebarNavRail bottom bar height
+       * + 1rem  – gap between dock top and floating search button bottom
+       * + 3rem  – FloatingSearchBar icon button height (size-12)
+       * = 8rem  + env(safe-area-inset-bottom)
+       *
+       * This guarantees the last piece of page content scrolls fully into view
+       * above both the mobile nav bar AND the floating search pill on every
+       * shop page without any per-page patches.
+       */}
       <div
-        className="h-[calc(4rem+env(safe-area-inset-bottom))] min-h-[4rem] shrink-0 md:hidden"
+        className="h-[calc(8rem+env(safe-area-inset-bottom))] min-h-32 shrink-0 md:hidden"
         aria-hidden="true"
       />
     </div>
