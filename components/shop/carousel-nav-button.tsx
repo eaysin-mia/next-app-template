@@ -34,19 +34,17 @@ export function CarouselNavButton({ direction, onPress, className }: CarouselNav
   return (
     <Button
       isIconOnly
-      size="sm"
-      variant="secondary"
       onPress={onPress}
       aria-label={ariaLabel}
       className={cn(
-        "absolute -translate-y-1/2 z-20 rounded-full bg-surface",
-        "shadow-[rgba(0,0,0,0.12)_0px_4px_24px_0px] border-0",
-        "transition-all duration-150 hover:scale-105 active:scale-95",
+        "absolute top-1/2 -translate-y-1/2 z-30 size-9 sm:size-10 min-w-9 sm:min-w-10 rounded-full",
+        "bg-surface text-foreground border border-border/60 shadow-md hover:shadow-lg",
+        "flex items-center justify-center cursor-pointer transition-all duration-150 hover:scale-105 active:scale-95",
         positionClass,
         className
       )}
     >
-      <Icon className="size-4 text-foreground stroke-[2.2]" aria-hidden="true" />
+      <Icon className="size-4.5 text-foreground stroke-[2.5]" aria-hidden="true" />
     </Button>
   );
 }

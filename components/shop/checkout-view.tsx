@@ -18,21 +18,22 @@ import {
   Truck,
 } from "lucide-react";
 import { cn } from "@heroui/react";
+import { PageContainer } from "./page-container";
 import { IN_YOUR_CART_ITEMS } from "./data/cart-data";
 import type { CartBrandGroup } from "./data/cart-data";
 
 export interface CheckoutViewProps {
-  initialBrandId?: string;
+  readonly initialBrandId?: string;
 }
 
 export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const brandParam = searchParams.get("brand") || initialBrandId || "cart-flag-nor-fail";
+  const brandParam = searchParams.get("brand") ?? initialBrandId ?? "cart-flag-nor-fail";
 
   // Selected brand group from cart data or fallback to FLAG NOR FAIL
   const brandGroup: CartBrandGroup =
-    IN_YOUR_CART_ITEMS.find((b) => b.id === brandParam) || IN_YOUR_CART_ITEMS[0];
+    IN_YOUR_CART_ITEMS.find((b) => b.id === brandParam) ?? IN_YOUR_CART_ITEMS[0];
 
   const [email, setEmail] = useState("");
   const [discountCode, setDiscountCode] = useState("");
@@ -114,7 +115,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
   const productHref = `/product/${primaryItem.productId || brandGroup.productId || "womens-ribbed-henley-tan"}`;
 
   return (
-    <div className="w-full h-full min-h-0 flex flex-col overflow-hidden bg-surface select-none">
+    <PageContainer fullHeight maxWidth="full">
       {/* Mobile Top Collapsible Order Summary Bar */}
       <div className="lg:hidden border-b border-border/80 bg-surface-secondary/50 px-4 py-3.5 shrink-0">
         <button
@@ -122,7 +123,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
           onClick={() => setShowMobileSummary(!showMobileSummary)}
           className="w-full flex items-center justify-between text-sm font-medium text-foreground cursor-pointer"
         >
-          <div className="flex items-center gap-2 text-[#2f5cf6] font-semibold">
+          <div className="flex items-center gap-2 text-accent font-semibold">
             <ShoppingBag className="size-4.5" />
             <span>{showMobileSummary ? "Hide order summary" : "Show order summary"}</span>
             {showMobileSummary ? (
@@ -158,7 +159,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-tight group-hover:text-[#2f5cf6] transition-colors">
+                  <span className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-tight group-hover:text-accent transition-colors">
                     {primaryItem.title}
                   </span>
                   <span className="text-xs text-muted uppercase mt-0.5">
@@ -260,14 +261,14 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl bg-[#f4f4f5] dark:bg-zinc-800/80 border border-transparent focus:border-blue-500 focus:bg-surface text-foreground text-sm placeholder:text-muted/80 outline-none transition-all shadow-2xs"
+                    className="w-full h-11 px-3.5 rounded-xl bg-surface-secondary border border-transparent focus:border-accent focus:bg-surface text-foreground text-sm placeholder:text-muted outline-none transition-all shadow-2xs"
                   />
 
                   <button
                     type="button"
                     onClick={handleContinueWithShop}
                     disabled={isProcessingShop}
-                    className="w-full h-11 rounded-full bg-[#2f5cf6] hover:bg-[#254edb] active:scale-[0.99] text-white font-semibold text-sm transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-75"
+                    className="w-full h-11 rounded-full bg-accent hover:bg-accent/90 active:scale-[0.99] text-accent-foreground font-semibold text-sm transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-75"
                   >
                     {isProcessingShop ? (
                       <span className="text-xs sm:text-sm">Connecting...</span>
@@ -316,7 +317,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                   <div className="mt-4 text-center flex items-center justify-center gap-2.5">
                     <Link
                       href="/cart"
-                      className="text-xs font-medium text-[#2f5cf6] hover:underline cursor-pointer"
+                      className="text-xs font-medium text-accent hover:underline cursor-pointer"
                     >
                       Back
                     </Link>
@@ -342,7 +343,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 {/* Account / Contact Card */}
                 <div className="p-3.5 rounded-xl border border-border/80 bg-surface flex items-center justify-between shadow-2xs">
                   <div className="flex items-center gap-2.5">
-                    <div className="size-8 rounded-full bg-blue-100 dark:bg-blue-950/60 text-[#2f5cf6] font-bold text-xs flex items-center justify-center">
+                    <div className="size-8 rounded-full bg-accent/15 text-accent font-bold text-xs flex items-center justify-center">
                       JM
                     </div>
                     <div className="flex flex-col">
@@ -357,7 +358,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                   <button
                     type="button"
                     onClick={() => setStep("signin")}
-                    className="text-xs font-semibold text-[#2f5cf6] hover:underline cursor-pointer"
+                    className="text-xs font-semibold text-accent hover:underline cursor-pointer"
                   >
                     Sign out
                   </button>
@@ -373,7 +374,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     <button
                       type="button"
                       onClick={() => setStep("shipping")}
-                      className="text-xs text-[#2f5cf6] hover:underline font-semibold cursor-pointer"
+                      className="text-xs text-accent hover:underline font-semibold cursor-pointer"
                     >
                       Change
                     </button>
@@ -410,7 +411,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     <button
                       type="button"
                       onClick={() => setStep("payment")}
-                      className="text-xs text-[#2f5cf6] hover:underline font-semibold cursor-pointer"
+                      className="text-xs text-accent hover:underline font-semibold cursor-pointer"
                     >
                       Change
                     </button>
@@ -438,7 +439,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                     type="checkbox"
                     checked={optInSms}
                     onChange={(e) => setOptInSms(e.target.checked)}
-                    className="size-3.5 rounded accent-[#2f5cf6] cursor-pointer"
+                    className="size-3.5 rounded accent-accent cursor-pointer"
                   />
                   <span>Text me with news and order updates</span>
                 </label>
@@ -447,7 +448,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 <button
                   type="button"
                   onClick={handleCompleteOrder}
-                  className="w-full h-11 rounded-full bg-[#2f5cf6] hover:bg-[#254edb] active:scale-[0.99] text-white font-semibold text-sm transition-all shadow-xs cursor-pointer mt-1 flex items-center justify-center gap-2"
+                  className="w-full h-11 rounded-full bg-accent hover:bg-accent/90 active:scale-[0.99] text-accent-foreground font-semibold text-sm transition-all shadow-xs cursor-pointer mt-1 flex items-center justify-center gap-2"
                 >
                   <Lock className="size-3.5" />
                   <span>Pay {formatCurrency(totalValue)}</span>
@@ -457,7 +458,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 <div className="flex flex-col items-center gap-2 text-center pt-1">
                   <Link
                     href="/cart"
-                    className="text-xs font-semibold text-[#2f5cf6] hover:underline cursor-pointer"
+                    className="text-xs font-semibold text-accent hover:underline cursor-pointer"
                   >
                     Return to cart
                   </Link>
@@ -483,7 +484,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                   <button
                     type="button"
                     onClick={() => setStep("signedin")}
-                    className="text-xs sm:text-sm text-[#2f5cf6] hover:underline"
+                    className="text-xs sm:text-sm text-accent hover:underline"
                   >
                     Cancel
                   </button>
@@ -544,7 +545,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 <button
                   type="button"
                   onClick={() => setStep("signedin")}
-                  className="w-full h-11.5 rounded-full bg-[#2f5cf6] hover:bg-[#254edb] text-white font-bold text-sm transition-all shadow-xs mt-1"
+                  className="w-full h-11.5 rounded-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-sm transition-all shadow-xs mt-1"
                 >
                   Save & return
                 </button>
@@ -564,7 +565,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 <div className="p-4 rounded-2xl border border-blue-500 bg-blue-50/20 dark:bg-blue-950/20 flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-bold text-foreground flex items-center gap-2">
-                      <CreditCard className="size-4.5 text-[#2f5cf6]" /> Credit / Debit Card
+                      <CreditCard className="size-4.5 text-accent" /> Credit / Debit Card
                     </span>
                     <span className="text-xs font-bold text-blue-600">Selected</span>
                   </div>
@@ -593,7 +594,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 <button
                   type="button"
                   onClick={() => setStep("signedin")}
-                  className="w-full h-11.5 rounded-full bg-[#2f5cf6] hover:bg-[#254edb] text-white font-bold text-sm transition-all shadow-xs mt-1"
+                  className="w-full h-11.5 rounded-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-sm transition-all shadow-xs mt-1"
                 >
                   Save payment method
                 </button>
@@ -619,7 +620,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 <div className="mt-4 flex flex-col sm:flex-row gap-3 w-full">
                   <Link
                     href="/"
-                    className="flex-1 py-3 px-5 rounded-full bg-[#2f5cf6] text-white font-bold text-sm text-center no-underline hover:bg-[#254edb]"
+                    className="flex-1 py-3 px-5 rounded-full bg-accent text-accent-foreground font-bold text-sm text-center no-underline hover:bg-accent/90"
                   >
                     Continue shopping
                   </Link>
@@ -636,7 +637,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
         </div>
 
         {/* Right Column: Order Summary with Clickable Product View */}
-        <div className="hidden lg:flex lg:col-span-5 h-full border-l border-border/70 bg-[#fafafa]/50 dark:bg-zinc-900/30 flex-col justify-center py-6 px-8 xl:px-12 overflow-y-auto">
+        <div className="hidden lg:flex lg:col-span-5 h-full border-l border-border/70 bg-surface-secondary/40 flex-col justify-center py-6 px-8 xl:px-12 overflow-y-auto">
           <div className="w-full max-w-[370px] flex flex-col gap-4 my-auto">
             {/* Clickable Product Line Item linking to Product View */}
             <div className="flex items-start justify-between gap-3.5">
@@ -661,7 +662,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
 
                 {/* Product Title & Variant with hover affordance */}
                 <div className="flex flex-col pt-0.5 min-w-0">
-                  <span className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-tight leading-snug truncate group-hover:text-[#2f5cf6] transition-colors flex items-center gap-1">
+                  <span className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-tight leading-snug truncate group-hover:text-accent transition-colors flex items-center gap-1">
                     {primaryItem.title}
                     <ExternalLink className="size-3 opacity-0 group-hover:opacity-60 transition-opacity" />
                   </span>
@@ -691,7 +692,7 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
                 <button
                   type="button"
                   onClick={handleApplyDiscount}
-                  className="h-10 px-4 rounded-xl bg-[#f4f4f5] hover:bg-[#e4e4e7] dark:bg-zinc-800 text-foreground text-xs sm:text-sm font-semibold transition-colors cursor-pointer shrink-0"
+                  className="h-10 px-4 rounded-xl bg-surface-secondary hover:bg-surface-tertiary text-foreground text-xs sm:text-sm font-semibold transition-colors cursor-pointer shrink-0"
                 >
                   Apply
                 </button>
@@ -758,6 +759,6 @@ export function CheckoutView({ initialBrandId }: CheckoutViewProps) {
           </div>
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }

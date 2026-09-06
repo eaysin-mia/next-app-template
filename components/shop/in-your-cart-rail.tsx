@@ -102,7 +102,7 @@ export function CartCard({
       <button
         type="button"
         onClick={handleCheckout}
-        className="w-full py-2.5 rounded-full bg-[#f2f4f7] hover:bg-[#e6e8ec] text-slate-800 font-semibold text-xs transition-all text-center cursor-pointer active:scale-[0.99]"
+        className="w-full py-2.5 rounded-full bg-surface-secondary hover:bg-surface-tertiary text-foreground border border-border/60 font-semibold text-xs transition-all text-center cursor-pointer active:scale-[0.99]"
       >
         Continue to checkout
       </button>

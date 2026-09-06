@@ -109,14 +109,14 @@ export function ProductCard({
           className={cn(
             "absolute bottom-2.5 right-2.5 z-10 rounded-full transition-all duration-200",
             wishlisted
-              ? "bg-[#2f5cf6] text-white shadow-xs scale-105"
+              ? "bg-accent text-accent-foreground shadow-xs scale-105"
               : "bg-foreground/25 hover:bg-foreground/35 text-background backdrop-blur-xs active:scale-95"
           )}
         >
           <Heart
             className={cn(
               "size-3.5 transition-transform",
-              wishlisted ? "fill-white stroke-white" : "stroke-current stroke-[2]"
+              wishlisted ? "fill-accent-foreground stroke-accent-foreground" : "stroke-current stroke-[2]"
             )}
           />
         </Button>

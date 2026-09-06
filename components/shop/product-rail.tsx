@@ -17,6 +17,7 @@ export interface ProductRailProps {
   readonly onProductClick?: (product: ProductItem) => void;
   readonly onHeaderClick?: () => void;
   readonly headerHref?: string;
+  readonly bleed?: boolean;
 }
 
 export function ProductRail({
@@ -27,6 +28,7 @@ export function ProductRail({
   onProductClick,
   onHeaderClick,
   headerHref,
+  bleed = true,
 }: ProductRailProps) {
   const { scrollRef, canScrollLeft, canScrollRight, scroll } = useScrollRail();
 
@@ -66,7 +68,7 @@ export function ProductRail({
       <div className="relative w-full group/rail">
         <div
           ref={scrollRef}
-          className="flex items-start gap-3 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth snap-x snap-mandatory w-full px-0 py-1"
+          className="flex items-start gap-3 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth snap-x snap-mandatory w-full py-1 px-0"
         >
           {children
             ? children
@@ -75,23 +77,31 @@ export function ProductRail({
                   key={product.id}
                   product={product}
                   onClick={onProductClick}
-                  className="snap-start snap-always shrink-0 w-[calc((100%-24px)/2.25)] sm:w-[calc((100%-36px)/3.25)] md:w-[calc((100%-48px)/4.25)] lg:w-[calc((100%-72px)/6.25)]"
+                  className={cn(
+                    "snap-start snap-always shrink-0",
+                    bleed
+                      ? "w-[calc((100%-24px)/2.25)] sm:w-[calc((100%-36px)/3.25)] md:w-[calc((100%-48px)/4.25)] lg:w-[250px] xl:w-[270px]"
+                      : "w-[calc((100%-24px)/2.25)] sm:w-[calc((100%-36px)/3.25)] md:w-[calc((100%-48px)/4.25)] lg:w-[calc((100%-72px)/6.25)]"
+                  )}
                 />
               ))}
+          {bleed && (
+            <div className="shrink-0 w-4 sm:w-6 md:w-8 lg:w-10 pointer-events-none" aria-hidden="true" />
+          )}
         </div>
 
         {canScrollRight && (
           <CarouselNavButton
             direction="right"
             onPress={() => scroll("right")}
-            className="top-1/2 hidden sm:flex"
+            className={cn("top-[38%] hidden sm:flex", bleed ? "right-4 sm:right-6 md:right-8" : "right-2 sm:right-3")}
           />
         )}
         {canScrollLeft && (
           <CarouselNavButton
             direction="left"
             onPress={() => scroll("left")}
-            className="top-1/2 hidden sm:flex"
+            className={cn("top-[38%] hidden sm:flex", bleed ? "left-4 sm:left-6 md:left-8" : "left-2 sm:left-3")}
           />
         )}
 
