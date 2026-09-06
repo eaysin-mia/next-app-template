@@ -5,6 +5,7 @@ export interface ProductDetailData {
   brandRating: string;
   title: string;
   rating: number;
+  reviewScore?: number;
   reviewCount: number;
   boughtBadge?: string;
   stockBadge?: string;
@@ -29,6 +30,165 @@ export interface ProductDetailData {
 }
 
 export const PRODUCT_DETAILS_DATABASE: Record<string, ProductDetailData> = {
+  "womens-ribbed-henley-tan": {
+    id: "womens-ribbed-henley-tan",
+    brand: "FLAG NOR FAIL",
+    brandAvatarText: "FNF",
+    brandRating: "4.9 ★ (19.4K)",
+    title: "WOMENS RIBBED HENLEY - TAN",
+    rating: 5,
+    reviewScore: 4.7,
+    reviewCount: 32,
+    price: "BDT 4,200.00",
+    originalPrice: "BDT 6,000.00",
+    discountBadge: "30% off",
+    sizes: [
+      { id: "small", label: "SMALL", available: true },
+      { id: "medium", label: "MEDIUM", available: true },
+      { id: "large", label: "LARGE", available: true },
+    ],
+    descriptionParagraphs: [
+      "Designed for everyday wear with endless possibilities, our new Women's Henley's is a staple piece for any closet. Crafted from our premium, lightweight ribbed material (also used in our Women's Ribbed Athletic Collection) these Henley's fea...",
+      "ture a flattering contoured fit, custom tonal buttons, and an embroidered sleeve emblem. Perfect for casual layering or athletic downtime., Designed for everyday wear with endless possibilities, our new Women's Henley's is a staple piece for any closet. Crafted from our premium, lightweight ribbed material (also used in our Women's Ribbed Athletic Collection) these Henley's fea...",
+      "ture a flattering contoured fit, custom tonal buttons, and an embroidered sleeve emblem. Perfect for casual layering or athletic downtime. Designed for everyday wear with endless possibilities, our new Women's Henley's is a staple piece for any closet. Crafted from our premium, lightweight ribbed material (also used in our Women's Ribbed Athletic Collection) these Henley's fea...",
+      "ture a flattering contoured fit, custom tonal buttons, and an embroidered sleeve emblem. Perfect for casual layering or athletic downtime.",
+    ],
+    galleryImages: [
+      {
+        id: "fnf-1",
+        alt: "Womens Ribbed Henley Tan Profile",
+        url: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "fnf-2",
+        alt: "Womens Ribbed Henley Tan Back View",
+        url: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "fnf-3",
+        alt: "Womens Ribbed Henley Tan Side Standing",
+        url: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "fnf-4",
+        alt: "Womens Ribbed Henley Tan Arm Patch Detail",
+        url: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "fnf-5",
+        alt: "Womens Ribbed Henley Tan Fabric Close-Up",
+        url: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "fnf-6",
+        alt: "Womens Ribbed Henley Tan Neckline Detail",
+        url: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "fnf-7",
+        alt: "Womens Ribbed Henley Tan Hem Detail",
+        url: "https://images.unsplash.com/photo-1495385794356-15371f348c31?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "fnf-8",
+        alt: "Womens Ribbed Henley Tan Full Outfit",
+        url: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=1000&auto=format&fit=crop&q=80",
+      },
+    ],
+    customerPhotos: [
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&auto=format&fit=crop&q=80",
+    ],
+    reviews: [
+      {
+        id: "r1",
+        author: "Brittany K.",
+        date: "September 02, 2026",
+        avatarBg: "bg-amber-100 text-amber-800",
+        avatarInitial: "B",
+        rating: 5,
+        text: "The ribbed material is unmatched. Incredibly soft, stretchy, and the tan color is so versatile!",
+      },
+    ],
+  },
+  "daydream-long-sleeve": {
+    id: "daydream-long-sleeve",
+    brand: "Born Primitive",
+    brandAvatarText: "BP",
+    brandRating: "4.8 ★ (120.9K)",
+    title: "Daydream Long Sleeve (Black)",
+    rating: 5,
+    reviewCount: 44,
+    boughtBadge: "100+ bought in past month",
+    stockBadge: "Only 3 left",
+    price: "BDT 3,300.00",
+    originalPrice: "BDT 6,600.00",
+    discountBadge: "50% off",
+    sizes: [
+      { id: "xs", label: "X-Small", available: false },
+      { id: "s", label: "Small", available: true },
+      { id: "m", label: "Medium", available: true },
+      { id: "l", label: "Large", available: true },
+      { id: "xl", label: "X-Large", available: true },
+      { id: "2xl", label: "2X-Large", available: true },
+      { id: "1x", label: "1X", available: true },
+      { id: "2x", label: "2X", available: true },
+      { id: "3x", label: "3X", available: true },
+    ],
+    descriptionParagraphs: [
+      "If you're anything like us, you never underestimate the power of a rest day (especially after leg day). To make the most of your recovery, we made the Daydream Long Sleeve. With an ultra-soft fabric that has \"I live in this\" comfort, it's p...",
+      "Engineered with a breathable four-way stretch blend that flows naturally with your movements. Designed with raglan sleeves and ergonomic flatlock seams to prevent chafing while you unwind.",
+    ],
+    galleryImages: [
+      {
+        id: "bp-1",
+        alt: "Daydream Long Sleeve Front View",
+        url: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bp-2",
+        alt: "Daydream Long Sleeve Back View",
+        url: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bp-3",
+        alt: "Daydream Long Sleeve Standing View",
+        url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1000&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "bp-4",
+        alt: "Daydream Long Sleeve Profile View",
+        url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1000&auto=format&fit=crop&q=80",
+      },
+    ],
+    customerPhotos: [
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=300&auto=format&fit=crop&q=80",
+    ],
+    reviews: [
+      {
+        id: "r1",
+        author: "Sarah M.",
+        date: "September 01, 2026",
+        avatarBg: "bg-purple-100 text-purple-800",
+        avatarInitial: "S",
+        rating: 5,
+        text: "The fabric is incredibly soft! Perfect for lounging post-workout. Runs true to size and the sleeve length is just right.",
+      },
+      {
+        id: "r2",
+        author: "Jessica T.",
+        date: "August 28, 2026",
+        avatarBg: "bg-blue-100 text-blue-800",
+        avatarInitial: "J",
+        rating: 5,
+        text: "My absolute favorite long sleeve! I bought it in Small and the fit is flattering without feeling too tight.",
+      },
+    ],
+  },
   "m1-grey-syzygy": {
     id: "m1-grey-syzygy",
     brand: "notwoways",
@@ -243,11 +403,35 @@ export function getProductData(id?: string): ProductDetailData {
   if (id && PRODUCT_DETAILS_DATABASE[id]) {
     return PRODUCT_DETAILS_DATABASE[id];
   }
+  if (
+    id &&
+    (id.toLowerCase().includes("henley") ||
+      id.toLowerCase().includes("ribbed") ||
+      id.toLowerCase().includes("flag") ||
+      id.toLowerCase().includes("tan"))
+  ) {
+    return PRODUCT_DETAILS_DATABASE["womens-ribbed-henley-tan"];
+  }
+  if (
+    id &&
+    (id.toLowerCase().includes("daydream") ||
+      id.toLowerCase().includes("born") ||
+      id.toLowerCase().includes("primitive") ||
+      id.toLowerCase().includes("sleeve"))
+  ) {
+    return PRODUCT_DETAILS_DATABASE["daydream-long-sleeve"];
+  }
   if (id && id.toLowerCase().includes("syzygy")) {
     return PRODUCT_DETAILS_DATABASE["m1-grey-syzygy"];
   }
-  if (id && (id.toLowerCase().includes("shoe") || id.toLowerCase().includes("sneaker") || id.toLowerCase().includes("kith") || id.toLowerCase().includes("on-cloud"))) {
+  if (
+    id &&
+    (id.toLowerCase().includes("shoe") ||
+      id.toLowerCase().includes("sneaker") ||
+      id.toLowerCase().includes("kith") ||
+      id.toLowerCase().includes("on-cloud"))
+  ) {
     return PRODUCT_DETAILS_DATABASE["m1-grey-syzygy"];
   }
-  return PRODUCT_DETAILS_DATABASE["m1-grey-syzygy"];
+  return PRODUCT_DETAILS_DATABASE["womens-ribbed-henley-tan"];
 }

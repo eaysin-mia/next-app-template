@@ -1,8 +1,14 @@
 "use client";
 
 import React from "react";
+import { usePathname } from "next/navigation";
 
 export function AppBanner() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/product")) {
+    return null;
+  }
   return (
     <div
       role="banner"
